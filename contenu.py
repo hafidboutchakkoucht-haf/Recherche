@@ -18,15 +18,12 @@ AXES = [
      "en": ("Comparative criminal law and criminal sciences", "Territorial sovereignty, transnational crime, the European criminal law area and the case law of the European Court of Human Rights.")},
     {"fr": ("Politiques publiques et mise en œuvre", "Faisabilité des programmes de gouvernement, gouvernance de coalition, finances publiques et architecture d’exécution."),
      "en": ("Public policy and implementation", "Feasibility of government programmes, coalition governance, public finance and delivery architecture.")},
-    {"fr": ("Europe, jeunesse et inclusion", "Mobilité internationale, éducation non formelle et accès des publics éloignés aux programmes européens, à partir du terrain associatif."),
-     "en": ("Europe, youth and inclusion", "International mobility, non-formal learning and access to European programmes for those furthest from them, grounded in non-profit field work.")},
 ]
 
 # Thèmes de la bibliothèque (filtres)
 TOPICS = {
     "droit": {"fr": "Droit pénal", "en": "Criminal law"},
     "politiques": {"fr": "Politiques publiques", "en": "Public policy"},
-    "europe": {"fr": "Europe et jeunesse", "en": "Europe and youth"},
 }
 
 PUBLICATIONS = [
@@ -106,18 +103,8 @@ PUBLICATIONS = [
     },
 ]
 
-# Vidéos : (numéro, thème de série, titre, résumé)
-VIDEO_THEMES = [
-    ({"fr": "Comprendre le programme", "en": "Understanding the programme"}, [
-        (1, {"fr": "Ce n’est pas que pour les étudiants", "en": "It is not only for students"}, {"fr": "Erasmus+ en chiffres : qui part, combien, et pourquoi les jeunes hors université sont concernés.", "en": "Erasmus+ in numbers: who goes, how many, and why young people outside university are concerned."}),
-        (2, {"fr": "Trois portes pour partir", "en": "Three doors to go abroad"}, {"fr": "Échanges de jeunes, mobilité des animateurs de jeunesse, DiscoverEU.", "en": "Youth exchanges, youth worker mobility, DiscoverEU."})]),
-    ({"fr": "Inclusion et égalité des chances", "en": "Inclusion and equal opportunities"}, [
-        (3, {"fr": "Erasmus+ pour toutes et tous", "en": "Erasmus+ for everyone"}, {"fr": "Les jeunes ayant moins d’opportunités, les quatre priorités du programme, et ce que cela donne sur le terrain.", "en": "Young people with fewer opportunities, the programme’s four priorities, and what it looks like in the field."})]),
-    ({"fr": "Ingénierie de projet", "en": "Project engineering"}, [
-        (4, {"fr": "Monter un projet en 6 étapes", "en": "Setting up a project in 6 steps"}, {"fr": "Du besoin de départ à la diffusion des résultats, et les erreurs à éviter.", "en": "From the initial need to sharing results, and the mistakes to avoid."})]),
-    ({"fr": "Retours de terrain", "en": "From the field"}, [
-        (5, {"fr": "Cross Borders en action", "en": "Cross Borders in action"}, {"fr": "Les rendez-vous de 2025 et 2026, ce que les jeunes ont produit, et la suite.", "en": "The 2025 and 2026 projects, what the young people produced, and what comes next."})]),
-]
+# Vidéos : (numéro, thème de série, titre, résumé). Liste vide = aucune vidéo sur le site.
+VIDEO_THEMES = []
 
 DISCLAIMER = {
     "fr": "Travaux personnels de Hafid Boutchakkoucht. Les analyses et opinions exprimées sur ce site n’engagent que leur auteur et ne sauraient être attribuées à l’association Cross Borders.",

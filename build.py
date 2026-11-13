@@ -11,11 +11,11 @@ e = html.escape
 LANGS = ["fr", "en"]
 UI = {
     "fr": dict(axes="Axes", library="Bibliothèque", about="À propos", contact="Contact", skip="Aller au contenu", theme="Changer de thème clair ou sombre", other="Read in English",
-               kicker="Carnet de recherche · Études · Vidéos", lead="Ce que les frontières font au droit, et ce que les programmes politiques deviennent lorsqu’il faut les exécuter.",
+               kicker="Carnet de recherche · Études et publications", lead="Ce que les frontières font au droit, et ce que les programmes politiques deviennent lorsqu’il faut les exécuter.",
                cta1="Explorer la bibliothèque", cta2="Télécharger le recueil", role="Chercheur en droit pénal comparé et sciences criminelles",
-               n_studies="études publiées", n_pages="pages en accès libre", n_videos="vidéos pédagogiques", n_axes="axes de recherche",
-               axes_k="01 · Axes de recherche", axes_h="Trois terrains, <em>une même question</em> : comment la norme tient-elle face au réel ?",
-               lib_k="02 · Bibliothèque", lib_h="Études, <em>commentaires</em> et vidéos", lib_p="Chaque étude est commentée et se télécharge en PDF. Filtrez par thème ou cherchez un mot.",
+               n_studies="études publiées", n_pages="pages en accès libre", n_videos="vidéos pédagogiques", n_dl="formats de citation", n_axes="axes de recherche",
+               axes_k="01 · Axes de recherche", axes_h="Deux terrains, <em>une même question</em> : comment la norme tient-elle face au réel ?",
+               lib_k="02 · Bibliothèque", lib_h="Études et <em>commentaires</em>", lib_p="Chaque étude est commentée et se télécharge en PDF. Filtrez par thème ou cherchez un mot.",
                search="Rechercher un titre, un mot-clé…", all="Tout", studies="Études", videos="Vidéos", none="Aucun résultat pour cette recherche.",
                study="Étude", video="Vidéo", minute="1 min", read="Lire la présentation", pdf="Télécharger le PDF", pages="pages", watch="Regarder", download="Télécharger",
                comment="Commentaire", recueil_h="Le recueil des études", recueil_p="Toutes les études réunies en un seul PDF, chacune précédée de son commentaire.", recueil_b="Télécharger le recueil (PDF)",
@@ -26,11 +26,11 @@ UI = {
                outline="Plan de l’étude", keywords="Mots-clés", cite="Citer cette étude", copy="Copier la référence", copied="Référence copiée", reader="Lire en ligne", reader_n="Si le lecteur ne s’affiche pas sur votre appareil, utilisez le bouton de téléchargement.",
                write="Écrire à l’auteur", next="Autre étude", rights="Tous droits réservés. Les textes peuvent être cités avec mention de l’auteur et de la source. Site sans cookie ni traceur.", series="Série Erasmus+ décrypté · en français"),
     "en": dict(axes="Research", library="Library", about="About", contact="Contact", skip="Skip to content", theme="Toggle light or dark theme", other="Lire en français",
-               kicker="Research notebook · Studies · Videos", lead="What borders do to law, and what political programmes become when they have to be implemented.",
+               kicker="Research notebook · Studies and publications", lead="What borders do to law, and what political programmes become when they have to be implemented.",
                cta1="Explore the library", cta2="Download the collection", role="Researcher in comparative criminal law and criminal sciences",
-               n_studies="published studies", n_pages="open-access pages", n_videos="educational videos", n_axes="research areas",
-               axes_k="01 · Research areas", axes_h="Three fields, <em>one question</em>: how does the norm hold up against reality?",
-               lib_k="02 · Library", lib_h="Studies, <em>commentary</em> and videos", lib_p="Each study comes with a commentary and a PDF download. Filter by topic or search for a word.",
+               n_studies="published studies", n_pages="open-access pages", n_videos="educational videos", n_dl="citation formats", n_axes="research areas",
+               axes_k="01 · Research areas", axes_h="Two fields, <em>one question</em>: how does the norm hold up against reality?",
+               lib_k="02 · Library", lib_h="Studies and <em>commentary</em>", lib_p="Each study comes with a commentary and a PDF download. Filter by topic or search for a word.",
                search="Search a title or keyword…", all="All", studies="Studies", videos="Videos", none="No result for this search.",
                study="Study", video="Video", minute="1 min", read="Read the overview", pdf="Download the PDF", pages="pages", watch="Watch", download="Download",
                comment="Commentary", recueil_h="The collected studies", recueil_p="All studies in a single PDF, each preceded by its commentary (in French).", recueil_b="Download the collection (PDF)",
@@ -152,7 +152,7 @@ def home(lang):
       <video controls playsinline preload="none" poster="{r}videos/erasmus-decrypte-ep{n}.jpg" aria-label="{e(t[lang])}"><source src="{r}videos/erasmus-decrypte-ep{n}.mp4" type="video/mp4"></video>
       <div><p class="label">{u['video']} · {e(theme[lang])}</p><h3>{e(t[lang])}</h3><p class="sub">{e(d[lang])}</p><p class="small">{u['series']} · <a href="{r}videos/erasmus-decrypte-ep{n}.mp4" download>{u['download']}</a></p></div>
     </article>""")
-    filters = f'<button class="f" type="button" data-f="all" aria-pressed="true">{u["all"]}</button><button class="f" type="button" data-f="kind:study" aria-pressed="false">{u["studies"]}</button><button class="f" type="button" data-f="kind:video" aria-pressed="false">{u["videos"]}</button>' + "".join(
+    filters = f'<button class="f" type="button" data-f="all" aria-pressed="true">{u["all"]}</button>' + (f'<button class="f" type="button" data-f="kind:study" aria-pressed="false">{u["studies"]}</button><button class="f" type="button" data-f="kind:video" aria-pressed="false">{u["videos"]}</button>' if n_videos else "") + "".join(
         f'<button class="f" type="button" data-f="topic:{k}" aria-pressed="false">{e(v[lang])}</button>' for k, v in TOPICS.items())
     person = {"@context": "https://schema.org", "@type": "Person", "name": AUTHOR, "url": SITE + "/", "image": SITE + "/assets/portrait.jpg", "jobTitle": UI[lang]["role"],
               "identifier": f"https://orcid.org/{ORCID}", "sameAs": [f"https://orcid.org/{ORCID}"], "description": BIO[lang], "knowsAbout": [a[lang][0] for a in AXES],
@@ -169,7 +169,7 @@ def home(lang):
   <div class="art">{norm_real_svg()}<p class="legend"><span>{'la norme' if lang == 'fr' else 'the norm'}</span><span>{'le réel' if lang == 'fr' else 'reality'}</span></p></div>
 </div>
 <div class="wrap"><dl class="stats rv">
-  <div><dt>{len(PUBLICATIONS)}</dt><dd>{u['n_studies']}</dd></div><div><dt>{total_pages}</dt><dd>{u['n_pages']}</dd></div><div><dt>{n_videos}</dt><dd>{u['n_videos']}</dd></div><div><dt>{len(AXES)}</dt><dd>{u['n_axes']}</dd></div>
+  <div><dt>{len(PUBLICATIONS)}</dt><dd>{u['n_studies']}</dd></div><div><dt>{total_pages}</dt><dd>{u['n_pages']}</dd></div>{f"<div><dt>{n_videos}</dt><dd>{u['n_videos']}</dd></div>" if n_videos else f"<div><dt>2</dt><dd>{u['n_dl']}</dd></div>"}<div><dt>{len(AXES)}</dt><dd>{u['n_axes']}</dd></div>
 </dl></div>
 
 <section id="axes"><div class="wrap">
