@@ -36,6 +36,40 @@ nav a{color:var(--ink);text-decoration:none}nav a:hover{color:var(--accent-ink)}
 .bar{position:absolute;inset-inline-start:0;bottom:-1px;height:2px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%}
 @media (max-width:760px){nav{order:3;width:100%;justify-content:space-between;gap:6px 12px;font-size:.8rem}.top .wrap{flex-wrap:wrap}}
 
+/* Vidéothèque */
+.vhero{padding-block:clamp(44px,8vw,104px) 0}
+.vhero h1{font-size:clamp(2.4rem,6.6vw,4.8rem);max-width:15ch;margin:.25em 0 .35em}
+.vhero .lead{max-width:40rem}
+.vjump{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.4em;font-size:inherit}
+.vjump a{text-decoration:none}
+.vfeature{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(18px,4vw,44px);align-items:center;margin-bottom:28px}
+.vfeature h3{font-size:clamp(1.6rem,3.2vw,2.4rem);margin:.3em 0 .4em}
+.vfilm{position:relative;display:block;border-radius:6px;overflow:hidden;background:#0b0f14;box-shadow:0 18px 40px -24px #0008}
+.vfilm img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;transition:transform .5s}
+.vfilm:hover img{transform:scale(1.025)}
+.vplay{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:#ff4b35;box-shadow:0 0 0 10px #ff4b3533}
+.vplay::after{content:"";position:absolute;left:27px;top:21px;border-style:solid;border-width:13px 0 13px 21px;border-color:transparent transparent transparent #140806}
+.vcap{position:absolute;inset:auto 0 0 0;padding:44px 18px 14px;background:linear-gradient(transparent,#0b0f14e6);display:grid;gap:2px;color:#efe7d6}
+.vcap .label{color:#ff8f80}.vcap strong{font:500 1.4rem var(--serif)}
+.vwide{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(18px,4vw,44px);align-items:end;margin-bottom:36px}
+.vwide video{width:100%;aspect-ratio:16/9;background:#0b0f14;border-radius:6px;display:block}
+.vseries{border-top:1px solid var(--rule);padding-block:26px}
+.vs-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px 28px;flex-wrap:wrap;margin-bottom:18px}
+.vs-head>div{max-width:44rem;min-width:0}
+.vs-head h3{margin-bottom:.35em}
+.vs-head p{margin:0 0 .4em;font-size:1rem}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
+.vcard{min-width:0}
+.vcard video{width:100%;aspect-ratio:9/16;background:#0b0f14;border-radius:6px;display:block;margin-bottom:10px}
+.vcard h4{margin:.15em 0 .2em;font:500 1.05rem/1.25 var(--serif)}
+.vcard .small{margin:0}
+.vseries.soon{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:18px}
+.vseries.soon h3{font-size:1.25rem;color:var(--muted)}
+.vteaser{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(18px,4vw,44px);align-items:center}
+.vrubs{list-style:none;margin:0 0 1em;padding:0;display:grid;gap:.3em;font:500 1.25rem var(--serif)}
+.vrubs a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}.vrubs a:hover{color:var(--accent-ink)}
+@media (max-width:760px){.vfeature,.vwide,.vteaser{grid-template-columns:1fr}.vgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 /* Accueil */
 .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,64px);align-items:center;padding-block:clamp(48px,9vw,120px) clamp(28px,5vw,56px)}
 .byline{font:500 clamp(1.25rem,2.4vw,1.8rem)/1.2 var(--serif);margin:.5em 0 0}

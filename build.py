@@ -46,6 +46,11 @@ PUB_DIR = {"fr": "publications", "en": "en/publications", "es": "es/publicacione
 HOME = {"fr": "", "en": "en", "es": "es", "ar": "ar"}
 import traductions  # noqa: E402
 traductions.apply(globals())
+from videotheque import VID_DIR, UI_V, RUBRIQUES, FILM_URL  # noqa: E402
+for _l in LANGS:
+    UI[_l]["about_k"] = UI_V[_l]["about_k"]
+    UI[_l]["contact_k"] = UI_V[_l]["contact_k"]
+    UI[_l]["n_videos"] = {"fr": "vidéos d’analyse", "en": "analysis videos", "es": "vídeos de análisis", "ar": "فيديو تحليلي"}[_l]
 
 
 def cite_text(p, lang):
@@ -108,7 +113,7 @@ def page(lang, path, alt_paths, title, desc, body, head_extra=""):
 <a class="skip" href="#main">{u['skip']}</a>
 <header class="top"><div class="wrap">
   <a class="sig" href="{home}"><span>{e(SITE_TITLE[lang])}</span><b>{AUTHOR}</b></a>
-  <nav aria-label="{u['library']}"><a href="{home}#axes">{u['axes']}</a><a href="{home}#bibliotheque">{u['library']}</a><a href="{home}#a-propos">{u['about']}</a><a href="{home}#contact">{u['contact']}</a></nav>
+  <nav aria-label="{u['library']}"><a href="{home}#axes">{u['axes']}</a><a href="{home}#bibliotheque">{u['library']}</a><a href="{root}{VID_DIR[lang]}/">{UI_V[lang]['nav']}</a><a href="{home}#a-propos">{u['about']}</a><a href="{home}#contact">{u['contact']}</a></nav>
   <div class="tools">{switch}<button class="tool" type="button" data-theme aria-label="{u['theme']}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button></div>
   <div class="bar" aria-hidden="true"></div>
 </div></header>
@@ -131,7 +136,7 @@ def home(lang):
     u = UI[lang]
     r = "" if lang == "fr" else "../"
     total_pages = sum(p["pages"] for p in PUBLICATIONS)
-    n_videos = sum(len(v) for _, v in VIDEO_THEMES)
+    n_videos = sum(len(v) for _, v in VIDEO_THEMES) + count_videos()
     cards = []
     for p in PUBLICATIONS:
         link = f"{r}{PUB_DIR[lang]}/{p['slug']}/"
@@ -188,6 +193,8 @@ def home(lang):
   <aside class="recueil rv"><div><p class="label">PDF · {total_pages + 5} {u['pages']}</p><h3>{u['recueil_h']}</h3><p>{u['recueil_p']}</p></div><a class="chip fill" href="{r}telechargements/boutchakkoucht-recueil-des-etudes.pdf" download>{u['recueil_b']}</a></aside>
 </div></section>
 
+{videos_teaser(lang, r)}
+
 <section id="a-propos"><div class="wrap">
   <div class="head"><p class="label">{u['about_k']}</p><h2>{u['about_h']}</h2></div>
   <div class="about rv"><figure><img src="{r}assets/portrait.jpg" alt="{AUTHOR}" width="700" height="700" loading="lazy"></figure>
@@ -200,6 +207,86 @@ def home(lang):
 </div></section>"""
     page(lang, HOME[lang], HOME, f"{SITE_TITLE[lang]} — {AUTHOR}", BIO[lang][:158].rsplit(" ", 1)[0] + "…", body,
          head_extra=f'<script type="application/ld+json">{json.dumps(person, ensure_ascii=False)}</script>')
+
+
+def count_videos():
+    n = 0
+    for rb in RUBRIQUES:
+        for s in rb["series"]:
+            n += len(s["items"]) * len(s.get("langs", []))
+    return n + 1  # + le film 16:9
+
+
+def vfile(s, lang, n):
+    return s["file"].format(lang=lang, n=n)
+
+
+def videos_teaser(lang, r):
+    v = UI_V[lang]
+    n_series = sum(1 for rb in RUBRIQUES for s in rb["series"] if s["items"])
+    rubs = "".join(f'<li><a href="{r}{VID_DIR[lang]}/#{rb["id"]}">{e(rb["name"][lang])}</a></li>' for rb in RUBRIQUES)
+    return f"""<section id="videos"><div class="wrap">
+  <div class="head"><p class="label">{v['home_k']}</p><div><h2>{v['home_h']}</h2><p class="intro">{e(v['home_p'])}</p></div></div>
+  <div class="vteaser rv">
+    <a class="vfilm" href="{r}{FILM_URL}{'?lang=ar' if lang == 'ar' else ''}"><img src="{r}media/videos/posters/film-interactif.jpg" alt="" width="1032" height="580" loading="lazy"><span class="vplay" aria-hidden="true"></span><span class="vcap"><span class="label">{v['featured']}</span><strong>{e(v['film_h'])}</strong></span></a>
+    <div><ul class="vrubs">{rubs}</ul><p class="small">{count_videos()} {v['count_v']} · {n_series} {v['n_series']}</p><p class="dl"><a class="chip fill" href="{r}{VID_DIR[lang]}/">{v['home_b']}</a></p></div>
+  </div>
+</div></section>"""
+
+
+def videos_page(lang):
+    v = UI_V[lang]
+    path = VID_DIR[lang]
+    root = "../" * len(path.split("/"))
+    first = "ar" if lang == "ar" else "fr"
+    jump = "".join(f'<a class="f" href="#{rb["id"]}">{e(rb["name"][lang])}</a>' for rb in RUBRIQUES)
+    film = f"""<div class="vfeature rv">
+    <a class="vfilm" href="{root}{FILM_URL}{'?lang=ar' if lang == 'ar' else ''}"><img src="{root}media/videos/posters/film-interactif.jpg" alt="" width="1032" height="580" loading="lazy"><span class="vplay" aria-hidden="true"></span></a>
+    <div><p class="label">{v['featured']}</p><h3>{e(v['film_h'])}</h3><p>{e(v['film_p'])}</p>
+    <p class="dl"><a class="chip fill" href="{root}{FILM_URL}{'?lang=ar' if lang == 'ar' else ''}">{v['film_b']}</a><a class="chip" href="{root}{FILM_URL}{'' if lang == 'ar' else '?lang=ar'}">{v['film_b2']}</a></p></div>
+  </div>
+  <div class="vwide rv"><video controls playsinline preload="none" poster="{root}media/videos/posters/film-guerre-des-blocus.jpg"><source src="{root}media/videos/iran/film-guerre-des-blocus.mp4" type="video/mp4"></video>
+    <div><p class="label">{v['film_v']}</p><p class="small">{e(v['film_v_p'])} · <a href="{root}media/videos/iran/film-guerre-des-blocus.mp4" download>{v['download']}</a></p></div></div>"""
+    secs = []
+    for i, rb in enumerate(RUBRIQUES):
+        blocks = []
+        for s in rb["series"]:
+            if not s["items"]:
+                blocks.append(f'<div class="vseries soon"><h3>{e(s["title"][lang])}</h3><span class="tag">{v["soon"]}</span></div>')
+                continue
+            langs = s["langs"]
+            show = first if first in langs else langs[0]
+            toggle = ""
+            if len(langs) > 1:
+                toggle = '<div class="filters vlang" role="group" aria-label="' + v["version"] + '">' + "".join(
+                    f'<button class="f" type="button" data-vl="{l}" aria-pressed="{str(l == show).lower()}" lang="{l}">{v[l]}</button>' for l in langs) + "</div>"
+            else:
+                toggle = f'<span class="tag">{v["only_ar"]}</span>' if langs == ["ar"] and lang != "ar" else ""
+            cards = []
+            for l in langs:
+                for n, title in s["items"]:
+                    f = vfile(s, l, n)
+                    src = f"{root}media/videos/{s['dir']}/{f}.mp4"
+                    num = f'{v["episode"]} {n} · ' if n else ""
+                    cards.append(f"""<article class="vcard" data-l="{l}"{'' if l == show else ' hidden'}><video controls playsinline preload="none" poster="{root}media/videos/posters/{f}.jpg" aria-label="{e(title[l])}"><source src="{src}" type="video/mp4"></video>
+        <p class="label">{num.rstrip(' · ') if num else v['special']}</p><h4 lang="{l}" dir="{'rtl' if l == 'ar' else 'ltr'}">{e(title[l])}</h4><p class="small"><a href="{src}" download>{v['download']}</a></p></article>""")
+            data = f'<p class="small">{v["data_note"]} : {e(s["data"][lang])}</p>' if s.get("data") else ""
+            blocks.append(f"""<div class="vseries" data-series>
+      <div class="vs-head"><div><h3>{e(s['title'][lang])}</h3><p>{e(s['about'][lang])}</p>{data}</div>{toggle}</div>
+      <div class="vgrid">{''.join(cards)}</div></div>""")
+        secs.append(f"""<section id="{rb['id']}"><div class="wrap">
+  <div class="head"><p class="label">{i + 1:02d} · {e(rb['name'][lang])}</p><div><h2>{e(rb['name'][lang])}</h2><p class="intro">{e(rb['intro'][lang])}</p></div></div>
+  {film if rb.get('film') else ''}
+  {''.join(blocks)}
+</div></section>""")
+    body = f"""<div class="wrap vhero">
+  <p class="label">{v['kicker']}</p>
+  <h1>{v['h1']}</h1>
+  <p class="lead">{e(v['lead'])}</p>
+  <nav class="filters vjump" aria-label="{v['jump']}">{jump}</nav>
+</div>
+{''.join(secs)}"""
+    page(lang, path, VID_DIR, f"{v['kicker']} — {AUTHOR} · {SITE_TITLE[lang]}", v["lead"][:155], body)
 
 
 def publication(lang, p, nxt):
@@ -259,6 +346,7 @@ def publication(lang, p, nxt):
 
 
 for lang in LANGS:
+    videos_page(lang)
     home(lang)
     for i, p in enumerate(PUBLICATIONS):
         publication(lang, p, PUBLICATIONS[(i + 1) % len(PUBLICATIONS)])
@@ -277,7 +365,7 @@ for p in PUBLICATIONS:
 write("CNAME", SITE.replace("https://", "") + "\n")
 write(".nojekyll", "")
 write("assets/icon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#7A1F2B"/><path d="M10 20h18c8 0 10-6 16-6s6 6 10 6M10 32h18c8 0 10 7 16 7s6-7 10-7M10 44h18c8 0 10-6 16-6s6 6 10 6" fill="none" stroke="#F6F2EA" stroke-width="3.2" stroke-linecap="round"/></svg>\n')
-urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS]
+urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS]
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{x}</loc></url>\n" for x in urls) + "</urlset>\n")
 write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 entries = "".join(f"""  <entry><title>{e(p['title']['fr'])}</title><link href="{SITE}/publications/{p['slug']}/"/><id>{SITE}/publications/{p['slug']}/</id><updated>{p['date'] if len(p['date']) > 4 else p['date'] + '-01-01'}T00:00:00Z</updated><summary>{e(p['comment']['fr'])}</summary></entry>\n""" for p in PUBLICATIONS)

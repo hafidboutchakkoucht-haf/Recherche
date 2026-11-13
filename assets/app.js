@@ -37,6 +37,14 @@
     try { await navigator.clipboard.writeText(t); } catch (e) { const r = d.createRange(); r.selectNode(d.querySelector(b.dataset.copy)); getSelection().removeAllRanges(); getSelection().addRange(r); d.execCommand('copy'); }
     b.textContent = b.dataset.done; setTimeout(() => { b.textContent = label; }, 1800);
   }));
+  // Vidéothèque : choix de la langue par série
+  d.querySelectorAll('[data-series]').forEach(s => {
+    const bs = [...s.querySelectorAll('[data-vl]')];
+    bs.forEach(b => b.addEventListener('click', () => {
+      bs.forEach(x => x.setAttribute('aria-pressed', x === b));
+      s.querySelectorAll('[data-l]').forEach(c => { const on = c.dataset.l === b.dataset.vl; c.hidden = !on; if (!on) { const v = c.querySelector('video'); if (v) v.pause(); } });
+    }));
+  });
   // Une seule vidéo à la fois
   const vids = [...d.querySelectorAll('video')];
   vids.forEach(v => v.addEventListener('play', () => vids.forEach(o => { if (o !== v) o.pause(); })));
