@@ -107,6 +107,6 @@ PUBLICATIONS = [
 VIDEO_THEMES = []
 
 DISCLAIMER = {
-    "fr": "Travaux personnels de Hafid Boutchakkoucht. Les analyses et opinions exprimées sur ce site n’engagent que leur auteur et ne sauraient être attribuées à l’association Cross Borders.",
-    "en": "Personal work by Hafid Boutchakkoucht. The analyses and opinions expressed on this site are the author’s own and cannot be attributed to the Cross Borders association.",
+    "fr": "Travaux personnels de Hafid Boutchakkoucht. Les analyses et opinions exprimées sur ce site n’engagent que leur auteur.",
+    "en": "Personal work by Hafid Boutchakkoucht. The analyses and opinions expressed on this site are the author’s own.",
 }

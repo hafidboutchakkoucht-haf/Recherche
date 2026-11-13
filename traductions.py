@@ -21,8 +21,8 @@ TOPICS = {
 }
 
 DISCLAIMER = {
-    "es": "Trabajos personales de Hafid Boutchakkoucht. Los análisis y opiniones expresados en este sitio solo comprometen a su autor y no pueden atribuirse a la asociación Cross Borders.",
-    "ar": "أعمال شخصية لحفيظ بوتشكوشت. التحليلات والآراء الواردة في هذا الموقع لا تُلزم إلا صاحبها، ولا يمكن نسبتها إلى جمعية «كروس بوردرز».",
+    "es": "Trabajos personales de Hafid Boutchakkoucht. Los análisis y opiniones expresados en este sitio solo comprometen a su autor.",
+    "ar": "أعمال شخصية لحفيظ بوتشكوشت. التحليلات والآراء الواردة في هذا الموقع لا تُلزم إلا صاحبها.",
 }
 
 PUBS = {
