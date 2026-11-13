@@ -8,7 +8,8 @@ sys.path.insert(0, ROOT)
 from contenu import *  # noqa: E402,F401,F403
 
 e = html.escape
-LANGS = ["fr", "en"]
+LANGS = ["fr", "en", "es", "ar"]
+RTL = {"ar"}
 UI = {
     "fr": dict(axes="Axes", library="Bibliothèque", about="À propos", contact="Contact", skip="Aller au contenu", theme="Changer de thème clair ou sombre", other="Read in English",
                kicker="Carnet de recherche · Études et publications", lead="Ce que les frontières font au droit, et ce que les programmes politiques deviennent lorsqu’il faut les exécuter.",
@@ -41,8 +42,10 @@ UI = {
                outline="Outline", keywords="Keywords", cite="Cite this study", copy="Copy the reference", copied="Reference copied", reader="Read online", reader_n="If the reader does not display on your device, use the download button.",
                write="Write to the author", next="Another study", rights="All rights reserved. Texts may be quoted with attribution to the author and source. No cookies, no trackers.", series="Erasmus+ décrypté series · in French"),
 }
-PUB_DIR = {"fr": "publications", "en": "en/publications"}
-HOME = {"fr": "", "en": "en"}
+PUB_DIR = {"fr": "publications", "en": "en/publications", "es": "es/publicaciones", "ar": "ar/publications"}
+HOME = {"fr": "", "en": "en", "es": "es", "ar": "ar"}
+import traductions  # noqa: E402
+traductions.apply(globals())
 
 
 def cite_text(p, lang):
@@ -67,16 +70,17 @@ def write(path, content):
         f.write(content)
 
 
-def page(lang, path, alt_path, title, desc, body, head_extra=""):
+def page(lang, path, alt_paths, title, desc, body, head_extra=""):
     u = UI[lang]
     depth = len([s for s in path.split("/") if s])
     root = "../" * depth
     home = root + (HOME[lang] + "/" if HOME[lang] else "") or "./"
-    other = "en" if lang == "fr" else "fr"
     url = f"{SITE}/{path + '/' if path else ''}"
-    alts = {lang: url, other: f"{SITE}/{alt_path + '/' if alt_path else ''}"}
+    alts = {l: f"{SITE}/{a + '/' if a else ''}" for l, a in alt_paths.items()}
+    switch = "".join(f'<a class="tool" href="{root}{alt_paths[l] + "/" if alt_paths[l] else ""}" hreflang="{l}" lang="{l}" aria-label="{UI[l]["lang_name"]}">{UI[l]["lang_label"]}</a>' for l in LANGS if l != lang)
+    if path == "": switch = switch.replace('href=""', 'href="./"')
     doc = f"""<!doctype html>
-<html lang="{lang}">
+<html lang="{lang}" dir="{'rtl' if lang in RTL else 'ltr'}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -84,8 +88,7 @@ def page(lang, path, alt_path, title, desc, body, head_extra=""):
 <meta name="description" content="{e(desc)}">
 <meta name="author" content="{AUTHOR}">
 <link rel="canonical" href="{url}">
-<link rel="alternate" hreflang="fr" href="{alts['fr']}">
-<link rel="alternate" hreflang="en" href="{alts['en']}">
+{"".join(f'<link rel="alternate" hreflang="{l}" href="{alts[l]}">' + chr(10) for l in LANGS).rstrip()}
 <link rel="alternate" hreflang="x-default" href="{alts['fr']}">
 <link rel="alternate" type="application/atom+xml" title="{e(SITE_TITLE['fr'])}" href="{SITE}/feed.xml">
 <meta property="og:type" content="website">
@@ -106,7 +109,7 @@ def page(lang, path, alt_path, title, desc, body, head_extra=""):
 <header class="top"><div class="wrap">
   <a class="sig" href="{home}"><span>{e(SITE_TITLE[lang])}</span><b>{AUTHOR}</b></a>
   <nav aria-label="{u['library']}"><a href="{home}#axes">{u['axes']}</a><a href="{home}#bibliotheque">{u['library']}</a><a href="{home}#a-propos">{u['about']}</a><a href="{home}#contact">{u['contact']}</a></nav>
-  <div class="tools"><a class="tool" href="{root}{alt_path + '/' if alt_path else ''}" hreflang="{other}" lang="{other}" aria-label="{u['other']}">{other.upper()}</a><button class="tool" type="button" data-theme aria-label="{u['theme']}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button></div>
+  <div class="tools">{switch}<button class="tool" type="button" data-theme aria-label="{u['theme']}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button></div>
   <div class="bar" aria-hidden="true"></div>
 </div></header>
 <main id="main">
@@ -126,7 +129,6 @@ def page(lang, path, alt_path, title, desc, body, head_extra=""):
 
 def home(lang):
     u = UI[lang]
-    other = "en" if lang == "fr" else "fr"
     r = "" if lang == "fr" else "../"
     total_pages = sum(p["pages"] for p in PUBLICATIONS)
     n_videos = sum(len(v) for _, v in VIDEO_THEMES)
@@ -157,7 +159,7 @@ def home(lang):
     person = {"@context": "https://schema.org", "@type": "Person", "name": AUTHOR, "url": SITE + "/", "image": SITE + "/assets/portrait.jpg", "jobTitle": UI[lang]["role"],
               "identifier": f"https://orcid.org/{ORCID}", "sameAs": [f"https://orcid.org/{ORCID}"], "description": BIO[lang], "knowsAbout": [a[lang][0] for a in AXES],
               "affiliation": {"@type": "NGO", "name": "Cross Borders", "url": MAIN_SITE}}
-    title_html = "La norme <em>et le réel</em>" if lang == "fr" else "Norm <em>and Reality</em>"
+    title_html = u["title_html"]
     body = f"""<div class="wrap hero">
   <div>
     <p class="label">{u['kicker']}</p>
@@ -166,7 +168,7 @@ def home(lang):
     <p class="lead">{e(u['lead'])}</p>
     <p class="dl"><a class="chip fill" href="#bibliotheque">{u['cta1']}</a><a class="chip" href="{r}telechargements/boutchakkoucht-recueil-des-etudes.pdf" download>{u['cta2']}</a></p>
   </div>
-  <div class="art">{norm_real_svg()}<p class="legend"><span>{'la norme' if lang == 'fr' else 'the norm'}</span><span>{'le réel' if lang == 'fr' else 'reality'}</span></p></div>
+  <div class="art">{norm_real_svg()}<p class="legend"><span>{u['norm']}</span><span>{u['real']}</span></p></div>
 </div>
 <div class="wrap"><dl class="stats rv">
   <div><dt>{len(PUBLICATIONS)}</dt><dd>{u['n_studies']}</dd></div><div><dt>{total_pages}</dt><dd>{u['n_pages']}</dd></div>{f"<div><dt>{n_videos}</dt><dd>{u['n_videos']}</dd></div>" if n_videos else f"<div><dt>2</dt><dd>{u['n_dl']}</dd></div>"}<div><dt>{len(AXES)}</dt><dd>{u['n_axes']}</dd></div>
@@ -196,13 +198,14 @@ def home(lang):
 <section id="contact"><div class="wrap">
   <div class="head"><p class="label">{u['contact_k']}</p><div><h2>{u['contact_h']}</h2><p class="intro">{u['contact_p']} <a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>
 </div></section>"""
-    page(lang, HOME[lang], HOME[other], f"{SITE_TITLE[lang]} — {AUTHOR}", BIO[lang][:158].rsplit(" ", 1)[0] + "…", body,
+    page(lang, HOME[lang], HOME, f"{SITE_TITLE[lang]} — {AUTHOR}", BIO[lang][:158].rsplit(" ", 1)[0] + "…", body,
          head_extra=f'<script type="application/ld+json">{json.dumps(person, ensure_ascii=False)}</script>')
 
 
 def publication(lang, p, nxt):
     u = UI[lang]
     other = "en" if lang == "fr" else "fr"
+    note = f'<p class="small">{u["abstract_note"]}</p>' if u["abstract_note"] else ""
     path = f"{PUB_DIR[lang]}/{p['slug']}"
     root = "../" * len(path.split("/"))
     pdf = f"{root}telechargements/{p['pdf']}"
@@ -232,8 +235,8 @@ def publication(lang, p, nxt):
       <h2 class="sec">{u['comment']}</h2><p class="big">{e(p['comment'][lang])}</p>
       <h2 class="sec">{u['takeaways']}</h2><ol class="points">{''.join(f'<li>{e(x)}</li>' for x in p['points'][lang])}</ol>
       <h2 class="sec">{u['readers']}</h2><p>{e(p['readers'][lang])}</p>
-      <h2 class="sec">{u['abstract']}</h2><p>{e(p['abstract'][lang])}</p>
-      <details><summary>{u['abstract_other']}</summary><p lang="{other}">{e(p['abstract'][other])}</p></details>
+      <h2 class="sec">{u['abstract']}</h2><p>{e(p['abstract'][lang])}</p>{note}
+      <details><summary>{u['abstract_other']}</summary><p lang="{other}" dir="ltr">{e(p['abstract'][other])}</p></details>
     </div>
     <aside>
       <h2 class="sec">{u['outline']}</h2><ol class="toc">{''.join(f'<li>{e(x)}</li>' for x in p['outline'][lang])}</ol>
@@ -242,7 +245,7 @@ def publication(lang, p, nxt):
   </div>
 
   <h2 class="sec" id="citer">{u['cite']}</h2>
-  <p class="cite" id="ref">{cite_text(p, lang)}</p>
+  <p class="cite" id="ref" dir="ltr" lang="fr">{cite_text(p, 'fr' if lang in RTL else lang)}</p>
   <p class="dl"><button class="chip" type="button" data-copy="#ref" data-done="{u['copied']}">{u['copy']}</button><a class="chip" href="{root}telechargements/{p['slug']}.bib" download>BibTeX</a><a class="chip" href="{root}telechargements/{p['slug']}.ris" download>RIS (Zotero, EndNote)</a></p>
 
   <h2 class="sec" id="lecteur">{u['reader']}</h2>
@@ -252,7 +255,7 @@ def publication(lang, p, nxt):
 
   <a class="next" href="../{nxt['slug']}/"><span class="label">{u['next']}</span><strong>{e(nxt['title'][lang])}</strong></a>
 </div>"""
-    page(lang, path, f"{PUB_DIR[other]}/{p['slug']}", f"{p['title'][lang]} — {AUTHOR} · {SITE_TITLE[lang]}", p["abstract"][lang][:155].rsplit(" ", 1)[0] + "…", body, head_extra=metas)
+    page(lang, path, {l: f"{PUB_DIR[l]}/{p['slug']}" for l in LANGS}, f"{p['title'][lang]} — {AUTHOR} · {SITE_TITLE[lang]}", p["abstract"][lang][:155].rsplit(" ", 1)[0] + "…", body, head_extra=metas)
 
 
 for lang in LANGS:

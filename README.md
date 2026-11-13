@@ -1,10 +1,11 @@
 # La norme et le réel — Hafid Boutchakkoucht
 
-Carnet de recherche publié sur `hafidboutchakkoucht.crossborders.ngo` (français et anglais).
+Carnet de recherche publié sur `hafidboutchakkoucht.crossborders.ngo` (français, anglais, espagnol et arabe).
 
 | Quoi | Où |
 | --- | --- |
-| Textes, études, vidéos, biographie (FR et EN) | `contenu.py` |
+| Textes, études, biographie en français et en anglais | `contenu.py` |
+| Traductions espagnole et arabe | `traductions.py` |
 | Mise en page | `assets/style.css` |
 | Filtres, thème, copie de référence | `assets/app.js` |
 | PDF des études, fichiers BibTeX et RIS | `telechargements/` |
