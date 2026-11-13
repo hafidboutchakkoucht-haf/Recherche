@@ -82,3 +82,6 @@ footer strong{color:var(--ink)}
 .theme .reels{grid-template-columns:repeat(auto-fill,minmax(180px,220px))}
 .reels figcaption{display:grid;gap:4px}.reels figcaption strong{color:var(--ink)}
 @media (max-width:860px){.theme{grid-template-columns:1fr}.theme .reels{display:flex}}
+
+.byline{font:500 clamp(1.3rem,2.6vw,1.9rem)/1.2 var(--serif);margin:.5em 0 0}
+.sig b{font-size:.88em}

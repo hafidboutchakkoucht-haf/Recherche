@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://recherche.crossborders.ngo/sitemap.xml
+Sitemap: https://hafidboutchakkoucht.crossborders.ngo/sitemap.xml

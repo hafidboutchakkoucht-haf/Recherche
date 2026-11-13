@@ -5,7 +5,8 @@ Pour ajouter une publication : ajouter un bloc dans PUBLICATIONS ci-dessous, pui
 """
 import html, json, os
 
-SITE = "https://recherche.crossborders.ngo"
+SITE = "https://hafidboutchakkoucht.crossborders.ngo"
+SITE_TITLE = "La norme et le réel"
 AUTHOR = "Hafid Boutchakkoucht"
 ORCID = "0009-0007-3785-5570"
 EMAIL = "hafidboutchakkoucht@gmail.com"
@@ -77,6 +78,7 @@ DISCLAIMER = "Travaux personnels de Hafid Boutchakkoucht. Les analyses et opinio
 
 
 def page(path, title, desc, body, head_extra="", root=""):
+    if path: title = f"{title} · {SITE_TITLE}"
     url = f"{SITE}/{path}"
     doc = f"""<!doctype html>
 <html lang="fr">
@@ -99,7 +101,7 @@ def page(path, title, desc, body, head_extra="", root=""):
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="sig" href="{root or './'}">Hafid <b>Boutchakkoucht</b></a>
+  <a class="sig" href="{root or './'}">{SITE_TITLE} <b>· Hafid Boutchakkoucht</b></a>
   <nav aria-label="Navigation principale"><a href="{root or './'}#axes">Axes</a><a href="{root or './'}#publications">Publications</a><a href="{root or './'}#videos">Vidéos</a><a href="{root or './'}#contact">Contact</a><a href="{MAIN_SITE}">Cross Borders ↗</a></nav>
 </div></header>
 <main>
@@ -151,13 +153,14 @@ person = {"@context": "https://schema.org", "@type": "Person", "name": AUTHOR, "
           "jobTitle": "Chercheur en droit pénal comparé et sciences criminelles", "identifier": f"https://orcid.org/{ORCID}",
           "sameAs": [f"https://orcid.org/{ORCID}"], "knowsAbout": [a for a, _ in AXES], "affiliation": {"@type": "NGO", "name": "Cross Borders", "url": MAIN_SITE}}
 
-page("", f"{AUTHOR} — Recherche, publications et vidéos",
+page("", f"{SITE_TITLE} — {AUTHOR}, recherche et publications",
      "Travaux de recherche de Hafid Boutchakkoucht : droit pénal comparé, sciences criminelles, politiques publiques. Publications, résumés et vidéos.",
      f"""<div class="wrap">
   <div class="hero">
     <div>
-      <p class="label">Recherche · Publications · Vidéos</p>
-      <h1>Hafid <em class="t">Boutchakkoucht</em></h1>
+      <p class="label">Carnet de recherche · Publications · Vidéos</p>
+      <h1>La norme <em class="t">et le réel</em></h1>
+      <p class="byline">Hafid Boutchakkoucht</p>
       <p class="lead">Chercheur en droit pénal comparé et sciences criminelles. J’étudie ce que les frontières font au droit, et ce que les programmes politiques deviennent lorsqu’il faut les exécuter.</p>
       <div class="ids"><a class="chip fill" href="#publications">Publications</a><a class="chip" href="https://orcid.org/{ORCID}" rel="me">ORCID {ORCID}</a><a class="chip" href="#contact">Contact</a></div>
     </div>
@@ -221,7 +224,7 @@ for p in PUBLICATIONS:
 </div>""", head_extra=metas, root="../../")
 
 root = os.path.dirname(os.path.abspath(__file__))
-open(os.path.join(root, "CNAME"), "w").write("recherche.crossborders.ngo\n")
+open(os.path.join(root, "CNAME"), "w").write(SITE.replace("https://", "") + "\n")
 open(os.path.join(root, ".nojekyll"), "w").write("")
 urls = [SITE + "/"] + [f"{SITE}/publications/{p['slug']}/" for p in PUBLICATIONS]
 open(os.path.join(root, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{u}</loc></url>\n" for u in urls) + "</urlset>\n")

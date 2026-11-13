@@ -1,6 +1,6 @@
-# Recherche — Hafid Boutchakkoucht
+# La norme et le réel — Hafid Boutchakkoucht
 
-Site personnel de recherche, publié sur `recherche.crossborders.ngo`.
+Site personnel de recherche, publié sur `hafidboutchakkoucht.crossborders.ngo`.
 
 - Contenu et publications : `build.py` (liste `PUBLICATIONS`).
 - Mise en page : `assets/style.css`.
