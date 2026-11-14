@@ -1,0 +1,248 @@
+[
+ {
+  "n": 1,
+  "part": "Partie générale",
+  "title": "Le principe de légalité et l'application de la loi pénale",
+  "ar": "مبدأ الشرعية وتطبيق القانون الجنائي",
+  "pills": [
+   "Art. 3 à 6 CP",
+   "Art. 10 CP"
+  ],
+  "off_label": "Texte officiel · art. 3 CP",
+  "off_text": "« Nul ne peut être condamné pour un fait qui n'est pas expressément prévu comme infraction par la loi, ni puni de peines que la loi n'a pas édictées. »",
+  "cas": "Une loi nouvelle alourdit la peine d'un délit après les faits reprochés à Karim : il reste jugé selon la loi ancienne, moins rigoureuse (art. 6).",
+  "piege": "Art. 5 : le fait n'est plus une infraction, même la peine en cours s'arrête. Art. 6 : le fait reste punissable, on retient seulement la loi la plus douce.",
+  "q": "Une loi supprime un délit pendant que Samir purge sa peine pour ce délit. Que se passe-t-il ?",
+  "r": "L'exécution de sa peine prend fin (art. 5 CP).",
+  "sections": [
+   "Les 5 règles à connaître"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "01-legalite"
+ },
+ {
+  "n": 2,
+  "part": "Partie générale",
+  "title": "Classer une infraction : crime, délit ou contravention",
+  "ar": "تصنيف الجرائم: جناية، جنحة، مخالفة",
+  "pills": [
+   "Art. 110 et 111 CP",
+   "Art. 16 à 18 CP"
+  ],
+  "off_label": "Texte officiel · art. 110 CP",
+  "off_text": "« L'infraction est un acte ou une abstention contraire à la loi pénale et réprimé par elle. »",
+  "cas": "Coups volontaires sans incapacité de plus de 20 jours (art. 400) : maximum 1 an → délit de police. Les mêmes coups avec plus de 20 jours d'incapacité (art. 401) : maximum 3 ans → délit correctionnel.",
+  "piege": "On classe selon la peine prévue par la loi (son maximum), pas selon la peine prononcée par le juge. Et le droit marocain compte quatre catégories, pas trois : le délit se divise en délit correctionnel et délit de police.",
+  "q": "Une infraction punie au maximum de 2 ans d'emprisonnement : délit correctionnel ou délit de police ?",
+  "r": "Délit de police : maximum de 2 ans ou moins (art. 111).",
+  "sections": [
+   "Les 4 catégories de l'art. 111 — le critère est la peine prévue par la loi"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "02-classification-des-infractions"
+ },
+ {
+  "n": 3,
+  "part": "Partie générale",
+  "title": "La tentative",
+  "ar": "المحاولة",
+  "pills": [
+   "Art. 114 à 116 CP"
+  ],
+  "off_label": "Texte officiel · art. 114 CP",
+  "off_text": "« Toute tentative de crime qui a été manifestée par un commencement d'exécution ou par des actes non équivoques tendant directement à le commettre, si elle n'a été suspendue ou si elle n'a manqué son effet que par des circonstances indépendantes de la volonté de son auteur, est assimilée au crime consommé et réprimée comme tel. »",
+  "cas": "Ali tire sur un rival et le manque. L'échec ne dépend pas de sa volonté : tentative de meurtre, punie comme le meurtre consommé (art. 114 et 392).",
+  "piege": "Si l'auteur renonce de lui-même avant d'aller au bout, la condition « circonstances indépendantes de sa volonté » manque : pas de tentative punissable. Les actes déjà accomplis peuvent toutefois constituer une autre infraction.",
+  "q": "La tentative de contravention est-elle punissable ?",
+  "r": "Jamais (art. 116 CP).",
+  "sections": [
+   "Les conditions et le régime"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "03-tentative"
+ },
+ {
+  "n": 4,
+  "part": "Partie générale",
+  "title": "Coauteur et complice",
+  "ar": "المساهمة والمشاركة في الجريمة",
+  "pills": [
+   "Art. 128 à 130 CP"
+  ],
+  "off_label": "Texte officiel · art. 128 CP",
+  "off_text": "« Sont considérés comme coauteurs, tous ceux qui, personnellement, ont pris part à l'exécution matérielle de l'infraction. »",
+  "cas": "Nabil prête sa voiture à Omar en sachant qu'elle servira à un cambriolage : il est complice (fourniture de moyens). Omar et Reda, qui pénètrent dans la maison, sont coauteurs.",
+  "piege": "La complicité n'est jamais punissable en matière de contravention (art. 129, dernier alinéa). Et une circonstance personnelle à l'un des participants ne s'étend pas aux autres (art. 130).",
+  "q": "Le complice d'un délit encourt-il une peine plus faible que l'auteur ?",
+  "r": "Non : il est punissable de la peine qui réprime ce délit (art. 130).",
+  "sections": [
+   "Les 4 modes de complicité (art. 129) — sans participation directe à l'infraction"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "04-coauteur-et-complice"
+ },
+ {
+  "n": 5,
+  "part": "Partie générale",
+  "title": "Les faits justificatifs : ordre de la loi, force majeure, légitime défense",
+  "ar": "أسباب التبرير والدفاع الشرعي",
+  "pills": [
+   "Art. 124 et 125 CP"
+  ],
+  "off_label": "Texte officiel · art. 124-3° CP",
+  "off_text": "« Il n'y a ni crime, ni délit, ni contravention […] lorsque l'infraction était commandée par la nécessité actuelle de la légitime défense de soi-même ou d'autrui ou d'un bien appartenant à soi-même ou à autrui, pourvu que la défense soit proportionnée à la gravité de l'agression. »",
+  "cas": "La nuit, Hamid surprend un individu qui escalade le mur de sa maison habitée et le blesse en le repoussant : la légitime défense est présumée (art. 125-1°).",
+  "piege": "Riposter après la fin de l'agression (vengeance) ou de façon disproportionnée fait perdre la justification : la défense doit être actuelle et proportionnée à la gravité de l'agression.",
+  "q": "La légitime défense peut-elle protéger un bien ?",
+  "r": "Oui : l'art. 124-3° vise aussi le bien de soi-même ou d'autrui, sous réserve de proportionnalité.",
+  "sections": [
+   "3 causes qui effacent l'infraction (art. 124) + 2 présomptions (art. 125)"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "05-faits-justificatifs"
+ },
+ {
+  "n": 6,
+  "part": "Partie générale",
+  "title": "Troubles mentaux : responsabilité pleine, partielle ou nulle",
+  "ar": "المسؤولية الجنائية والخلل العقلي",
+  "pills": [
+   "Art. 132, 134, 135 CP"
+  ],
+  "off_label": "Texte officiel · art. 132 CP",
+  "off_text": "« Toute personne saine d'esprit et capable de discernement est personnellement responsable : des infractions qu'elle commet ; des crimes ou délits dont elle se rend complice ; des tentatives de crimes ; des tentatives de certains délits qu'elle réalise dans les conditions prévues par la loi. »",
+  "cas": "En pleine crise psychotique, Mehdi agresse un passant sans comprendre ce qu'il fait : il est absous, mais le tribunal ordonne son internement judiciaire (art. 134 et 76).",
+  "piege": "L'état mental s'apprécie au moment des faits , pas au jour du procès. Et « absous » ne signifie pas « libre » : l'internement judiciaire peut être ordonné.",
+  "q": "Quel article prévoit la responsabilité partielle ?",
+  "r": "L'art. 135 CP.",
+  "sections": [
+   "L'échelle de la responsabilité — appréciée au moment des faits"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "06-troubles-mentaux"
+ },
+ {
+  "n": 7,
+  "part": "Partie générale",
+  "title": "La responsabilité pénale des mineurs",
+  "ar": "المسؤولية الجنائية للأحداث",
+  "pills": [
+   "Art. 138 à 140 CP",
+   "Livre III CPP"
+  ],
+  "off_label": "Texte officiel · art. 140 CP",
+  "off_text": "« Les délinquants ayant atteint la majorité pénale de dix-huit ans révolus, sont réputés pleinement responsables. »",
+  "cas": "Un adolescent de 16 ans commet un vol : il bénéficie de l'excuse de minorité et relève des règles du livre III du Code de procédure pénale, propres aux mineurs.",
+  "piege": "« Irresponsable » ne veut pas dire « hors du droit » : même avant 12 ans, le mineur peut faire l'objet des mesures prévues par le livre III du Code de procédure pénale.",
+  "q": "À quel âge est-on pleinement responsable pénalement au Maroc ?",
+  "r": "À 18 ans révolus (art. 140 CP).",
+  "sections": [
+   "3 seuils d'âge"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "07-mineurs"
+ },
+ {
+  "n": 8,
+  "part": "Partie spéciale",
+  "title": "Atteintes à la vie : de l'homicide involontaire à l'assassinat",
+  "ar": "القتل العمد والقتل الخطأ",
+  "pills": [
+   "Art. 392, 393, 396 CP",
+   "Art. 432 CP"
+  ],
+  "off_label": "Texte officiel · art. 392 al. 1 CP",
+  "off_text": "« Quiconque donne intentionnellement la mort à autrui est coupable de meurtre et puni de la réclusion perpétuelle. »",
+  "cas": "Un automobiliste grille un feu rouge et tue un piéton. Pas d'intention de tuer : homicide involontaire (art. 432), les règles spéciales du Code de la route pouvant aussi s'appliquer.",
+  "piege": "Préméditation ≠ intention. Tout meurtre suppose l'intention de tuer ; c'est la préméditation (dessein formé avant l'action) ou le guet-apens qui fait du meurtre un assassinat.",
+  "q": "Qu'est-ce qui distingue le meurtre de l'assassinat ?",
+  "r": "La préméditation ou le guet-apens (art. 393).",
+  "sections": [
+   "L'escalier de la gravité"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "08-atteintes-a-la-vie"
+ },
+ {
+  "n": 9,
+  "part": "Partie spéciale",
+  "title": "Coups et blessures volontaires : la durée d'incapacité fait la peine",
+  "ar": "الضرب والجرح العمد",
+  "pills": [
+   "Art. 400 à 403 CP"
+  ],
+  "off_label": "L'essentiel du texte",
+  "off_text": "Les violences volontaires sont graduées selon leur résultat : incapacité de 20 jours au plus, incapacité de plus de 20 jours, infirmité permanente, puis mort sans intention de la donner. Chaque palier est aggravé en cas de préméditation, de guet-apens ou d'usage d'une arme.",
+  "cas": "Adil attend son voisin à la sortie du travail (guet-apens) et le frappe : certificat médical de 25 jours d'incapacité → emprisonnement de 2 à 5 ans et amende de 250 à 2 000 DH (art. 401 al. 2).",
+  "piege": "C'est le certificat médical qui fixe la qualification : 20 jours d'incapacité, on reste à l'art. 400 ; 21 jours, on bascule dans l'art. 401. Et les coups mortels (art. 403) ne sont pas un meurtre : l'intention de tuer manque.",
+  "q": "Des violences volontaires, sans intention de tuer, ont entraîné la mort. Quelle peine ?",
+  "r": "Réclusion de 10 à 20 ans ; perpétuelle avec préméditation, guet-apens ou arme (art. 403).",
+  "sections": [
+   "Le barème (peines encourues)"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "09-coups-et-blessures"
+ },
+ {
+  "n": 10,
+  "part": "Partie spéciale",
+  "title": "Le vol : du larcin au vol qualifié",
+  "ar": "السرقة: من البسيطة إلى الموصوفة",
+  "pills": [
+   "Art. 505 à 510 CP"
+  ],
+  "off_label": "Texte officiel · art. 505 CP",
+  "off_text": "« Quiconque soustrait frauduleusement une chose qui ne lui appartient pas est coupable de vol et puni de l'emprisonnement d'un à cinq ans et d'une amende de 200 à 500 dirhams. »",
+  "cas": "Deux individus arrachent un téléphone, la nuit. Deux circonstances (nuit + pluralité d'auteurs) : le vol devient un crime puni de la réclusion de 10 à 20 ans (art. 509).",
+  "piege": "Une seule circonstance aggravante suffit à faire du vol un crime (réclusion, art. 510) : l'affaire quitte le terrain du délit. Vérifiez toujours la liste exacte des circonstances aux art. 507 à 510.",
+  "q": "Un vol commis par une personne seule, armée, sans autre circonstance : quelle peine ?",
+  "r": "Réclusion perpétuelle (art. 507).",
+  "sections": [
+   "3 éléments constitutifs : soustraction · chose d'autrui · intention frauduleuse — puis l'échelle des peines"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "10-vol"
+ },
+ {
+  "n": 11,
+  "part": "Partie spéciale",
+  "title": "Escroquerie ou abus de confiance ?",
+  "ar": "النصب أم خيانة الأمانة؟",
+  "pills": [
+   "Art. 540 CP",
+   "Art. 547 et 549 CP"
+  ],
+  "off_label": "",
+  "off_text": "",
+  "cas": "Un faux agent immobilier encaisse une avance pour un appartement qui n'existe pas → escroquerie. Le caissier salarié qui puise dans la caisse de son employeur → abus de confiance aggravé (art. 549).",
+  "piege": "Dans l'escroquerie, la tromperie précède et détermine la remise. Dans l'abus de confiance, la remise était libre et licite : c'est l'usage ultérieur qui devient frauduleux.",
+  "q": "Vous confiez votre ordinateur en dépôt à un ami, qui le revend. Escroquerie ou abus de confiance ?",
+  "r": "Abus de confiance : bien remis volontairement à titre de dépôt, puis détourné (art. 547).",
+  "sections": [
+   "Les deux infractions côte à côte"
+  ],
+  "source": "Source vérifiable : Code pénal (Dahir n° 1-59-413 du 26 novembre 1962), version consolidée au 20 avril 2023 — Ministère de la Justice, adala.justice.gov.ma · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "11-escroquerie-abus-de-confiance"
+ },
+ {
+  "n": 12,
+  "part": "Réforme 2025",
+  "title": "Les peines alternatives (loi n° 43.22)",
+  "ar": "العقوبات البديلة — القانون 43.22",
+  "pills": [
+   "Loi n° 43.22",
+   "En vigueur depuis le 22/08/2025"
+  ],
+  "off_label": "L'essentiel du texte",
+  "off_text": "Peines prononcées à la place de l'emprisonnement pour les délits dont la peine n'excède pas 5 ans ferme, hors récidive. En cas de manquement, l'emprisonnement initial peut être exécuté.",
+  "cas": "Condamné à 6 mois d'emprisonnement pour un délit, sans antécédent, un prévenu peut voir sa peine remplacée par une amende journalière ou un travail d'intérêt général.",
+  "piege": "Ce n'est pas un droit du condamné : le tribunal peut substituer. La récidive ferme la porte, tout comme les infractions exclues par l'art. 35-3.",
+  "q": "Un récidiviste condamné à 1 an pour vol peut-il obtenir un travail d'intérêt général ?",
+  "r": "Non : les peines alternatives sont exclues en cas de récidive.",
+  "sections": [
+   "Les 4 peines alternatives"
+  ],
+  "source": "Source vérifiable : Loi n° 43.22 relative aux peines alternatives (art. 35-1 s. CP), Bulletin officiel n° 7328 du 22 août 2024 ; décret d'application n° 2.25.386 ; entrée en vigueur le 22 août 2025 · Vérifié le 11/11/2026. Support pédagogique : ne remplace pas une consultation juridique.",
+  "slug": "12-peines-alternatives"
+ }
+]
