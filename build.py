@@ -57,6 +57,30 @@ for _l in LANGS:
     UI[_l].update(S[_l])
 AXES.append({l: S[l]["axe3"] for l in LANGS})
 import questionnaire as QZ  # noqa: E402
+import lexique as LX  # noqa: E402
+import zlib  # noqa: E402
+from fiches_fr import FICHES_FR, UI as FR_UI, SOURCE as FR_SOURCE  # noqa: E402
+for _f in FICHES_FR:
+    _f["source"] = FR_SOURCE
+PARTS["Peines"] = {"fr": "Peines", "en": "Penalties", "es": "Penas", "ar": "العقوبات"}
+FR_BY_N = {f["n"]: f for f in FICHES_FR}
+MA_BY_N = {f["n"]: f for f in FICHES}
+_FX = {
+    "f_k": ("Droit pénal comparé", "Comparative criminal law", "Derecho penal comparado", "القانون الجنائي المقارن"),
+    "f_h": ("Maroc et France <em>en vingt-quatre fiches</em>", "Morocco and France <em>in twenty-four sheets</em>", "Marruecos y Francia <em>en veinticuatro fichas</em>", "المغرب وفرنسا <em>في أربع وعشرين بطاقة</em>"),
+    "f_p": ("Deux séries en miroir : Qanoun Clair pour le droit pénal marocain, Droit Clair pour le droit pénal français. Chaque fiche donne le texte officiel, les règles à connaître, un cas pratique, le piège à éviter et un test de dix secondes, puis renvoie à la fiche équivalente de l’autre droit.",
+            "Two mirrored series: Qanoun Clair for Moroccan criminal law, Droit Clair for French criminal law. Each sheet gives the official text, the rules to know, a worked case, the trap to avoid and a ten-second test, then points to the equivalent sheet in the other system.",
+            "Dos series en espejo: Qanoun Clair para el derecho penal marroquí, Droit Clair para el derecho penal francés. Cada ficha ofrece el texto oficial, las reglas, un caso práctico, la trampa que evitar y un test de diez segundos, y remite a la ficha equivalente del otro derecho.",
+            "سلسلتان متقابلتان: «قانون واضح» للقانون الجنائي المغربي و«Droit Clair» للقانون الجنائي الفرنسي. تقدّم كل بطاقة النص الرسمي والقواعد الأساسية وحالة تطبيقية والفخ الواجب تجنبه واختباراً من عشر ثوانٍ، ثم تحيل على البطاقة المقابلة في القانون الآخر."),
+    "n_fiches": ("fiches de droit pénal comparé", "comparative criminal law sheets", "fichas de derecho penal comparado", "بطاقة في القانون الجنائي المقارن"),
+    "f_ma": ("Maroc", "Morocco", "Marruecos", "المغرب"), "f_fr": ("France", "France", "Francia", "فرنسا"),
+    "f_pack_ma": ("Fiches Maroc (PDF)", "Morocco sheets (PDF)", "Fichas Marruecos (PDF)", "بطاقات المغرب (PDF)"),
+    "f_pack_fr": ("Fiches France (PDF)", "France sheets (PDF)", "Fichas Francia (PDF)", "بطاقات فرنسا (PDF)"),
+    "f_updated_fr": ("Fiches France : codes en vigueur consultés sur Légifrance, rédaction du 14 novembre 2026.", "France sheets: codes in force consulted on Légifrance, written on 14 November 2026.",
+                     "Fichas Francia: códigos vigentes consultados en Légifrance, redacción del 14 de noviembre de 2026.", "بطاقات فرنسا: المدونات السارية كما هي منشورة على موقع Légifrance، حُرّرت في 14 نونبر 2026."),
+}
+for _i, _l in enumerate(LANGS):
+    UI[_l].update({k: v[_i] for k, v in _FX.items()})
 strip_no = lambda k: k.split(" · ", 1)[1] if " · " in k and k[:2].isdigit() else k
 
 
@@ -120,7 +144,7 @@ def page(lang, path, alt_paths, title, desc, body, head_extra="", alternates=Tru
 <a class="skip" href="#main">{u['skip']}</a>
 <header class="top"><div class="wrap">
   <a class="sig" href="{home}"><span>{e(SITE_TITLE[lang])}</span><b>{AUTHOR}</b></a>
-  <nav aria-label="{u['library']}"><a href="{home}#axes">{u['axes']}</a><a href="{home}#jeunesses">{u['nav_doc']}</a><a href="{home}#bibliotheque">{u['nav_etudes']}</a><a href="{home}#fiches">{u['nav_fiches']}</a><a href="{root}{VID_DIR[lang]}/">{UI_V[lang]['nav']}</a><a href="{home}#parcours">{u['nav_parcours']}</a><a href="{home}#contact">{u['contact']}</a></nav>
+  <nav aria-label="{u['library']}"><a href="{home}#axes">{u['axes']}</a><a href="{home}#jeunesses">{u['nav_doc']}</a><a href="{home}#bibliotheque">{u['nav_etudes']}</a><a href="{home}#fiches">{u['nav_fiches']}</a><a href="{root}{LX.L_DIR[lang]}/">{LX.TXT['nav'][lang]}</a><a href="{root}{VID_DIR[lang]}/">{UI_V[lang]['nav']}</a><a href="{home}#parcours">{u['nav_parcours']}</a><a href="{home}#contact">{u['contact']}</a></nav>
   <div class="tools">{switch}<button class="tool" type="button" data-theme aria-label="{u['theme']}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button></div>
   <div class="bar" aria-hidden="true"></div>
 </div></header>
@@ -173,14 +197,15 @@ def home(lang):
               "affiliation": {"@type": "NGO", "name": "Cross Borders", "url": MAIN_SITE}}
     title_html = u["title_html"]
     parts = list(dict.fromkeys(f["part"] for f in FICHES))
+    allf = [("ma", "fiches", f) for f in FICHES] + [("fr", "fiches-france", f) for f in FICHES_FR]
     fcards = "".join(f"""
-    <a class="fcard rv" data-item data-part="{parts.index(f['part'])}" data-text="{e((f['title'] + ' ' + f['ar'] + ' ' + ' '.join(f['pills']) + ' ' + f['q']).lower())}" href="{r}fiches/{f['slug']}/" hreflang="fr">
-      <span class="fnum">{f['n']:02d}</span><span class="tag">{e(PARTS[f['part']][lang])}</span>
+    <a class="fcard rv" data-item data-sys="{sy}" data-part="{sy}{parts.index(f['part']) if f['part'] in parts else 9}" data-text="{e((f['title'] + ' ' + f['ar'] + ' ' + ' '.join(f['pills']) + ' ' + f['q'] + ' ' + u['f_' + sy]).lower())}" href="{r}{fd}/{f['slug']}/" hreflang="fr">
+      <span class="fnum">{f['n']:02d}</span><span class="tag sys-{sy}">{e(u['f_' + sy])} · {e(PARTS[f['part']][lang])}</span>
       <strong lang="fr" dir="ltr">{e(f['title'])}</strong><span class="far" lang="ar" dir="rtl">{e(f['ar'])}</span>
       <span class="fpills" dir="ltr">{''.join(f'<i>{e(x)}</i>' for x in f['pills'])}</span>
-    </a>""" for f in FICHES)
-    ffilters = f'<button class="f" type="button" data-f="all" aria-pressed="true">{u["f_all"]}</button>' + "".join(f'<button class="f" type="button" data-f="part:{i}" aria-pressed="false">{e(PARTS[x][lang])}</button>' for i, x in enumerate(parts))
-    quiz = [{"n": f["n"], "q": f["q"], "r": f["r"], "t": f["title"], "u": f"{r}fiches/{f['slug']}/"} for f in FICHES]
+    </a>""" for sy, fd, f in allf)
+    ffilters = f'<button class="f" type="button" data-f="all" aria-pressed="true">{u["f_all"]}</button>' + "".join(f'<button class="f" type="button" data-f="sys:{sy}" aria-pressed="false">{e(u["f_" + sy])}</button>' for sy in ("ma", "fr"))
+    quiz = [{"n": f["n"], "q": f["q"], "r": f["r"], "t": u["f_" + sy] + " · " + f["title"], "u": f"{r}{fd}/{f['slug']}/"} for sy, fd, f in allf]
     k = lambda i, label: f"{i:02d} · {strip_no(label)}"
     body = f"""<div class="wrap hero">
   <div>
@@ -194,7 +219,7 @@ def home(lang):
   <div class="art">{norm_real_svg()}<p class="legend"><span>{u['norm']}</span><span>{u['real']}</span></p></div>
 </div>
 <div class="wrap"><dl class="stats rv">
-  <div><dt>{len(PUBLICATIONS)}</dt><dd>{u['n_studies']}</dd></div><div><dt>{total_pages}</dt><dd>{u['n_pages']}</dd></div><div><dt>{len(FICHES)}</dt><dd>{u['n_fiches']}</dd></div><div><dt>{n_videos}</dt><dd>{u['n_videos']}</dd></div>
+  <div><dt>{len(PUBLICATIONS)}</dt><dd>{u['n_studies']}</dd></div><div><dt>{total_pages}</dt><dd>{u['n_pages']}</dd></div><div><dt>{len(FICHES) + len(FICHES_FR)}</dt><dd>{u['n_fiches']}</dd></div><div><dt>{n_videos}</dt><dd>{u['n_videos']}</dd></div>
 </dl></div>
 
 <section id="axes"><div class="wrap">
@@ -224,7 +249,7 @@ def home(lang):
 
 <section id="fiches"><div class="wrap" data-library>
   <div class="head"><p class="label">{k(4, u['f_k'])}</p><div><h2>{u['f_h']}</h2><p class="intro">{e(u['f_p'])}</p><p class="small">{e(u['f_note'])}</p>
-  <p class="dl"><a class="chip fill" href="{r}telechargements/qanoun-clair-pack-1.pdf" download>{e(u['f_pack'])}</a></p></div></div>
+  <p class="dl"><a class="chip fill" href="{r}telechargements/qanoun-clair-pack-1.pdf" download>{e(u['f_pack_ma'])}</a><a class="chip fill" href="{r}telechargements/droit-clair-france.pdf" download>{e(u['f_pack_fr'])}</a></p></div></div>
   <div class="toolbar"><input class="search" type="search" placeholder="{e(u['f_search'])}" aria-label="{e(u['f_search'])}"><div class="filters">{ffilters}</div></div>
   <div class="fgrid">{fcards}
   </div>
@@ -234,13 +259,15 @@ def home(lang):
     <p class="dl"><button class="chip fill" type="button" data-show>{e(u['quiz_show'])}</button><button class="chip" type="button" data-next>{e(u['quiz_next'])}</button><a class="chip" data-link href="#" hidden>{e(u['quiz_link'])}</a></p></div>
     <script type="application/json">{json.dumps({"fiche": u["f_fiche"], "items": quiz}, ensure_ascii=False).replace("<", "\\u003c")}</script>
   </div>
-  <p class="small" style="margin-top:18px">{e(u['f_updated'])} {e(u['f_disc'])}</p>
+  <p class="small" style="margin-top:18px">{e(u['f_updated'])} {e(u['f_updated_fr'])} {e(u['f_disc'])}</p>
 </div></section>
+
+{lex_teaser(lang, r)}
 
 {videos_teaser(lang, r)}
 
 <section id="parcours"><div class="wrap">
-  <div class="head"><p class="label">{k(6, u['par_k'])}</p><h2>{u['par_h']}</h2></div>
+  <div class="head"><p class="label">{k(7, u['par_k'])}</p><h2>{u['par_h']}</h2></div>
   <div class="about rv"><figure><img src="{r}assets/portrait.jpg" alt="{AUTHOR}" width="700" height="700" loading="lazy"></figure>
   <div><p class="role">{e(u['role'])}</p><p>{e(BIO[lang])}</p>
   <p class="dl"><a class="chip" href="https://orcid.org/{ORCID}" rel="me">{u['orcid']} · {ORCID}</a><a class="chip" href="{r}assets/portrait.jpg" download="hafid-boutchakkoucht.jpg">{u['portrait']}</a><a class="chip" href="{MAIN_SITE}">Cross Borders ↗</a></p></div></div>
@@ -252,7 +279,7 @@ def home(lang):
 </div></section>
 
 <section id="contact"><div class="wrap">
-  <div class="head"><p class="label">{k(7, u['contact_k'])}</p><div><h2>{u['contact_h']}</h2><p class="intro">{u['contact_p']} <a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>
+  <div class="head"><p class="label">{k(8, u['contact_k'])}</p><div><h2>{u['contact_h']}</h2><p class="intro">{u['contact_p']} <a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>
 </div></section>"""
     page(lang, HOME[lang], HOME, f"{SITE_TITLE[lang]} — {AUTHOR}", BIO[lang][:158].rsplit(" ", 1)[0] + "…", body,
          head_extra=f'<script type="application/ld+json">{json.dumps(person, ensure_ascii=False)}</script>')
@@ -275,7 +302,7 @@ def videos_teaser(lang, r):
     n_series = sum(1 for rb in RUBRIQUES for s in rb["series"] if s["items"])
     rubs = "".join(f'<li><a href="{r}{VID_DIR[lang]}/#{rb["id"]}">{e(rb["name"][lang])}</a></li>' for rb in RUBRIQUES)
     return f"""<section id="videos"><div class="wrap">
-  <div class="head"><p class="label">05 · {strip_no(v['home_k'])}</p><div><h2>{v['home_h']}</h2><p class="intro">{e(v['home_p'])}</p></div></div>
+  <div class="head"><p class="label">06 · {strip_no(v['home_k'])}</p><div><h2>{v['home_h']}</h2><p class="intro">{e(v['home_p'])}</p></div></div>
   <div class="vteaser rv">
     <a class="vfilm" href="{r}{FILM_URL}{'?lang=ar' if lang == 'ar' else ''}"><img src="{r}media/videos/posters/film-interactif.jpg" alt="" width="1032" height="580" loading="lazy"><span class="vplay" aria-hidden="true"></span><span class="vcap"><span class="label">{v['featured']}</span><strong>{e(v['film_h'])}</strong></span></a>
     <div><ul class="vrubs">{rubs}</ul><p class="small">{count_videos()} {v['count_v']} · {n_series} {v['n_series']}</p><p class="dl"><a class="chip fill" href="{r}{VID_DIR[lang]}/">{v['home_b']}</a></p></div>
@@ -405,6 +432,9 @@ def fiche_page(f, prev, nxt):
         blocks += f'<h2 class="sec">{e(f["off_label"] or u["fp_text"])}</h2><blockquote class="official">{e(f["off_text"])}</blockquote>'
     blocks += f'<h2 class="sec">{u["fp_case"]}</h2><p>{e(f["cas"])}</p><h2 class="sec">{u["fp_trap"]}</h2><p class="trap">{e(f["piege"])}</p>'
     blocks += f'<h2 class="sec">{u["fp_test"]}</h2><div class="qcard"><p class="qq">{e(f["q"])}</p><details><summary>{u["quiz_show"]}</summary><p class="qr">{e(f["r"])}</p></details></div>'
+    fr = FR_BY_N.get(f["n"])
+    if fr:
+        blocks += f'<h2 class="sec">{FR_UI["cross_ma"]}</h2><p class="cross">{e(fr["croise"])} <a href="{root}fiches-france/{fr["slug"]}/">{FR_UI["cross_b_ma"]} →</a></p>'
     blocks += f'<h2 class="sec">{u["fp_source"]}</h2><p class="small">{e(f["source"].replace("Source vérifiable :", "").strip())}</p>'
     ld = {"@context": "https://schema.org", "@type": "LearningResource", "name": f["title"], "alternateName": f["ar"], "inLanguage": ["fr", "ar"], "learningResourceType": "Fiche de révision",
           "about": "Droit pénal marocain", "url": f"{SITE}/{path}/", "image": f"{SITE}/fiches/img/fiche-{f['n']:02d}.webp", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Qanoun Clair"},
@@ -424,6 +454,162 @@ def fiche_page(f, prev, nxt):
 </div>"""
     page("fr", path, HOME, f"{f['title']} — Qanoun Clair, fiche {f['n']:02d} · {AUTHOR}", (f["off_text"] or f["cas"])[:155].rsplit(" ", 1)[0] + "…", body,
          head_extra=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>', alternates=False)
+
+
+def sheet_fr(f, tag="h2"):
+    """La fiche française, composée en HTML (écran et impression)."""
+    return f"""<article class="sheet-fr">
+    <header><p class="label">{FR_UI['serie']} · {UI['fr']['f_fiche']} {f['n']:02d} / {len(FICHES_FR)} · {e(f['part'])}</p><{tag}>{e(f['title'])}</{tag}><p class="far" lang="ar" dir="rtl">{e(f['ar'])}</p></header>
+    <h3>{FR_UI['rules']}</h3><ol>{''.join(f'<li>{e(x)}</li>' for x in f['regles'])}</ol>
+    <h3>{FR_UI['figures']}</h3><dl>{''.join(f'<div><dt>{e(a)}</dt><dd>{e(b)}</dd></div>' for a, b in f['chiffres'])}</dl>
+  </article>"""
+
+
+def fiche_fr_page(f, prev, nxt):
+    u = UI["fr"]
+    path = f"fiches-france/{f['slug']}"
+    root = "../../"
+    ma = MA_BY_N.get(f["n"])
+    blocks = f'<h2 class="sec">{e(f["off_label"])}</h2><blockquote class="official">{e(f["off_text"])}</blockquote>'
+    blocks += f'<h2 class="sec">{u["fp_case"]}</h2><p>{e(f["cas"])}</p><h2 class="sec">{u["fp_trap"]}</h2><p class="trap">{e(f["piege"])}</p>'
+    blocks += f'<h2 class="sec">{u["fp_test"]}</h2><div class="qcard"><p class="qq">{e(f["q"])}</p><details><summary>{u["quiz_show"]}</summary><p class="qr">{e(f["r"])}</p></details></div>'
+    if ma:
+        blocks += f'<h2 class="sec">{FR_UI["cross"]}</h2><p class="cross">{e(f["croise"])} <a href="{root}fiches/{ma["slug"]}/">{FR_UI["cross_b"]} →</a></p>'
+    blocks += f'<h2 class="sec">{u["fp_source"]}</h2><p class="small">{e(f["source"].replace("Source vérifiable :", "").strip())}</p>'
+    ld = {"@context": "https://schema.org", "@type": "LearningResource", "name": f["title"], "alternateName": f["ar"], "inLanguage": "fr", "learningResourceType": "Fiche de révision",
+          "about": "Droit pénal français", "url": f"{SITE}/{path}/", "isPartOf": {"@type": "CreativeWorkSeries", "name": FR_UI["serie"]}, "author": {"@type": "Person", "name": AUTHOR, "url": SITE + "/"}}
+    body = f"""<div class="wrap article fiche">
+  <p class="label"><a href="{root}#fiches">{u['fp_back']}</a> · {FR_UI['serie']} · {u['f_fiche']} {f['n']:02d} / {len(FICHES_FR)} · {e(f['part'])}</p>
+  <h1>{e(f['title'])}</h1>
+  <p class="far-title" lang="ar" dir="rtl">{e(f['ar'])}</p>
+  <ul class="kw">{''.join(f'<li>{e(x)}</li>' for x in f['pills'])}</ul>
+  <p class="dl"><a class="chip fill" href="{root}telechargements/droit-clair-france.pdf" download>{FR_UI['pack']}</a><button class="chip" type="button" data-print>{FR_UI['print']}</button></p>
+  <div class="cols fiche-cols">
+    {sheet_fr(f)}
+    <aside class="body">{blocks}</aside>
+  </div>
+  <p class="small">{e(u['f_disc'])}</p>
+  <nav class="pager" aria-label="Fiches"><a href="../{prev['slug']}/"><span class="label">{u['fp_prev']}</span><strong>{prev['n']:02d} · {e(prev['title'])}</strong></a><a href="../{nxt['slug']}/"><span class="label">{u['fp_next']}</span><strong>{nxt['n']:02d} · {e(nxt['title'])}</strong></a></nav>
+</div>"""
+    page("fr", path, HOME, f"{f['title']} — {FR_UI['serie']}, fiche {f['n']:02d} · {AUTHOR}", f["off_text"][:155].rsplit(" ", 1)[0] + "…", body,
+         head_extra=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>', alternates=False)
+
+
+def print_fr():
+    """Document A4 autonome (une fiche par page) servant à produire le PDF."""
+    u = UI["fr"]
+    pages = "".join(f"""<section class="pg">{sheet_fr(f)}
+  <div class="two"><div><h3>{e(f['off_label'])}</h3><blockquote>{e(f['off_text'])}</blockquote><h3>{u['fp_case']}</h3><p>{e(f['cas'])}</p></div>
+  <div><h3>{u['fp_trap']}</h3><p class="trap">{e(f['piege'])}</p><h3>{u['fp_test']}</h3><p><b>{e(f['q'])}</b><br>→ {e(f['r'])}</p><h3>{FR_UI['cross']}</h3><p>{e(f['croise'])}</p></div></div>
+  <footer>{e(f['source'])} · {AUTHOR} · {SITE.replace('https://', '')}</footer></section>""" for f in FICHES_FR)
+    toc = "".join(f"<li><span>{f['n']:02d}</span>{e(f['title'])}</li>" for f in FICHES_FR)
+    css = """@page{size:A4;margin:0}*{box-sizing:border-box}body{margin:0;font:10.4pt/1.42 Georgia,'Times New Roman',serif;color:#1B1A17}
+.pg{width:210mm;height:297mm;padding:15mm 16mm 12mm;page-break-after:always;position:relative;overflow:hidden;background:#FFFDF8}
+.label{font:700 7.6pt Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#7A1F2B;margin:0 0 3mm}
+h1{font-size:34pt;font-weight:500;line-height:1.08;margin:0}h1 em{color:#7A1F2B}h2{font-size:19pt;font-weight:500;line-height:1.15;margin:0}
+.far{font:700 13pt 'Noto Naskh Arabic','Noto Sans Arabic',serif;color:#B8862B;margin:1.5mm 0 0}
+.sheet-fr header{border-bottom:2px solid #7A1F2B;padding-bottom:4mm;margin-bottom:4mm}
+h3{font:700 7.8pt Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#7A1F2B;margin:4.5mm 0 1.6mm}
+ol{margin:0;padding:0;list-style:none;counter-reset:r}ol li{counter-increment:r;padding:1.3mm 0 1.3mm 9mm;position:relative;border-bottom:.3pt solid #1B1A1722}
+ol li::before{content:counter(r);position:absolute;left:0;top:.4mm;font-size:15pt;font-style:italic;color:#B8862B}
+dl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(40mm,1fr));gap:2mm}dl div{background:#F1EADB;padding:2.4mm 3mm}dt{font:700 7.4pt Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#5F5A50}dd{margin:.6mm 0 0;font-size:10.6pt}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:7mm}blockquote{margin:0;padding:2.4mm 3.4mm;border-left:2.4pt solid #7A1F2B;background:#F6F2EA;font-style:italic}p{margin:0}
+.trap{border-left:2.4pt solid #B8862B;padding-left:3mm}footer{position:absolute;left:16mm;right:16mm;bottom:8mm;font:6.6pt/1.35 Arial,sans-serif;color:#5F5A50;border-top:.3pt solid #1B1A1733;padding-top:1.6mm}
+.cover{display:flex;flex-direction:column;justify-content:center}.cover ol{margin-top:10mm;columns:2;column-gap:10mm}.cover li{border:0;padding:1mm 0 1mm 9mm;break-inside:avoid}.cover li span{position:absolute;left:0;color:#B8862B;font-style:italic}.cover li::before{content:none}
+.lead{font-size:13pt;color:#5F5A50;margin-top:6mm;max-width:150mm}"""
+    doc = f"""<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>{FR_UI['serie']} — {AUTHOR}</title><style>{css}</style></head><body>
+<section class="pg cover"><p class="label">{FR_UI['serie']} · {AUTHOR}</p><h1>{FR_UI['h']}</h1><p class="lead">Douze fiches d’une page, en miroir des fiches Qanoun Clair consacrées au droit pénal marocain : règles, repères chiffrés, texte officiel, cas pratique, piège, test et regard croisé.</p><ol>{toc}</ol>
+<footer>{e(FR_SOURCE)} · {SITE.replace('https://', '')}</footer></section>{pages}</body></html>"""
+    write("outils/droit-clair-france-impression.html", doc)
+
+
+def star_xy(tid, i):
+    h = zlib.crc32(tid.encode())
+    col, row = i % 3, i // 3
+    return 78 + col * 122 + (h % 25 - 12), 52 + row * 106 + (col % 2) * 24 + ((h >> 8) % 21 - 10)
+
+
+def star_label(s):
+    if len(s) <= 14 or " " not in s:
+        return [s]
+    cuts = [i for i, c in enumerate(s) if c == " "]
+    c = min(cuts, key=lambda i: abs(i - len(s) / 2))
+    return [s[:c], s[c + 1:]]
+
+
+def lex_data():
+    out = {}
+    for di, (dk, _) in enumerate(LX.DOMAINS):
+        for tid, names, defs, links in LX.TERMS[dk]:
+            out[tid] = {"d": di, "t": names, "x": defs, "l": links}
+    for tid, v in out.items():
+        for l in v["l"]:
+            assert l in out, (tid, l)
+    return out
+
+
+def lex_teaser(lang, r):
+    T = LX.TXT
+    li = LANGS.index(lang)
+    sample = "".join(f'<a class="wstar d{di}" href="{r}{LX.L_DIR[lang]}/#t-{tid}">{e(names[li])}</a>' for di, (dk, _) in enumerate(LX.DOMAINS) for tid, names, _d, _l in LX.TERMS[dk][:4])
+    n = sum(len(v) for v in LX.TERMS.values())
+    return f"""<section id="lexique"><div class="wrap">
+  <div class="head"><p class="label">05 · {e(T['home_k'][lang])}</p><div><h2>{T['home_h'][lang]}</h2><p class="intro">{e(T['home_p'][lang])}</p></div></div>
+  <div class="lex-teaser rv"><div class="wcloud">{sample}</div>
+  <div class="lt-foot"><p>{n} {e(T['count'][lang])} · {len(LX.DOMAINS)} {e(T['domains'][lang])} · {len(LANGS)} {e(T['langs'][lang])}</p><a class="chip fill" href="{r}{LX.L_DIR[lang]}/">{e(T['home_b'][lang])}</a></div></div>
+</div></section>"""
+
+
+def lex_page(lang):
+    T, li, data = LX.TXT, LANGS.index(lang), lex_data()
+    x = lambda key: T[key][lang]
+    deg = {k: len(v["l"]) + sum(1 for o in data.values() if k in o["l"]) for k, v in data.items()}
+    skies = ""
+    for di, (dk, dname) in enumerate(LX.DOMAINS):
+        pos = {tid: star_xy(tid, i) for i, (tid, *_r) in enumerate(LX.TERMS[dk])}
+        seen, lines, stars = set(), "", ""
+        for tid, names, _d, links in LX.TERMS[dk]:
+            for l in links:
+                if l in pos and (l, tid) not in seen:
+                    seen.add((tid, l))
+                    lines += f'<line x1="{pos[tid][0]}" y1="{pos[tid][1]}" x2="{pos[l][0]}" y2="{pos[l][1]}" data-a="{tid}" data-b="{l}"/>'
+        for tid, names, _d, links in LX.TERMS[dk]:
+            px, py = pos[tid]
+            lab = "".join(f'<tspan x="{px}" dy="{0 if j == 0 else 14}">{e(s)}</tspan>' for j, s in enumerate(star_label(names[li])))
+            stars += f'<a class="star" href="#t-{tid}" data-star="{tid}" data-text="{e(" ".join(names).lower())}"><circle class="hit" cx="{px}" cy="{py + 8}" r="30"/><circle class="s" cx="{px}" cy="{py}" r="{3.2 + min(deg[tid], 8) * 0.55:.1f}" style="animation-delay:{(zlib.crc32(tid.encode()) % 40) / 10}s"/><text x="{px}" y="{py + 22}" text-anchor="middle">{lab}</text></a>'
+        skies += f"""<figure class="sky d{di}" id="{dk}"><figcaption><span>{di + 1:02d}</span><h2>{e(dname[lang])}</h2><small>{len(LX.TERMS[dk])} {e(x('count'))}</small></figcaption>
+    <svg viewBox="0 0 400 480" role="group" aria-label="{e(dname[lang])}"><g class="links">{lines}</g>{stars}</svg></figure>"""
+    order = sorted(data.items(), key=lambda kv: kv[1]["t"][li].lower().replace("é", "e").replace("É", "e"))
+    index = "".join(f"""<div class="lex-item" id="t-{tid}" data-item data-text="{e(' '.join(v['t']).lower())}"><dt><button type="button" data-open="{tid}">{e(v['t'][li])}</button><span class="tag d{v['d']}">{e(LX.DOMAINS[v['d']][1][lang])}</span></dt>
+    <dd><p>{e(v['x'][li])}</p><p class="eq">{' · '.join(f'<span lang="{l}" dir="{"rtl" if l in RTL else "ltr"}">{e(v["t"][j])}</span>' for j, l in enumerate(LANGS) if l != lang)}</p></dd></div>""" for tid, v in order)
+    tabs = "".join(f'<button type="button" data-lg="{l}" aria-pressed="{"true" if l == lang else "false"}" lang="{l}">{UI[l]["lang_name"]}</button>' for l in LANGS)
+    payload = json.dumps({"lang": lang, "langs": LANGS, "domains": [[d[1][l] for l in LANGS] for d in LX.DOMAINS], "terms": data}, ensure_ascii=False).replace("<", "\\u003c")
+    body = f"""<div class="wrap article lex" data-lex>
+  <p class="label">{e(x('kicker'))}</p>
+  <h1>{x('h1')}</h1>
+  <p class="lead">{e(x('lead'))}</p>
+  <div class="toolbar lex-tools"><input class="search" type="search" placeholder="{e(x('search'))}" aria-label="{e(x('search'))}"><div class="filters">{''.join(f'<a class="f d{di}" href="#{dk}">{e(dn[lang])}</a>' for di, (dk, dn) in enumerate(LX.DOMAINS))}<button class="f" type="button" data-random>✦ {e(x('random'))}</button></div></div>
+  <div class="skies">{skies}</div>
+  <div class="head lex-head"><p class="label">{e(x('index'))}</p><div><p class="intro">{e(x('index_p'))}</p></div></div>
+  <dl class="lex-index">{index}</dl>
+  <p class="empty" hidden>{e(x('none'))}</p>
+  <p class="small">{e(x('note'))}</p>
+  <div class="lex-sheet" hidden role="dialog" aria-modal="false" aria-labelledby="ls-term" tabindex="-1">
+    <div class="ls-top"><span class="tag ls-dom"></span><div class="ls-tabs" role="group">{tabs}</div><button class="ls-close" type="button" aria-label="{e(x('close'))}">×</button></div>
+    <h2 id="ls-term"></h2><p class="ls-def"></p><p class="eq ls-eq"></p>
+    <p class="label">{e(x('see'))}</p><div class="ls-see"></div>
+  </div>
+  <script type="application/json">{payload}</script>
+</div>"""
+    ld = {"@context": "https://schema.org", "@type": "DefinedTermSet", "name": f"{strip_tags(x('h1'))} — {AUTHOR}", "inLanguage": lang, "url": f"{SITE}/{LX.L_DIR[lang]}/",
+          "hasDefinedTerm": [{"@type": "DefinedTerm", "name": v["t"][li], "description": v["x"][li]} for _k, v in order]}
+    page(lang, LX.L_DIR[lang], LX.L_DIR, f"{strip_tags(x('h1'))} — {AUTHOR} · {SITE_TITLE[lang]}", x("lead")[:155].rsplit(" ", 1)[0] + "…", body,
+         head_extra=f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>')
+
+
+def strip_tags(s):
+    import re
+    return re.sub(r"<[^>]+>", "", s)
 
 
 def survey_cta(lang, r):
@@ -487,7 +673,12 @@ def survey_page(lang):
 for i, f in enumerate(FICHES):
     fiche_page(f, FICHES[i - 1], FICHES[(i + 1) % len(FICHES)])
 
+for i, f in enumerate(FICHES_FR):
+    fiche_fr_page(f, FICHES_FR[i - 1], FICHES_FR[(i + 1) % len(FICHES_FR)])
+print_fr()
+
 for lang in LANGS:
+    lex_page(lang)
     survey_page(lang)
     videos_page(lang)
     home(lang)
@@ -508,7 +699,7 @@ for p in PUBLICATIONS:
 write("CNAME", SITE.replace("https://", "") + "\n")
 write(".nojekyll", "")
 write("assets/icon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#7A1F2B"/><path d="M10 20h18c8 0 10-6 16-6s6 6 10 6M10 32h18c8 0 10 7 16 7s6-7 10-7M10 44h18c8 0 10-6 16-6s6 6 10 6" fill="none" stroke="#F6F2EA" stroke-width="3.2" stroke-linecap="round"/></svg>\n')
-urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS] + [f"{SITE}/fiches/{f['slug']}/" for f in FICHES] + ([f"{SITE}/{QZ.Q_DIR[l]}/" for l in LANGS] if QZ.ENDPOINT else [])
+urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS] + [f"{SITE}/fiches/{f['slug']}/" for f in FICHES] + [f"{SITE}/fiches-france/{f['slug']}/" for f in FICHES_FR] + [f"{SITE}/{LX.L_DIR[l]}/" for l in LANGS] + ([f"{SITE}/{QZ.Q_DIR[l]}/" for l in LANGS] if QZ.ENDPOINT else [])
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{x}</loc></url>\n" for x in urls) + "</urlset>\n")
 write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 entries = "".join(f"""  <entry><title>{e(p['title']['fr'])}</title><link href="{SITE}/publications/{p['slug']}/"/><id>{SITE}/publications/{p['slug']}/</id><updated>{p['date'] if len(p['date']) > 4 else p['date'] + '-01-01'}T00:00:00Z</updated><summary>{e(p['comment']['fr'])}</summary></entry>\n""" for p in PUBLICATIONS)

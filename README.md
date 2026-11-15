@@ -34,6 +34,8 @@ Ajouter une vidéo : déposer le MP4 dans `media/videos/<série>/` et son affich
 | Quoi | Où |
 | --- | --- |
 | Recherches sur les jeunesses, travaux en cours, parcours, libellés des fiches (4 langues) | `sections.py` |
+| Fiches de droit pénal français « Droit Clair · France » (12 fiches, regard croisé Maroc) | `fiches_fr.py` |
+| Lexique « La constellation des mots » (48 notions, 4 langues) | `lexique.py` |
 | Questionnaire « Jeunesses et engagement » (questions, adresse de collecte) | `questionnaire.py` |
 | Contenu des 12 fiches Qanoun Clair | `fiches.json`, images dans `fiches/img/` |
 

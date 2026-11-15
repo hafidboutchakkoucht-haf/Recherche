@@ -70,6 +70,51 @@
       } catch (e2) { err.hidden = false; btn.disabled = false; btn.textContent = label; }
     });
   });
+  // Impression d'une fiche
+  d.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => print()));
+  // Lexique : constellation, fiche de définition, recherche
+  d.querySelectorAll('[data-lex]').forEach(box => {
+    const data = JSON.parse(box.querySelector(':scope > script').textContent), LG = data.langs, home = LG.indexOf(data.lang);
+    const sheet = box.querySelector('.lex-sheet'), skies = box.querySelector('.skies'), stars = [...box.querySelectorAll('[data-star]')], lines = [...box.querySelectorAll('.links line')], items = [...box.querySelectorAll('[data-item]')];
+    const h = sheet.querySelector('h2'), def = sheet.querySelector('.ls-def'), eq = sheet.querySelector('.ls-eq'), dom = sheet.querySelector('.ls-dom'), see = sheet.querySelector('.ls-see'), tabs = [...sheet.querySelectorAll('[data-lg]')];
+    const nrm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    let cur = null, lg = data.lang;
+    const draw = () => {
+      const t = data.terms[cur], i = LG.indexOf(lg), dir = lg === 'ar' ? 'rtl' : 'ltr';
+      dom.textContent = data.domains[t.d][home]; dom.className = 'tag ls-dom d' + t.d;
+      [h, def].forEach(el => { el.lang = lg; el.dir = dir; });
+      h.textContent = t.t[i]; def.textContent = t.x[i];
+      eq.textContent = t.t.filter((_, k) => k !== i).join(' · ');
+      tabs.forEach(b => b.setAttribute('aria-pressed', b.dataset.lg === lg));
+      see.textContent = '';
+      t.l.forEach(id => { const b = d.createElement('button'); b.type = 'button'; b.className = 'd' + data.terms[id].d; b.textContent = data.terms[id].t[i]; b.addEventListener('click', () => open(id, true)); see.appendChild(b); });
+    };
+    const open = (id, scroll) => {
+      if (!data.terms[id]) return;
+      cur = id; sheet.hidden = false; draw(); skies.classList.add('has-on');
+      const rel = data.terms[id].l;
+      stars.forEach(s => { s.classList.toggle('on', s.dataset.star === id); s.classList.toggle('rel', rel.includes(s.dataset.star)); });
+      lines.forEach(l => l.classList.toggle('on', l.dataset.a === id || l.dataset.b === id));
+      if (scroll) { const s = box.querySelector(`[data-star="${id}"]`); if (s) s.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+      try { history.replaceState(null, '', '#t-' + id); } catch (e) {}
+    };
+    const close = () => { sheet.hidden = true; cur = null; skies.classList.remove('has-on'); stars.forEach(s => s.classList.remove('on', 'rel')); lines.forEach(l => l.classList.remove('on')); };
+    stars.forEach(s => s.addEventListener('click', ev => { ev.preventDefault(); open(s.dataset.star); }));
+    box.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => open(b.dataset.open, true)));
+    tabs.forEach(b => b.addEventListener('click', () => { lg = b.dataset.lg; draw(); }));
+    sheet.querySelector('.ls-close').addEventListener('click', close);
+    d.addEventListener('keydown', ev => { if (ev.key === 'Escape' && !sheet.hidden) close(); });
+    const rnd = box.querySelector('[data-random]'), ids = Object.keys(data.terms);
+    if (rnd) rnd.addEventListener('click', () => open(ids[Math.floor(Math.random() * ids.length)], true));
+    const search = box.querySelector('.search'), empty = box.querySelector('.empty');
+    if (search) search.addEventListener('input', () => {
+      const q = nrm(search.value.trim()); let n = 0;
+      stars.forEach(s => s.classList.toggle('dim', !!q && !nrm(s.dataset.text).includes(q)));
+      items.forEach(it => { const ok = !q || nrm(it.dataset.text + ' ' + it.textContent).includes(q); it.hidden = !ok; if (ok) n++; });
+      if (empty) empty.hidden = n > 0;
+    });
+    if (location.hash.startsWith('#t-')) open(location.hash.slice(3), true);
+  });
   // Copier la référence
   d.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
     const t = d.querySelector(b.dataset.copy).innerText, label = b.textContent;
