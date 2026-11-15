@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>La guerre des blocus</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Film interactif en six chapitres sur la guerre Iran–États-Unis, avec l'analyse de Hafid Boutchakkoucht, chercheur en relations internationales, scène par scène.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -579,7 +578,7 @@ function panel(){const p=LINE[pos],t=T[lang],n=noteFor(p);
 function setTab(id){["note","talk","src"].forEach(k=>{$("tab-"+k).setAttribute("aria-selected",k===id);$("pane-"+k).hidden=k!==id})}
 ["note","talk","src"].forEach(k=>$("tab-"+k).onclick=()=>setTab(k));
 
-/* ---------- comments: claude.ai store, or the site's PHP endpoint ---------- */
+/* ---------- comments: the site's PHP endpoint ---------- */
 let COMS=[],cmode="off",db=null,usr=null,names={};
 function renderComments(){const k=key(LINE[pos]),t=T[lang];const list=COMS.filter(c=>c.k===k).sort((a,b)=>a.at-b.at);
   $("ccount").textContent=list.length;const box=$("clist");
@@ -587,12 +586,6 @@ function renderComments(){const k=key(LINE[pos]),t=T[lang];const list=COMS.filte
   $("cform").hidden=false;$("c-name").hidden=cmode==="db";
   box.innerHTML=list.length?list.map(c=>`<div class="cm"><div class="h"><b>${esc(c.uid?(names[c.uid]||t.anon):(c.name||t.anon))}</b><span>${new Date(c.at).toLocaleDateString(lang==="ar"?"ar-MA":"fr-FR",{day:"numeric",month:"long"})}</span></div><p>${esc(c.text)}</p></div>`).join(""):`<p class="muted">${esc(t.noCom)}</p>`}
 async function initComments(){
-  if(window.claude&&window.claude.use){try{db=await window.claude.use("db");usr=await window.claude.use("user")}catch(e){db=null}
-    if(db){cmode="db";const timer=setTimeout(()=>{if(!COMS.length){$("c-status").textContent=T[lang].loadErr;$("c-status").className="status err"}},10000);
-      db.collection("comments").orderBy("at","asc").limit(800).onSnapshot(async snap=>{clearTimeout(timer);if(!snap.metadata||!snap.metadata.fromCache){$("c-status").textContent=""}
-        COMS=snap.docs.map(d=>d.data());const ids=[...new Set(COMS.map(c=>c.uid).filter(Boolean))];
-        if(usr&&ids.length){try{const ps=await usr.profiles(ids);ids.forEach(i=>names[i]=(ps[i]&&ps[i].name)||"")}catch(e){}}renderComments()},
-        e=>{clearTimeout(timer);$("c-status").textContent=T[lang].loadErr;$("c-status").className="status err"});renderComments();return}}
   if(COMMENTS_ENDPOINT&&location.protocol.startsWith("http")){try{const r=await fetch(COMMENTS_ENDPOINT,{headers:{Accept:"application/json"}});if(!r.ok)throw 0;const j=await r.json();COMS=Array.isArray(j)?j:[];cmode="rest"}catch(e){cmode="off"}}
   renderComments()}
 $("c-text").addEventListener("focus",()=>pause());
