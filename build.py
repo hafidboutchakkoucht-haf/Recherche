@@ -231,6 +231,7 @@ def home(lang):
   <div class="head"><p class="label">{k(2, u['doc_k'])}</p><div><h2>{u['doc_h']}</h2><p class="sub big-sub">{e(u['doc_sub'])}</p><p class="intro">{e(u['doc_p'])}</p></div></div>
   <div class="axes three">{''.join(f'<article class="rv"><b>{['I', 'II', 'III'][i]}</b><h3>{e(t)}</h3><p>{e(d)}</p></article>' for i, (t, d) in enumerate(u['doc_cards']))}</div>
   <ul class="kw">{''.join(f'<li>{e(x)}</li>' for x in u['doc_kw'])}</ul>
+  {jeunesses_affiche(lang, r)}
   {survey_cta(lang, r)}
 </div></section>
 
@@ -285,12 +286,48 @@ def home(lang):
          head_extra=f'<script type="application/ld+json">{json.dumps(person, ensure_ascii=False)}</script>')
 
 
+JV = {"fr": dict(watch="Voir les épisodes", study="Lire l'étude", survey="Répondre à l'enquête", series="Voir la série", film="La série en un film (16:9)"),
+      "en": dict(watch="Watch the episodes", study="Read the study", survey="Take the survey", series="Watch the series", film="The series as one film (16:9)"),
+      "es": dict(watch="Ver los episodios", study="Leer el estudio", survey="Responder a la encuesta", series="Ver la serie", film="La serie en una película (16:9)"),
+      "ar": dict(watch="شاهد الحلقات", study="اقرأ الدراسة", survey="شارك في الاستبيان", series="شاهد السلسلة", film="السلسلة في فيلم واحد (16:9)")}
+
+
+def featured_series():
+    for rb in RUBRIQUES:
+        for s in rb["series"]:
+            if s.get("feature"):
+                return rb, s
+    return None, None
+
+
+def jeunesses_affiche(lang, r):
+    """Affiche de la série vidéo, mise en avant sur l'accueil."""
+    rb, s = featured_series()
+    if not s:
+        return ""
+    f, v, j = s["feature"], UI_V[lang], JV[lang]
+    pl = "ar" if lang == "ar" else "fr"
+    href = f"{r}{VID_DIR[lang]}/#{rb['id']}"
+    return f"""<div class="vfeature jaffiche rv">
+    <a class="vfilm" href="{href}"><img src="{r}media/videos/posters/{f['poster'].format(lang=pl)}" alt="{e(f['h'][lang])}" width="1920" height="1080" loading="lazy"><span class="vplay" aria-hidden="true"></span></a>
+    <div><p class="label">{e(f['kicker'][lang])}</p><h3>{e(f['h'][lang])}</h3><p>{e(s['about'][lang])}</p>
+    <p class="dl"><a class="chip fill" href="{href}">{j['series']}</a><a class="chip" href="{r}{PUB_DIR[lang]}/{f['study']}/">{j['study']}</a></p></div>
+  </div>"""
+
+
+def series_chip(lang, p, root):
+    rb, s = featured_series()
+    if not s or s["feature"].get("study") != p["slug"]:
+        return ""
+    return f'<a class="chip" href="{root}{VID_DIR[lang]}/#{rb["id"]}">{JV[lang]["series"]}</a>'
+
+
 def count_videos():
     n = 0
     for rb in RUBRIQUES:
         for s in rb["series"]:
             n += len(s["items"]) * len(s.get("langs", []))
-    return n + 1  # + le film 16:9
+    return n + 1 + sum(len(s.get('langs', [])) for rb in RUBRIQUES for s in rb['series'] if s.get('feature'))  # + films 16:9
 
 
 def vfile(s, lang, n):
@@ -347,9 +384,18 @@ def videos_page(lang):
                     cards.append(f"""<article class="vcard" data-l="{l}"{'' if l == show else ' hidden'}><video controls playsinline preload="none" poster="{root}media/videos/posters/{f}.jpg" aria-label="{e(title[l])}"><source src="{src}" type="video/mp4"></video>
         <p class="label">{num.rstrip(' · ') if num else v['special']}</p><h4 lang="{l}" dir="{'rtl' if l == 'ar' else 'ltr'}">{e(title[l])}</h4><p class="small"><a href="{src}" download>{v['download']}</a></p></article>""")
             data = f'<p class="small">{v["data_note"]} : {e(s["data"][lang])}</p>' if s.get("data") else ""
+            feat = ""
+            if s.get("feature"):
+                ft, j = s["feature"], JV[lang]
+                for l in langs:
+                    fsrc = f"{root}media/videos/{s['dir']}/{ft['film'].format(lang=l)}"
+                    feat += f"""<div class="vwide jfeat" data-l="{l}"{'' if l == show else ' hidden'}><video controls playsinline preload="none" poster="{root}media/videos/posters/{ft['poster'].format(lang=l)}" aria-label="{e(ft['h'][l])}"><source src="{fsrc}" type="video/mp4"></video>
+        <div><p class="label">{e(ft['kicker'][lang])}</p><h3 lang="{l}" dir="{'rtl' if l == 'ar' else 'ltr'}">{e(ft['h'][l])}</h3><p>{e(ft['p'][lang])}</p>
+        <p class="dl"><a class="chip fill" href="#ep-{s['id']}">{j['watch']}</a><a class="chip" href="{root}{PUB_DIR[lang]}/{ft['study']}/">{j['study']}</a><a class="chip" href="{root}enquete/#repondre">{j['survey']}</a></p>
+        <p class="small">{j['film']} · <a href="{fsrc}" download>{v['download']}</a></p></div></div>"""
             blocks.append(f"""<div class="vseries" data-series>
       <div class="vs-head"><div><h3>{e(s['title'][lang])}</h3><p>{e(s['about'][lang])}</p>{data}</div>{toggle}</div>
-      <div class="vgrid">{''.join(cards)}</div></div>""")
+      {feat}<div class="vgrid" id="ep-{s['id']}">{''.join(cards)}</div></div>""")
         secs.append(f"""<section id="{rb['id']}"><div class="wrap">
   <div class="head"><p class="label">{i + 1:02d} · {e(rb['name'][lang])}</p><div><h2>{e(rb['name'][lang])}</h2><p class="intro">{e(rb['intro'][lang])}</p></div></div>
   {film if rb.get('film') else ''}
@@ -386,7 +432,7 @@ def publication(lang, p, nxt):
   <p class="label"><a href="{root}{HOME[lang] + '/' if HOME[lang] else ''}#bibliotheque">{u['back']}</a> · {e(p['type'][lang])} · {e(TOPICS[p['topic']][lang])}</p>
   <h1>{e(p['title'][lang])}</h1>
   <p class="sub">{e(p['subtitle'][lang])}</p>
-  <p class="dl"><a class="chip fill" href="{pdf}" download>{u['pdf']} · {p['pages']} {u['pages']}</a><a class="chip" href="#lecteur">{u['reader']}</a><a class="chip" href="#citer">{u['cite']}</a></p>
+  <p class="dl"><a class="chip fill" href="{pdf}" download>{u['pdf']} · {p['pages']} {u['pages']}</a><a class="chip" href="#lecteur">{u['reader']}</a><a class="chip" href="#citer">{u['cite']}</a>{series_chip(lang, p, root)}</p>
   <dl class="facts"><div><dt>{u['author']}</dt><dd>{AUTHOR}</dd></div><div><dt>{u['published']}</dt><dd>{e(p['date_txt'][lang])}</dd></div><div><dt>{u['nature']}</dt><dd>{e(p['type'][lang])}</dd></div><div><dt>{u['language']}</dt><dd>{e(p['lang_note'][lang])}</dd></div><div class="wide"><dt>{u['approach']}</dt><dd>{e(p['strap'][lang])}</dd></div></dl>
 
   <h2 class="sec">{u['keyfig']}</h2>

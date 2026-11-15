@@ -61,8 +61,39 @@ UKRAINE = [
     ("6", t4("Où va la guerre ?", "Where is the war heading?", "¿Hacia dónde va la guerra?", "الحرب إلى أين")),
 ]
 
+JEUNESSES = [
+    ("1", t4("La même colère, quatre destins", "The same anger, four outcomes", "La misma ira, cuatro destinos", "الغضب نفسه... والمصائر أربعة")),
+    ("2", t4("France : tout part des lycées", "France: it all starts in the lycées", "Francia: todo empieza en los liceos", "فرنسا: البداية من الثانويات")),
+    ("3", t4("Albanie : l'école contre la corruption", "Albania: schools against corruption", "Albania: la escuela contra la corrupción", "ألبانيا: المدرسة في مواجهة الفساد")),
+    ("4", t4("Serbie : de la rue aux urnes", "Serbia: from the street to the ballot box", "Serbia: de la calle a las urnas", "صربيا: من الشارع إلى الصناديق")),
+    ("5", t4("Maroc : GenZ 212, d'Agadir au pays", "Morocco: GenZ 212, from Agadir to the whole country", "Marruecos: GenZ 212, de Agadir a todo el país", "المغرب: جيل Z 212، من أكادير إلى البلاد")),
+    ("6", t4("Maroc : ce que disent vraiment les chiffres", "Morocco: what the figures really say", "Marruecos: lo que dicen de verdad las cifras", "المغرب: ماذا تقول الأرقام حقًا؟")),
+    ("7", t4("Le test des résultats", "The test of results", "La prueba de los resultados", "امتحان النتائج")),
+]
+
 # Chaque série : id, titre, présentation, langues disponibles (fr/ar), date des données, dossier, épisodes.
 RUBRIQUES = [
+    {"id": "jeunesses", "name": t4("Jeunesses et action publique", "Youth and public action", "Juventudes y acción pública", "الشباب والفعل العمومي"),
+     "intro": t4("Comment les États répondent à leur jeunesse : mobilisations, réponses publiques et résultats, de l'Europe au Maroc.",
+                 "How states respond to their young people: mobilisations, public responses and results, from Europe to Morocco.",
+                 "Cómo responden los Estados a su juventud: movilizaciones, respuestas públicas y resultados, de Europa a Marruecos.",
+                 "كيف تستجيب الدول لشبابها: التعبئة، والاستجابة العمومية، والنتائج، من أوروبا إلى المغرب."),
+     "series": [
+        {"id": "jeunesses", "title": t4("Jeunesses en mouvement · Europe et Maroc", "Youth on the move · Europe and Morocco", "Juventudes en movimiento · Europa y Marruecos", "شباب في حراك · أوروبا والمغرب"),
+         "about": t4("Série documentaire en sept épisodes. Une même colère générationnelle, quatre réponses publiques : la France, l'Albanie, la Serbie et le Maroc, entre 2025 et 2026. Chaque épisode part des causes de la mobilisation, examine la réponse de l'État et s'achève sur ce qu'elle a produit.",
+                     "A seven-part documentary series. One generational anger, four public responses: France, Albania, Serbia and Morocco, in 2025–2026. Each episode starts from the causes of the mobilisation, examines the state's response and ends with what it produced.",
+                     "Serie documental en siete episodios. Una misma ira generacional, cuatro respuestas públicas: Francia, Albania, Serbia y Marruecos, entre 2025 y 2026. Cada episodio parte de las causas de la movilización, examina la respuesta del Estado y termina con lo que produjo.",
+                     "سلسلة وثائقية في سبع حلقات. غضب جيلي واحد وأربع استجابات عمومية: فرنسا وألبانيا وصربيا والمغرب، بين 2025 و2026. تنطلق كل حلقة من أسباب التعبئة، وتفحص استجابة الدولة، وتنتهي بما أسفرت عنه."),
+         "data": None, "langs": ["fr", "ar"], "dir": "jeunesses", "file": "jeunesses-{lang}-{n}", "items": JEUNESSES,
+         "feature": {"poster": "affiche-jeunesses-{lang}.jpg", "film": "film-jeunesses-{lang}.mp4",
+                     "kicker": t4("Série documentaire · 7 épisodes", "Documentary series · 7 episodes", "Serie documental · 7 episodios", "سلسلة وثائقية · 7 حلقات"),
+                     "h": t4("Jeunesses en mouvement", "Youth on the move", "Juventudes en movimiento", "شباب في حراك"),
+                     "p": t4("Revendiquer, négocier, réprimer ou transformer la politique : quatre pays, une même question. La série intégrale en un film de 6 min 53, en français et en arabe.",
+                             "Protest, negotiate, repress or transform politics: four countries, one question. The full series as a 6 min 53 film, in French and Arabic.",
+                             "Reivindicar, negociar, reprimir o transformar la política: cuatro países, una misma pregunta. La serie completa en una película de 6 min 53, en francés y en árabe.",
+                             "المطالبة أو التفاوض أو القمع أو تغيير السياسة: أربعة بلدان وسؤال واحد. السلسلة كاملة في فيلم مدته 6 دقائق و53 ثانية، بالفرنسية والعربية."),
+                     "study": "partir-rester-se-faire-entendre"}},
+     ]},
     {"id": "geopolitique", "name": t4("Géopolitique et conflits", "Geopolitics and conflict", "Geopolítica y conflictos", "الجيوسياسة والنزاعات"),
      "intro": t4("Les guerres en cours lues par les chiffres, les cartes et les rapports de force.", "Ongoing wars read through figures, maps and the balance of power.",
                  "Las guerras en curso leídas a través de cifras, mapas y relaciones de fuerza.", "الحروب الجارية بقراءة الأرقام والخرائط وموازين القوى."),
@@ -103,7 +134,6 @@ RUBRIQUES = [
                  "Los libros que explican el mundo y las generaciones que lo transforman.", "الكتب التي تفسّر العالم والأجيال التي تغيّره."),
      "series": [
         {"id": "bibliotheque", "title": t4("La bibliothèque géopolitique", "The geopolitical library", "La biblioteca geopolítica", "المكتبة الجيوسياسية"), "items": []},
-        {"id": "jeunesses", "title": t4("Jeunesses en mouvement · Europe et Maroc", "Youth on the move · Europe and Morocco", "Juventudes en movimiento · Europa y Marruecos", "شباب في حراك · أوروبا والمغرب"), "items": []},
      ]},
     {"id": "europe", "name": t4("Europe et jeunesse", "Europe and youth", "Europa y juventud", "أوروبا والشباب"),
      "intro": t4("Les dispositifs européens expliqués simplement, pour les jeunes et les associations.", "European programmes explained simply, for young people and associations.",
