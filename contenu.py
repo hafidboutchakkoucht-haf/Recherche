@@ -24,9 +24,47 @@ AXES = [
 TOPICS = {
     "droit": {"fr": "Droit pénal", "en": "Criminal law"},
     "politiques": {"fr": "Politiques publiques", "en": "Public policy"},
+    "jeunesses": {"fr": "Jeunesses", "en": "Youth"},
 }
 
 PUBLICATIONS = [
+    {
+        "slug": "partir-rester-se-faire-entendre", "topic": "jeunesses", "year": "2026", "date": "2026-11-15", "pages": 19,
+        "pdf": "boutchakkoucht-2026-partir-rester-se-faire-entendre.pdf", "lang_note": {"fr": "Texte en français", "en": "Full text in French"},
+        "date_txt": {"fr": "15 novembre 2026", "en": "15 November 2026"},
+        "type": {"fr": "Étude de cadrage scientifique", "en": "Scientific scoping study"},
+        "title": {"fr": "Partir, rester ou se faire entendre", "en": "Leave, Stay or Be Heard"},
+        "subtitle": {"fr": "Jeunesses marocaines entre mobilité et mobilisation, Maroc — Europe, 2011–2026", "en": "Moroccan youth between mobility and mobilisation, Morocco — Europe, 2011–2026"},
+        "strap": {"fr": "Sociologie des migrations, sociologie des mobilisations et économie politique de la défection", "en": "Sociology of migration, sociology of mobilisation and the political economy of exit"},
+        "abstract": {
+            "fr": "La jeunesse marocaine dispose de trois réponses à un horizon jugé bouché : partir, se faire entendre ou se retirer. Les années 2025 et 2026 ont rendu ces trois réponses visibles en même temps : une intention d’émigrer en hausse, la mobilisation GenZ 212, puis la participation électorale la plus faible depuis 2007. Cette étude les analyse comme les trois faces d’un même rapport à l’avenir. Elle établit l’état des connaissances à partir des sources institutionnelles les plus récentes, propose un modèle articulant la théorie des aspirations et capacités migratoires et la triade exit–voice–loyalty d’Albert O. Hirschman, formule huit hypothèses testables et décrit le dispositif d’enquête comparative Maroc–Europe destiné à les éprouver.",
+            "en": "Moroccan youth have three possible responses to a future they see as blocked: leave, speak up or withdraw. In 2025 and 2026 all three became visible at once: a rising intention to emigrate, the GenZ 212 mobilisation and the lowest electoral turnout since 2007. This study treats them as three sides of the same relationship to the future. It reviews the latest institutional evidence, proposes a model combining the aspirations–capabilities theory of migration with Albert O. Hirschman’s exit–voice–loyalty framework, sets out eight testable hypotheses and describes the comparative Morocco–Europe survey designed to test them."},
+        "comment": {
+            "fr": "Cette étude refuse de traiter séparément ceux qui partent et ceux qui protestent. Elle part d’une intuition d’Albert O. Hirschman : la défection et la prise de parole peuvent se renforcer au lieu de s’exclure. Appliquée aux jeunes Marocains de 2025–2026, cette grille éclaire à la fois l’envie de partir, la mobilisation GenZ 212 et le recul de la participation électorale.",
+            "en": "This study refuses to treat those who leave and those who protest as separate groups. It starts from an insight by Albert O. Hirschman: exit and voice can reinforce rather than exclude each other. Applied to young Moroccans in 2025–2026, this lens sheds light on the wish to leave, the GenZ 212 mobilisation and falling electoral turnout alike."},
+        "points": {
+            "fr": ["Au troisième trimestre 2026, le chômage des 15–24 ans atteint 30,5 %, près de trois fois la moyenne nationale ; 2,9 millions de jeunes de 15 à 29 ans ne sont ni en emploi, ni en études, ni en formation.",
+                   "64 % des 18–35 ans ont envisagé d’émigrer, dont 28 % « beaucoup » ; l’Europe reste la destination préférée.",
+                   "GenZ 212 a placé la santé, l’éducation et la lutte contre la corruption au cœur des revendications ; la participation aux législatives de 2026 est pourtant tombée à 38,08 %.",
+                   "Un modèle à quatre profils (partir, s’engager, les deux, ni l’un ni l’autre), huit hypothèses testables et une enquête comparative Maroc–Europe auprès des 18–35 ans."],
+            "en": ["In the third quarter of 2026, unemployment among 15–24-year-olds reached 30.5%, nearly three times the national average; 2.9 million people aged 15–29 are not in employment, education or training.",
+                   "64% of 18–35-year-olds have considered emigrating, 28% “a lot”; Europe remains the preferred destination.",
+                   "GenZ 212 put health, education and the fight against corruption at the heart of its demands; yet turnout in the 2026 legislative elections fell to 38.08%.",
+                   "A four-profile model (leave, engage, both, neither), eight testable hypotheses and a comparative Morocco–Europe survey of 18–35-year-olds."]},
+        "readers": {"fr": "Chercheurs en science politique, en sociologie et en études migratoires, décideurs publics, acteurs de la jeunesse et de la coopération euro-méditerranéenne.",
+                    "en": "Researchers in political science, sociology and migration studies, policy-makers, youth organisations and actors in Euro-Mediterranean cooperation."},
+        "figures": [("30,5 %", {"fr": "chômage des 15–24 ans au Maroc, 3e trimestre 2026", "en": "unemployment among 15–24-year-olds in Morocco, Q3 2026"}),
+                    ("64 %", {"fr": "des 18–35 ans ont envisagé d’émigrer", "en": "of 18–35-year-olds have considered emigrating"}),
+                    ("42", {"fr": "notes renvoyant aux sources", "en": "numbered source notes"}),
+                    ("8", {"fr": "hypothèses testables", "en": "testable hypotheses"})],
+        "outline": {
+            "fr": ['Statut de l’étude et règles de preuve', 'Problématique et questions de recherche', 'Cadre conceptuel', 'État de l’art critique', 'Diagnostic : une jeunesse tenue à l’écart du travail', 'Aspirations migratoires', 'Mobilisations : GenZ 212 et les jeunesses européennes', 'L’Europe comme horizon', 'Les réponses publiques et leur réception', 'Modèle analytique et hypothèses', 'Dispositif d’enquête', 'Contributions et programme de publications', 'Recommandations aux décideurs', 'Limites et conditions de validité'],
+            "en": ['Status of the study and rules of evidence', 'Research problem and questions', 'Conceptual framework', 'Critical literature review', 'Diagnosis: a youth kept away from work', 'Migration aspirations', 'Mobilisations: GenZ 212 and European youth', 'Europe as a horizon', 'Public responses and how they are received', 'Analytical model and hypotheses', 'Survey design', 'Contributions and publication plan', 'Recommendations for policy-makers', 'Limitations and conditions of validity']},
+        "keywords": {"fr": ["jeunesse", "Maroc", "Europe", "migrations", "mobilisations", "GenZ 212", "Hirschman", "confiance institutionnelle", "participation électorale"],
+                     "en": ["youth", "Morocco", "Europe", "migration", "mobilisation", "GenZ 212", "Hirschman", "institutional trust", "electoral turnout"]},
+        "cite_title": "Partir, rester ou se faire entendre. Jeunesses marocaines entre mobilité et mobilisation, Maroc — Europe, 2011–2026",
+        "cite_tail": {"fr": "Étude de cadrage scientifique, version 1.0, 15 novembre 2026.", "en": "Scientific scoping study, version 1.0, 15 November 2026."},
+    },
     {
         "slug": "ingenierie-des-promesses", "topic": "politiques", "year": "2026", "date": "2026-10-02", "pages": 41,
         "pdf": "boutchakkoucht-2026-ingenierie-des-promesses.pdf", "lang_note": {"fr": "Texte en français", "en": "Full text in French"},

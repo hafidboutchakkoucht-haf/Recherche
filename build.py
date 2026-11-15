@@ -613,11 +613,14 @@ def strip_tags(s):
 
 
 def survey_cta(lang, r):
-    """Encart d'appel au questionnaire (affiché seulement quand la collecte est ouverte)."""
-    if not QZ.ENDPOINT:
-        return ""
-    T = QZ.TXT
-    return f"""<aside class="recueil survey-cta rv"><div><p class="label">{e(T['cta_k'][lang])}</p><h3>{e(T['cta_h'][lang])}</h3><p>{e(T['cta_p'][lang])}</p></div><a class="chip fill" href="{r}{QZ.Q_DIR[lang]}/">{e(T['cta_b'][lang])}</a></aside>"""
+    """Encart d'appel à l'enquête « Partir, rester ou se faire entendre » (dossier enquete/)."""
+    T = {
+        "fr": ("Enquête en cours", "Vous avez entre 18 et 35 ans ?", "Vingt minutes, de façon anonyme : dites ce que vous vivez, ce que vous attendez des responsables publics et comment vous voyez votre avenir, au Maroc ou en Europe.", "Répondre à l’enquête", "Résultats et étude"),
+        "en": ("Survey in progress", "Are you between 18 and 35?", "Twenty minutes, anonymous, in French: tell us what you experience, what you expect from public authorities and how you see your future, in Morocco or in Europe.", "Take the survey", "Results and study"),
+        "es": ("Encuesta en curso", "¿Tienes entre 18 y 35 años?", "Veinte minutos, de forma anónima y en francés: cuenta lo que vives, lo que esperas de los responsables públicos y cómo ves tu futuro, en Marruecos o en Europa.", "Responder a la encuesta", "Resultados y estudio"),
+        "ar": ("استطلاع جارٍ", "هل عمرك بين 18 و35 سنة؟", "عشرون دقيقة، دون ذكر الهوية وباللغة الفرنسية: أخبرنا بما تعيشه، وبما تنتظره من المسؤولين العموميين، وكيف ترى مستقبلك، في المغرب أو في أوروبا.", "المشاركة في الاستطلاع", "النتائج والدراسة"),
+    }[lang]
+    return f"""<aside class="recueil survey-cta rv"><div><p class="label">{e(T[0])}</p><h3>{e(T[1])}</h3><p>{e(T[2])}</p></div><p class="dl"><a class="chip fill" href="{r}enquete/#repondre">{e(T[3])}</a><a class="chip" href="{r}enquete/#resultats">{e(T[4])}</a></p></aside>"""
 
 
 def survey_page(lang):
@@ -689,7 +692,7 @@ for lang in LANGS:
 for p in PUBLICATIONS:
     key = f"boutchakkoucht{p['year']}{p['slug'].split('-')[0]}"
     kind = "book" if p["type"]["fr"] == "Traité" else "techreport"
-    extra = "  publisher = {Hafid Boutchakkoucht},\n" if kind == "book" else "  type = {Note d'analyse stratégique},\n  institution = {Hafid Boutchakkoucht},\n"
+    extra = "  publisher = {Hafid Boutchakkoucht},\n" if kind == "book" else f"  type = {{{p['type']['fr']}}},\n  institution = {{Hafid Boutchakkoucht}},\n"
     write(f"telechargements/{p['slug']}.bib", f"@{kind}{{{key},\n  author = {{Boutchakkoucht, Hafid}},\n  title = {{{p['cite_title']}}},\n  year = {{{p['year']}}},\n{extra}  language = {{french}},\n  url = {{{SITE}/publications/{p['slug']}/}},\n  note = {{ORCID {ORCID}}}\n}}\n")
     ris = ["TY  - " + ("BOOK" if kind == "book" else "RPRT"), "AU  - Boutchakkoucht, Hafid", f"TI  - {p['cite_title']}", f"PY  - {p['year']}", f"DA  - {p['date'].replace('-', '/')}", "LA  - fr",
            f"AB  - {p['abstract']['fr']}"] + [f"KW  - {k}" for k in p["keywords"]["fr"]] + [f"UR  - {SITE}/publications/{p['slug']}/", f"L1  - {SITE}/telechargements/{p['pdf']}", "ER  - "]
@@ -699,7 +702,7 @@ for p in PUBLICATIONS:
 write("CNAME", SITE.replace("https://", "") + "\n")
 write(".nojekyll", "")
 write("assets/icon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#7A1F2B"/><path d="M10 20h18c8 0 10-6 16-6s6 6 10 6M10 32h18c8 0 10 7 16 7s6-7 10-7M10 44h18c8 0 10-6 16-6s6 6 10 6" fill="none" stroke="#F6F2EA" stroke-width="3.2" stroke-linecap="round"/></svg>\n')
-urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS] + [f"{SITE}/fiches/{f['slug']}/" for f in FICHES] + [f"{SITE}/fiches-france/{f['slug']}/" for f in FICHES_FR] + [f"{SITE}/{LX.L_DIR[l]}/" for l in LANGS] + ([f"{SITE}/{QZ.Q_DIR[l]}/" for l in LANGS] if QZ.ENDPOINT else [])
+urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS] + [f"{SITE}/fiches/{f['slug']}/" for f in FICHES] + [f"{SITE}/fiches-france/{f['slug']}/" for f in FICHES_FR] + [f"{SITE}/{LX.L_DIR[l]}/" for l in LANGS] + [f"{SITE}/enquete/"] + ([f"{SITE}/{QZ.Q_DIR[l]}/" for l in LANGS] if QZ.ENDPOINT else [])
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{x}</loc></url>\n" for x in urls) + "</urlset>\n")
 write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 entries = "".join(f"""  <entry><title>{e(p['title']['fr'])}</title><link href="{SITE}/publications/{p['slug']}/"/><id>{SITE}/publications/{p['slug']}/</id><updated>{p['date'] if len(p['date']) > 4 else p['date'] + '-01-01'}T00:00:00Z</updated><summary>{e(p['comment']['fr'])}</summary></entry>\n""" for p in PUBLICATIONS)

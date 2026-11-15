@@ -18,6 +18,7 @@ AXES = [
 TOPICS = {
     "droit": {"es": "Derecho penal", "ar": "القانون الجنائي"},
     "politiques": {"es": "Políticas públicas", "ar": "السياسات العمومية"},
+    "jeunesses": {"es": "Juventudes", "ar": "الشباب"},
 }
 
 DISCLAIMER = {
@@ -26,6 +27,39 @@ DISCLAIMER = {
 }
 
 PUBS = {
+    "partir-rester-se-faire-entendre": {
+        "lang_note": {"es": "Texto en francés", "ar": "النص الكامل بالفرنسية"},
+        "date_txt": {"es": "15 de noviembre de 2026", "ar": "15 نونبر 2026"},
+        "type": {"es": "Estudio científico de encuadre", "ar": "دراسة علمية تأطيرية"},
+        "title": {"es": "Irse, quedarse o hacerse oír", "ar": "الرحيل أو البقاء أو إسماع الصوت"},
+        "subtitle": {"es": "Juventudes marroquíes entre movilidad y movilización, Marruecos — Europa, 2011–2026", "ar": "الشباب المغربي بين الهجرة والتعبئة، المغرب — أوروبا، 2011–2026"},
+        "strap": {"es": "Sociología de las migraciones, sociología de las movilizaciones y economía política de la salida", "ar": "سوسيولوجيا الهجرة، وسوسيولوجيا التعبئة، والاقتصاد السياسي للانسحاب"},
+        "abstract": {
+            "es": "La juventud marroquí dispone de tres respuestas ante un horizonte que percibe cerrado: irse, hacerse oír o retirarse. En 2025 y 2026 las tres se hicieron visibles a la vez: una intención de emigrar en aumento, la movilización GenZ 212 y la participación electoral más baja desde 2007. Este estudio las analiza como tres caras de una misma relación con el futuro. Establece el estado de los conocimientos a partir de las fuentes institucionales más recientes, propone un modelo que articula la teoría de las aspiraciones y capacidades migratorias con la tríada salida–voz–lealtad de Albert O. Hirschman, formula ocho hipótesis contrastables y describe la encuesta comparada Marruecos–Europa destinada a ponerlas a prueba.",
+            "ar": "أمام أفق يراه مسدودًا، يملك الشباب المغربي ثلاث استجابات: الرحيل، أو إسماع الصوت، أو الانسحاب. وقد برزت الاستجابات الثلاث معًا خلال سنتي 2025 و2026: تزايد نية الهجرة، وتعبئة جيل Z 212، ثم أضعف مشاركة انتخابية منذ 2007. تتناول هذه الدراسة هذه الاستجابات بوصفها ثلاثة أوجه لعلاقة واحدة بالمستقبل. فهي ترسم حالة المعرفة انطلاقًا من أحدث المصادر المؤسساتية، وتقترح نموذجًا يجمع بين نظرية تطلعات الهجرة وقدراتها وثلاثية «الخروج والصوت والولاء» لألبرت أو. هيرشمان، وتصوغ ثماني فرضيات قابلة للاختبار، وتعرض تصميم استطلاع مقارن بين المغرب وأوروبا لاختبارها."},
+        "comment": {
+            "es": "Este estudio se niega a tratar por separado a quienes se van y a quienes protestan. Parte de una intuición de Albert O. Hirschman: la salida y la voz pueden reforzarse en lugar de excluirse. Aplicada a los jóvenes marroquíes de 2025–2026, esta lectura ilumina a la vez el deseo de irse, la movilización GenZ 212 y el retroceso de la participación electoral.",
+            "ar": "ترفض هذه الدراسة الفصل بين من يرحلون ومن يحتجون. فهي تنطلق من حدس لألبرت أو. هيرشمان: الخروج وإسماع الصوت قد يعزز أحدهما الآخر بدل أن يُقصيه. وحين تُطبَّق هذه القراءة على الشباب المغربي في 2025–2026، فإنها تضيء في آن واحد الرغبة في الرحيل، وتعبئة جيل Z 212، وتراجع المشاركة الانتخابية."},
+        "points": {
+            "es": ["En el tercer trimestre de 2026, el desempleo de los jóvenes de 15 a 24 años alcanza el 30,5 %, casi el triple de la media nacional; 2,9 millones de jóvenes de 15 a 29 años no estudian, no trabajan ni se forman.",
+                   "El 64 % de los jóvenes de 18 a 35 años ha pensado en emigrar, el 28 % «mucho»; Europa sigue siendo el destino preferido.",
+                   "GenZ 212 situó la salud, la educación y la lucha contra la corrupción en el centro de sus reivindicaciones; sin embargo, la participación en las legislativas de 2026 cayó al 38,08 %.",
+                   "Un modelo de cuatro perfiles (irse, comprometerse, ambas cosas, ninguna), ocho hipótesis contrastables y una encuesta comparada Marruecos–Europa entre jóvenes de 18 a 35 años."],
+            "ar": ["في الربع الثالث من 2026، بلغت البطالة في صفوف الفئة 15–24 سنة 30,5 %، أي ما يقارب ثلاثة أضعاف المعدل الوطني؛ و2,9 مليون شاب من الفئة 15–29 سنة لا يعملون ولا يدرسون ولا يتابعون تكوينًا.",
+                   "64 % من الفئة 18–35 سنة فكروا في الهجرة، منهم 28 % «كثيرًا»؛ وتظل أوروبا الوجهة المفضلة.",
+                   "وضع جيل Z 212 الصحة والتعليم ومحاربة الفساد في صلب مطالبه؛ ومع ذلك تراجعت المشاركة في الانتخابات التشريعية لسنة 2026 إلى 38,08 %.",
+                   "نموذج من أربعة أنماط (الرحيل، الالتزام، الاثنان معًا، لا هذا ولا ذاك)، وثماني فرضيات قابلة للاختبار، واستطلاع مقارن بين المغرب وأوروبا لدى الفئة 18–35 سنة."]},
+        "readers": {"es": "Investigadores en ciencia política, sociología y estudios migratorios, responsables públicos, organizaciones juveniles y actores de la cooperación euromediterránea.",
+                    "ar": "الباحثون في العلوم السياسية وعلم الاجتماع ودراسات الهجرة، وصناع القرار العمومي، والفاعلون في مجال الشباب والتعاون الأورومتوسطي."},
+        "figures": [{"es": "desempleo de los jóvenes de 15 a 24 años en Marruecos, 3.er trimestre de 2026", "ar": "بطالة الفئة 15–24 سنة بالمغرب، الربع الثالث 2026"},
+                    {"es": "de los jóvenes de 18 a 35 años ha pensado en emigrar", "ar": "من الفئة 18–35 سنة فكروا في الهجرة"},
+                    {"es": "notas numeradas que remiten a las fuentes", "ar": "إحالة مرقّمة إلى المصادر"},
+                    {"es": "hipótesis contrastables", "ar": "فرضيات قابلة للاختبار"}],
+        "outline": {"es": ['Estatuto del estudio y reglas de prueba', 'Problemática y preguntas de investigación', 'Marco conceptual', 'Estado de la cuestión crítico', 'Diagnóstico: una juventud apartada del trabajo', 'Aspiraciones migratorias', 'Movilizaciones: GenZ 212 y las juventudes europeas', 'Europa como horizonte', 'Las respuestas públicas y su recepción', 'Modelo analítico e hipótesis', 'Diseño de la encuesta', 'Contribuciones y programa de publicaciones', 'Recomendaciones para los responsables públicos', 'Límites y condiciones de validez'], "ar": ['وضع الدراسة وقواعد الإثبات', 'الإشكالية وأسئلة البحث', 'الإطار المفاهيمي', 'مراجعة نقدية للأدبيات', 'التشخيص: شباب على هامش سوق الشغل', 'تطلعات الهجرة', 'التعبئات: جيل Z 212 والشباب الأوروبي', 'أوروبا أفقًا', 'الاستجابات العمومية وتلقيها', 'النموذج التحليلي والفرضيات', 'تصميم الاستطلاع', 'الإسهامات وبرنامج النشر', 'توصيات لصناع القرار', 'حدود الدراسة وشروط صلاحيتها']},
+        "keywords": {"es": ["juventud", "Marruecos", "Europa", "migraciones", "movilizaciones", "GenZ 212", "Hirschman", "confianza institucional", "participación electoral"],
+                     "ar": ["الشباب", "المغرب", "أوروبا", "الهجرة", "التعبئة", "جيل Z 212", "هيرشمان", "الثقة المؤسساتية", "المشاركة الانتخابية"]},
+        "cite_tail": {"es": "Estudio científico de encuadre, versión 1.0, 15 de noviembre de 2026.", "ar": "دراسة علمية تأطيرية، الإصدار 1.0، 15 نونبر 2026."},
+    },
     "ingenierie-des-promesses": {
         "lang_note": {"es": "Texto en francés", "ar": "النص الكامل بالفرنسية"},
         "date_txt": {"es": "2 de octubre de 2026", "ar": "2 أكتوبر 2026"},
