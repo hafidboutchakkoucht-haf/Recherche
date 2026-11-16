@@ -25,7 +25,7 @@ UI = {
                back="← Bibliothèque", author="Auteur", published="Parution", nature="Nature", approach="Approche", language="Langue",
                keyfig="L’étude en chiffres", keyfig_n="Chiffres tirés de l’étude.", takeaways="Ce qu’il faut retenir", readers="À qui s’adresse ce texte", abstract="Résumé", abstract_other="Abstract (English)",
                outline="Plan de l’étude", keywords="Mots-clés", cite="Citer cette étude", copy="Copier la référence", copied="Référence copiée", reader="Lire en ligne", reader_n="Si le lecteur ne s’affiche pas sur votre appareil, utilisez le bouton de téléchargement.",
-               write="Écrire à l’auteur", next="Autre étude", rights="Tous droits réservés. Les textes peuvent être cités avec mention de l’auteur et de la source. Site sans cookie ni traceur.", series="Série Erasmus+ décrypté · en français"),
+               write="Écrire à l’auteur", next="Autre étude", rights="Tous droits réservés. Les textes peuvent être cités avec mention de l’auteur et de la source. Site sans cookie ; mesure d’audience anonyme.", series="Série Erasmus+ décrypté · en français"),
     "en": dict(axes="Research", library="Library", about="About", contact="Contact", skip="Skip to content", theme="Toggle light or dark theme", other="Lire en français",
                kicker="Research notebook · Studies and publications", lead="What borders do to law, and what political programmes become when they have to be implemented.",
                cta1="Explore the library", cta2="Download the collection", role="Researcher in comparative criminal law and criminal sciences",
@@ -40,7 +40,7 @@ UI = {
                back="← Library", author="Author", published="Published", nature="Type", approach="Approach", language="Language",
                keyfig="The study in figures", keyfig_n="Figures taken from the study.", takeaways="Key takeaways", readers="Who this text is for", abstract="Abstract", abstract_other="Résumé (français)",
                outline="Outline", keywords="Keywords", cite="Cite this study", copy="Copy the reference", copied="Reference copied", reader="Read online", reader_n="If the reader does not display on your device, use the download button.",
-               write="Write to the author", next="Another study", rights="All rights reserved. Texts may be quoted with attribution to the author and source. No cookies, no trackers.", series="Erasmus+ décrypté series · in French"),
+               write="Write to the author", next="Another study", rights="All rights reserved. Texts may be quoted with attribution to the author and source. No cookies; anonymous audience measurement.", series="Erasmus+ décrypté series · in French"),
 }
 PUB_DIR = {"fr": "publications", "en": "en/publications", "es": "es/publicaciones", "ar": "ar/publications"}
 HOME = {"fr": "", "en": "en", "es": "es", "ar": "ar"}
@@ -157,6 +157,7 @@ def page(lang, path, alt_paths, title, desc, body, head_extra="", alternates=Tru
   <p>© {AUTHOR}. {u['rights']}</p>
 </div></footer>
 <script src="{root}assets/app.js" defer></script>
+<script data-goatcounter="https://hafid.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
 """

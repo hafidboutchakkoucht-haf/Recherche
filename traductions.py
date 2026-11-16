@@ -148,7 +148,7 @@ UI = {
                keyfig="El estudio en cifras", keyfig_n="Cifras tomadas del estudio.", takeaways="Lo esencial", readers="A quién se dirige este texto", abstract="Resumen", abstract_other="Resumen original (francés)",
                abstract_note="Traducción del resumen del autor.",
                outline="Índice del estudio", keywords="Palabras clave", cite="Citar este estudio", copy="Copiar la referencia", copied="Referencia copiada", reader="Leer en línea", reader_n="Si el lector no se muestra en su dispositivo, utilice el botón de descarga.",
-               write="Escribir al autor", next="Otro estudio", rights="Todos los derechos reservados. Los textos pueden citarse mencionando al autor y la fuente. Sitio sin cookies ni rastreadores.", series="",
+               write="Escribir al autor", next="Otro estudio", rights="Todos los derechos reservados. Los textos pueden citarse mencionando al autor y la fuente. Sitio sin cookies; medición de audiencia anónima.", series="",
                title_html="La norma <em>y lo real</em>", norm="la norma", real="lo real", lang_label="ES", lang_name="Español"),
     "ar": dict(axes="المحاور", library="المكتبة", about="نبذة", contact="اتصال", skip="انتقل إلى المحتوى", theme="تبديل المظهر الفاتح أو الداكن",
                kicker="دفتر بحث · دراسات ومنشورات", lead="ما تفعله الحدود بالقانون، وما تؤول إليه البرامج السياسية حين يحين وقت تنفيذها.",
@@ -165,7 +165,7 @@ UI = {
                keyfig="الدراسة بالأرقام", keyfig_n="أرقام مأخوذة من الدراسة.", takeaways="أهم الخلاصات", readers="لمن هذا النص", abstract="ملخص", abstract_other="الملخص الأصلي (بالفرنسية)",
                abstract_note="ترجمة لملخص المؤلف.",
                outline="تصميم الدراسة", keywords="كلمات مفتاحية", cite="الاستشهاد بهذه الدراسة", copy="نسخ المرجع", copied="تم نسخ المرجع", reader="القراءة على الموقع", reader_n="إذا لم يظهر القارئ على جهازك، استعمل زر التحميل.",
-               write="مراسلة المؤلف", next="دراسة أخرى", rights="جميع الحقوق محفوظة. يمكن الاستشهاد بالنصوص مع ذكر المؤلف والمصدر. موقع بلا ملفات تعريف ارتباط ولا أدوات تتبّع.", series="",
+               write="مراسلة المؤلف", next="دراسة أخرى", rights="جميع الحقوق محفوظة. يمكن الاستشهاد بالنصوص مع ذكر المؤلف والمصدر. موقع بلا ملفات تعريف ارتباط؛ قياس مجهول لعدد الزيارات.", series="",
                title_html="القاعدة <em>والواقع</em>", norm="القاعدة", real="الواقع", lang_label="ع", lang_name="العربية"),
 }
 UI_EXTRA = {
