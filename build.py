@@ -106,7 +106,7 @@ def write(path, content):
         f.write(content)
 
 
-def page(lang, path, alt_paths, title, desc, body, head_extra="", alternates=True):
+def page(lang, path, alt_paths, title, desc, body, head_extra="", alternates=True, og_type="website", og_image="assets/og.png"):
     u = UI[lang]
     depth = len([s for s in path.split("/") if s])
     root = "../" * depth
@@ -127,12 +127,14 @@ def page(lang, path, alt_paths, title, desc, body, head_extra="", alternates=Tru
 {"".join(f'<link rel="alternate" hreflang="{l}" href="{alts[l]}">' + chr(10) for l in LANGS).rstrip() if alternates else ""}
 {f'<link rel="alternate" hreflang="x-default" href="{alts["fr"]}">' if alternates else ""}
 <link rel="alternate" type="application/atom+xml" title="{e(SITE_TITLE['fr'])}" href="{SITE}/feed.xml">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="{e(SITE_TITLE[lang])}">
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{SITE}/assets/og.png">
+<meta property="og:image" content="{SITE}/{og_image}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#7A1F2B">
 <link rel="icon" href="{root}assets/icon.svg" type="image/svg+xml">
@@ -273,11 +275,12 @@ def home(lang):
   <div class="about rv"><figure><img src="{r}assets/portrait.jpg" alt="{AUTHOR}" width="700" height="700" loading="lazy"></figure>
   <div><p class="role">{e(u['role'])}</p><p>{e(BIO[lang])}</p>
   <p class="dl"><a class="chip" href="https://orcid.org/{ORCID}" rel="me">{u['orcid']} · {ORCID}</a><a class="chip" href="{r}assets/portrait.jpg" download="hafid-boutchakkoucht.jpg">{u['portrait']}</a><a class="chip" href="{MAIN_SITE}">Cross Borders ↗</a></p></div></div>
-  <div class="axes four">{''.join(f'<article class="rv"><b>{i + 1}</b><h3>{e(t)}</h3><p>{e(d)}</p></article>' for i, (t, d) in enumerate(u['par_cards']))}</div>
+  <div class="axes three">{''.join(f'<article class="rv"><b>{i + 1}</b><h3>{e(t)}</h3><p>{e(d)}</p></article>' for i, (t, d) in enumerate(u['par_cards'][:3]))}</div>
   <div class="cv rv">
-    <div><p class="label">{e(u['edu_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(t)}</strong><br>{e(d)}</p>' for t, d in u['edu'])}<p class="label" style="margin-top:1.6em">{e(u['mandate_k'])}</p><p class="cvl"><strong>{e(u['mandate'][0])}</strong><br>{e(u['mandate'][1])}</p><p class="label" style="margin-top:1.6em">{e(u['lang_k'])}</p><p class="cvl">{e(u['langs'])}</p></div>
-    <div><p class="label">{e(u['val_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(t)}</strong><br>{e(d)}</p>' for t, d in u['vals'])}</div>
+    <div><p class="label">{e(u['edu_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(t)}</strong><br>{e(d)}</p>' for t, d in (u['edu'][0], u['edu'][3]))}<p class="label" style="margin-top:1.6em">{e(u['lang_k'])}</p><p class="cvl">{e(u['langs'])}</p></div>
+    <div><p class="label">{e(u['val_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(t)}</strong><br>{e(d)}</p>' for t, d in (u['vals'][0], u['vals'][3]))}</div>
   </div>
+  <p class="dl rv"><a class="chip" href="{r}{AB_DIR[lang]}/">{e(u['ab_link'])} →</a></p>
 </div></section>
 
 <section id="contact"><div class="wrap">
@@ -291,6 +294,28 @@ JV = {"fr": dict(watch="Voir les épisodes", study="Lire l'étude", survey="Rép
       "en": dict(watch="Watch the episodes", study="Read the study", survey="Take the survey", series="Watch the series", film="The series as one film (16:9)"),
       "es": dict(watch="Ver los episodios", study="Leer el estudio", survey="Responder a la encuesta", series="Ver la serie", film="La serie en una película (16:9)"),
       "ar": dict(watch="شاهد الحلقات", study="اقرأ الدراسة", survey="شارك في الاستبيان", series="شاهد السلسلة", film="السلسلة في فيلم واحد (16:9)")}
+
+
+AB_DIR = {"fr": "a-propos", "en": "en/about", "es": "es/acerca-de", "ar": "ar/about"}
+
+
+def about_page(lang):
+    u = UI[lang]
+    path = AB_DIR[lang]
+    root = "../" * len(path.split("/"))
+    home = root + (HOME[lang] + "/" if HOME[lang] else "")
+    t, d = u['par_cards'][3]
+    body = f"""<div class="wrap article">
+  <p class="label"><a href="{home}#parcours">{e(u['ab_back'])}</a></p>
+  <h1>{u['ab_h']}</h1>
+  <p class="lead">{e(u['ab_lead'])}</p>
+  <div class="axes three"><article><h3>{e(t)}</h3><p>{e(d)}</p></article></div>
+  <div class="cv">
+    <div><p class="label">{e(u['edu_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(a)}</strong><br>{e(c)}</p>' for a, c in (u['edu'][1], u['edu'][2], u['edu'][4]))}<p class="label" style="margin-top:1.6em">{e(u['mandate_k'])}</p><p class="cvl"><strong>{e(u['mandate'][0])}</strong><br>{e(u['mandate'][1])}</p></div>
+    <div><p class="label">{e(u['val_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(a)}</strong><br>{e(c)}</p>' for a, c in (u['vals'][1], u['vals'][2]))}</div>
+  </div>
+</div>"""
+    page(lang, path, AB_DIR, f"{strip_tags(u['ab_h'])} — {AUTHOR} · {SITE_TITLE[lang]}", u["ab_lead"], body)
 
 
 def featured_series():
@@ -335,10 +360,14 @@ def vfile(s, lang, n):
     return s["file"].format(lang=lang, n=n)
 
 
+def live_rubs():
+    return [rb for rb in RUBRIQUES if any(s["items"] for s in rb["series"])]
+
+
 def videos_teaser(lang, r):
     v = UI_V[lang]
     n_series = sum(1 for rb in RUBRIQUES for s in rb["series"] if s["items"])
-    rubs = "".join(f'<li><a href="{r}{VID_DIR[lang]}/#{rb["id"]}">{e(rb["name"][lang])}</a></li>' for rb in RUBRIQUES)
+    rubs = "".join(f'<li><a href="{r}{VID_DIR[lang]}/#{rb["id"]}">{e(rb["name"][lang])}</a></li>' for rb in live_rubs())
     return f"""<section id="videos"><div class="wrap">
   <div class="head"><p class="label">06 · {strip_no(v['home_k'])}</p><div><h2>{v['home_h']}</h2><p class="intro">{e(v['home_p'])}</p></div></div>
   <div class="vteaser rv">
@@ -353,7 +382,7 @@ def videos_page(lang):
     path = VID_DIR[lang]
     root = "../" * len(path.split("/"))
     first = "ar" if lang == "ar" else "fr"
-    jump = "".join(f'<a class="f" href="#{rb["id"]}">{e(rb["name"][lang])}</a>' for rb in RUBRIQUES)
+    jump = "".join(f'<a class="f" href="#{rb["id"]}">{e(rb["name"][lang])}</a>' for rb in live_rubs())
     film = f"""<div class="vfeature rv">
     <a class="vfilm" href="{root}{FILM_URL}{'?lang=ar' if lang == 'ar' else ''}"><img src="{root}media/videos/posters/film-interactif.jpg" alt="" width="1032" height="580" loading="lazy"><span class="vplay" aria-hidden="true"></span></a>
     <div><p class="label">{v['featured']}</p><h3>{e(v['film_h'])}</h3><p>{e(v['film_p'])}</p>
@@ -362,11 +391,10 @@ def videos_page(lang):
   <div class="vwide rv"><video controls playsinline preload="none" poster="{root}media/videos/posters/film-guerre-des-blocus.jpg"><source src="{root}media/videos/iran/film-guerre-des-blocus.mp4" type="video/mp4"></video>
     <div><p class="label">{v['film_v']}</p><p class="small">{e(v['film_v_p'])} · <a href="{root}media/videos/iran/film-guerre-des-blocus.mp4" download>{v['download']}</a></p></div></div>"""
     secs = []
-    for i, rb in enumerate(RUBRIQUES):
+    for i, rb in enumerate(live_rubs()):
         blocks = []
         for s in rb["series"]:
             if not s["items"]:
-                blocks.append(f'<div class="vseries soon"><h3>{e(s["title"][lang])}</h3><span class="tag">{v["soon"]}</span></div>')
                 continue
             langs = s["langs"]
             show = first if first in langs else langs[0]
@@ -465,7 +493,8 @@ def publication(lang, p, nxt):
 
   <a class="next" href="../{nxt['slug']}/"><span class="label">{u['next']}</span><strong>{e(nxt['title'][lang])}</strong></a>
 </div>"""
-    page(lang, path, {l: f"{PUB_DIR[l]}/{p['slug']}" for l in LANGS}, f"{p['title'][lang]} — {AUTHOR} · {SITE_TITLE[lang]}", p["abstract"][lang][:155].rsplit(" ", 1)[0] + "…", body, head_extra=metas)
+    page(lang, path, {l: f"{PUB_DIR[l]}/{p['slug']}" for l in LANGS}, f"{p['title'][lang]} — {AUTHOR} · {SITE_TITLE[lang]}", p["abstract"][lang][:155].rsplit(" ", 1)[0] + "…", body, head_extra=metas,
+         og_type="article", og_image=f"assets/og/{p['slug']}.png" if os.path.exists(f"assets/og/{p['slug']}.png") else "assets/og.png")
 
 
 def fiche_page(f, prev, nxt):
@@ -731,6 +760,7 @@ for lang in LANGS:
     lex_page(lang)
     survey_page(lang)
     videos_page(lang)
+    about_page(lang)
     home(lang)
     for i, p in enumerate(PUBLICATIONS):
         publication(lang, p, PUBLICATIONS[(i + 1) % len(PUBLICATIONS)])
@@ -738,7 +768,7 @@ for lang in LANGS:
 # Fichiers de citation
 for p in PUBLICATIONS:
     key = f"boutchakkoucht{p['year']}{p['slug'].split('-')[0]}"
-    kind = "book" if p["type"]["fr"] == "Traité" else "techreport"
+    kind = "techreport"
     extra = "  publisher = {Hafid Boutchakkoucht},\n" if kind == "book" else f"  type = {{{p['type']['fr']}}},\n  institution = {{Hafid Boutchakkoucht}},\n"
     write(f"telechargements/{p['slug']}.bib", f"@{kind}{{{key},\n  author = {{Boutchakkoucht, Hafid}},\n  title = {{{p['cite_title']}}},\n  year = {{{p['year']}}},\n{extra}  language = {{french}},\n  url = {{{SITE}/publications/{p['slug']}/}},\n  note = {{ORCID {ORCID}}}\n}}\n")
     ris = ["TY  - " + ("BOOK" if kind == "book" else "RPRT"), "AU  - Boutchakkoucht, Hafid", f"TI  - {p['cite_title']}", f"PY  - {p['year']}", f"DA  - {p['date'].replace('-', '/')}", "LA  - fr",
@@ -749,7 +779,7 @@ for p in PUBLICATIONS:
 write("CNAME", SITE.replace("https://", "") + "\n")
 write(".nojekyll", "")
 write("assets/icon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#7A1F2B"/><path d="M10 20h18c8 0 10-6 16-6s6 6 10 6M10 32h18c8 0 10 7 16 7s6-7 10-7M10 44h18c8 0 10-6 16-6s6 6 10 6" fill="none" stroke="#F6F2EA" stroke-width="3.2" stroke-linecap="round"/></svg>\n')
-urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS] + [f"{SITE}/fiches/{f['slug']}/" for f in FICHES] + [f"{SITE}/fiches-france/{f['slug']}/" for f in FICHES_FR] + [f"{SITE}/{LX.L_DIR[l]}/" for l in LANGS] + [f"{SITE}/enquete/"] + ([f"{SITE}/{QZ.Q_DIR[l]}/" for l in LANGS] if QZ.ENDPOINT else [])
+urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS] + [f"{SITE}/fiches/{f['slug']}/" for f in FICHES] + [f"{SITE}/fiches-france/{f['slug']}/" for f in FICHES_FR] + [f"{SITE}/{LX.L_DIR[l]}/" for l in LANGS] + [f"{SITE}/{AB_DIR[l]}/" for l in LANGS] + [f"{SITE}/enquete/"] + ([f"{SITE}/{QZ.Q_DIR[l]}/" for l in LANGS] if QZ.ENDPOINT else [])
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{x}</loc></url>\n" for x in urls) + "</urlset>\n")
 write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 entries = "".join(f"""  <entry><title>{e(p['title']['fr'])}</title><link href="{SITE}/publications/{p['slug']}/"/><id>{SITE}/publications/{p['slug']}/</id><updated>{p['date'] if len(p['date']) > 4 else p['date'] + '-01-01'}T00:00:00Z</updated><summary>{e(p['comment']['fr'])}</summary></entry>\n""" for p in PUBLICATIONS)
