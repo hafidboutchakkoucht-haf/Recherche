@@ -318,6 +318,20 @@ def about_page(lang):
     page(lang, path, AB_DIR, f"{strip_tags(u['ab_h'])} — {AUTHOR} · {SITE_TITLE[lang]}", u["ab_lead"], body)
 
 
+POSTER_TXT = {"fr": ("Affiche de l’étude", "Télécharger l’affiche"), "en": ("Study poster", "Download the poster"),
+              "es": ("Cartel del estudio", "Descargar el cartel"), "ar": ("ملصق الدراسة", "تحميل الملصق")}
+
+
+def poster_block(lang, p, root):
+    if not p.get("poster"):
+        return ""
+    src = root + p["poster"].format(lang=lang)
+    cap, dl = POSTER_TXT[lang]
+    return f"""  <figure class="pubposter"><img src="{src}" alt="{e(cap)} · {e(p['title'][lang])}" width="1080" height="1350" loading="lazy">
+    <figcaption><p class="label">{cap}</p><p class="dl"><a class="chip" href="{src}" download>{dl}</a></p></figcaption></figure>
+"""
+
+
 def featured_series():
     for rb in RUBRIQUES:
         for s in rb["series"]:
@@ -463,6 +477,7 @@ def publication(lang, p, nxt):
   <p class="sub">{e(p['subtitle'][lang])}</p>
   <p class="dl"><a class="chip fill" href="{pdf}" download>{u['pdf']} · {p['pages']} {u['pages']}</a><a class="chip" href="#lecteur">{u['reader']}</a><a class="chip" href="#citer">{u['cite']}</a>{series_chip(lang, p, root)}</p>
   <dl class="facts"><div><dt>{u['author']}</dt><dd>{AUTHOR}</dd></div><div><dt>{u['published']}</dt><dd>{e(p['date_txt'][lang])}</dd></div><div><dt>{u['nature']}</dt><dd>{e(p['type'][lang])}</dd></div><div><dt>{u['language']}</dt><dd>{e(p['lang_note'][lang])}</dd></div><div class="wide"><dt>{u['approach']}</dt><dd>{e(p['strap'][lang])}</dd></div></dl>
+{poster_block(lang, p, root)}
 
   <h2 class="sec">{u['keyfig']}</h2>
   <dl class="stats small-stats">{''.join(f'<div><dt>{e(v)}</dt><dd>{e(t[lang])}</dd></div>' for v, t in p['figures'])}</dl>

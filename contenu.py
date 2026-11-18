@@ -25,9 +25,48 @@ TOPICS = {
     "droit": {"fr": "Droit pénal", "en": "Criminal law"},
     "politiques": {"fr": "Politiques publiques", "en": "Public policy"},
     "jeunesses": {"fr": "Jeunesses", "en": "Youth"},
+    "science": {"fr": "Science politique", "en": "Political science"},
 }
 
 PUBLICATIONS = [
+    {
+        "slug": "france-2027", "topic": "science", "year": "2026", "date": "2026-11-17", "pages": 20,
+        "pdf": "boutchakkoucht-2026-france-2027.pdf", "poster": "assets/affiches/france-2027-{lang}.jpg",
+        "lang_note": {"fr": "Texte en français", "en": "Full text in French"},
+        "date_txt": {"fr": "17 novembre 2026", "en": "17 November 2026"},
+        "type": {"fr": "Étude de science politique et de prospective", "en": "Political science and foresight study"},
+        "title": {"fr": "France 2027", "en": "France 2027"},
+        "subtitle": {"fr": "L’élection présidentielle qui peut redessiner l’avenir de la France et de l’Europe", "en": "The presidential election that could reshape the future of France and Europe"},
+        "strap": {"fr": "Science politique comparée, sociologie électorale et prospective stratégique", "en": "Comparative political science, electoral sociology and strategic foresight"},
+        "abstract": {
+            "fr": "Cette étude analyse l’élection présidentielle française des 18 avril et 2 mai 2027 à partir d’une thèse : le scrutin ne se jouera pas sur la question « qui promet le plus », mais sur la question « qui peut gouverner ». Arrêtée au 17 novembre 2026, elle cartographie les forces en présence, montre que le Parti socialiste a choisi d’être un acteur autonome sans candidat propre, compare les orientations des programmes et mesure les contraintes que le prochain président ne choisira pas : une dette publique de 119 % du PIB, un Parlement fragmenté et une guerre aux portes de l’Union. Elle propose cinq scénarios, une matrice des variables décisives et une lecture des conséquences pour l’Europe, les États-Unis et le Maroc.",
+            "en": "This study analyses the French presidential election of 18 April and 2 May 2027 around one thesis: the vote will not turn on who promises the most, but on who is able to govern. With data as of 17 November 2026, it maps the political forces, shows that the Socialist Party chose to remain an autonomous actor without its own candidate, compares the parties’ programmatic orientations and measures the constraints the next president will not choose: public debt at 119% of GDP, a fragmented Parliament and a war on the Union’s doorstep. It sets out five scenarios, a matrix of decisive variables and the implications for Europe, the United States and Morocco."},
+        "comment": {
+            "fr": "Cette étude ne cherche pas à désigner un vainqueur. Elle déplace la question : de la compétition entre promesses vers la capacité à gouverner. Elle confronte les sondages, les données de l’Insee et les positions publiques des candidats aux grandes théories des systèmes de partis, de Duverger à Peter Mair.",
+            "en": "This study does not try to name a winner. It shifts the question from a contest of promises to the capacity to govern. It confronts polls, official statistics and the candidates’ public positions with the major theories of party systems, from Duverger to Peter Mair."},
+        "points": {
+            "fr": ["Le Rassemblement national domine le premier tour, entre 30 et 37 % des intentions de vote, mais doit encore gagner près de vingt points pour l’emporter au second.",
+                   "La décision de la Cour de cassation sur l’éligibilité de Marine Le Pen est attendue au plus tard début avril 2027, quelques jours avant le premier tour.",
+                   "Le Parti socialiste a confié la candidature à Raphaël Glucksmann ; il reste une machine électorale, un négociateur du projet et un arbitre du second tour.",
+                   "L’Ukraine est la ligne de partage stratégique de la campagne : un changement de cap français pèserait sur la cohésion européenne et sur la relation transatlantique."],
+            "en": ["The National Rally leads the first round with 30 to 37% of voting intentions, but still needs to gain nearly twenty points to win the run-off.",
+                   "The Court of Cassation’s ruling on Marine Le Pen’s eligibility is expected by early April 2027 at the latest, days before the first round.",
+                   "The Socialist Party handed the candidacy to Raphaël Glucksmann; it remains an electoral machine, a negotiator of the platform and an arbiter of the run-off.",
+                   "Ukraine is the campaign’s strategic dividing line: a change of course in France would weigh on European cohesion and on the transatlantic relationship."]},
+        "readers": {"fr": "Décideurs publics, diplomates, journalistes politiques, chercheurs et étudiants en science politique et en relations internationales.",
+                    "en": "Policymakers, diplomats, political journalists, researchers and students in political science and international relations."},
+        "figures": [("30–37 %", {"fr": "intentions de vote pour le Rassemblement national au premier tour, début novembre 2026", "en": "first-round voting intentions for the National Rally, early November 2026"}),
+                    ("119 %", {"fr": "dette publique rapportée au PIB, fin juin 2026", "en": "public debt as a share of GDP, end of June 2026"}),
+                    ("5", {"fr": "scénarios à l’horizon de mai 2027", "en": "scenarios up to May 2027"}),
+                    ("30", {"fr": "sources numérotées", "en": "numbered sources"})],
+        "outline": {
+            "fr": ["Résumé exécutif", "Cadre institutionnel : une élection sans sortant, sous double contrainte", "Cartographie des forces au 17 novembre 2026", "Le Parti socialiste : un acteur autonome sans candidat propre", "Les programmes : six visions de l’État, six contradictions", "L’état réel du pays : finances publiques, chômage, inflation", "Europe, Ukraine, sécurité : deux doctrines de puissance", "Rapports de force : sondages et équation du second tour", "Cinq scénarios et leurs déclencheurs", "Cadre théorique : Duverger, Sartori, Lipset et Rokkan, Mair", "Conséquences pour l’Europe, les États-Unis et le Maroc", "Conclusion et limites"],
+            "en": ["Executive summary", "Institutional framework: an election without an incumbent, under a double constraint", "Map of political forces as of 17 November 2026", "The Socialist Party: an autonomous actor without its own candidate", "Platforms: six visions of the State, six contradictions", "The real state of the country: public finances, unemployment, inflation", "Europe, Ukraine, security: two doctrines of power", "Balance of power: polls and the run-off equation", "Five scenarios and their triggers", "Theoretical framework: Duverger, Sartori, Lipset and Rokkan, Mair", "Implications for Europe, the United States and Morocco", "Conclusion and limitations"]},
+        "keywords": {"fr": ["France", "élection présidentielle 2027", "systèmes de partis", "sociologie électorale", "prospective", "Europe", "Ukraine", "finances publiques"],
+                     "en": ["France", "2027 presidential election", "party systems", "electoral sociology", "foresight", "Europe", "Ukraine", "public finances"]},
+        "cite_title": "France 2027 : l’élection présidentielle qui peut redessiner l’avenir de la France et de l’Europe",
+        "cite_tail": {"fr": "Étude de science politique et de prospective, 17 novembre 2026.", "en": "Political science and foresight study, 17 November 2026."},
+    },
     {
         "slug": "partir-rester-se-faire-entendre", "topic": "jeunesses", "year": "2026", "date": "2026-11-15", "pages": 19,
         "pdf": "boutchakkoucht-2026-partir-rester-se-faire-entendre.pdf", "lang_note": {"fr": "Texte en français", "en": "Full text in French"},

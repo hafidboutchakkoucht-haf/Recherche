@@ -19,6 +19,7 @@ TOPICS = {
     "droit": {"es": "Derecho penal", "ar": "القانون الجنائي"},
     "politiques": {"es": "Políticas públicas", "ar": "السياسات العمومية"},
     "jeunesses": {"es": "Juventudes", "ar": "الشباب"},
+    "science": {"es": "Ciencia política", "ar": "العلوم السياسية"},
 }
 
 DISCLAIMER = {
@@ -27,6 +28,41 @@ DISCLAIMER = {
 }
 
 PUBS = {
+    "france-2027": {
+        "lang_note": {"es": "Texto en francés", "ar": "النص الكامل بالفرنسية"},
+        "date_txt": {"es": "17 de noviembre de 2026", "ar": "17 نونبر 2026"},
+        "type": {"es": "Estudio de ciencia política y prospectiva", "ar": "دراسة في العلوم السياسية والاستشراف"},
+        "title": {"es": "Francia 2027", "ar": "فرنسا 2027"},
+        "subtitle": {"es": "La elección presidencial que puede redibujar el futuro de Francia y de Europa", "ar": "الانتخابات الرئاسية التي قد تعيد رسم مستقبل فرنسا وأوروبا"},
+        "strap": {"es": "Ciencia política comparada, sociología electoral y prospectiva estratégica", "ar": "العلوم السياسية المقارنة، وسوسيولوجيا الانتخابات، والاستشراف الاستراتيجي"},
+        "abstract": {
+            "es": "Este estudio analiza la elección presidencial francesa del 18 de abril y el 2 de mayo de 2027 a partir de una tesis: la votación no se decidirá en torno a quién promete más, sino en torno a quién puede gobernar. Con datos al 17 de noviembre de 2026, cartografía las fuerzas políticas, muestra que el Partido Socialista optó por seguir siendo un actor autónomo sin candidato propio, compara las orientaciones de los programas y mide las restricciones que el próximo presidente no elegirá: una deuda pública del 119 % del PIB, un Parlamento fragmentado y una guerra a las puertas de la Unión. Propone cinco escenarios, una matriz de variables decisivas y una lectura de las consecuencias para Europa, Estados Unidos y Marruecos.",
+            "ar": "تحلل هذه الدراسة الانتخابات الرئاسية الفرنسية ليومي 18 أبريل و2 ماي 2027 انطلاقًا من أطروحة واحدة: لن يُحسم الاقتراع حول من يَعِد أكثر، بل حول من يقدر على الحكم. وبمعطيات محيَّنة إلى 17 نونبر 2026، ترسم الدراسة خريطة القوى السياسية، وتبيّن أن الحزب الاشتراكي اختار البقاء فاعلًا مستقلًا دون مرشح خاص به، وتقارن توجهات البرامج، وتقيس القيود التي لن يختارها الرئيس المقبل: دين عمومي يبلغ 119 % من الناتج الداخلي الخام، وبرلمان مشتت، وحرب على أبواب الاتحاد الأوروبي. وتقترح خمسة سيناريوهات ومصفوفة للمتغيرات الحاسمة وقراءة للانعكاسات على أوروبا والولايات المتحدة والمغرب."},
+        "comment": {
+            "es": "Este estudio no pretende designar a un ganador. Desplaza la pregunta: de la competencia entre promesas a la capacidad de gobernar. Confronta las encuestas, las estadísticas oficiales y las posiciones públicas de los candidatos con las grandes teorías de los sistemas de partidos, de Duverger a Peter Mair.",
+            "ar": "لا تسعى هذه الدراسة إلى تسمية الفائز، بل تنقل السؤال من التنافس بين الوعود إلى القدرة على الحكم. وتضع استطلاعات الرأي والإحصاءات الرسمية والمواقف المعلنة للمرشحين في مواجهة النظريات الكبرى حول الأنظمة الحزبية، من دوفرجيه إلى بيتر ماير."},
+        "points": {
+            "es": ["La Agrupación Nacional domina la primera vuelta, con entre el 30 y el 37 % de las intenciones de voto, pero aún debe ganar cerca de veinte puntos para imponerse en la segunda.",
+                   "La decisión del Tribunal de Casación sobre la elegibilidad de Marine Le Pen se espera, a más tardar, a principios de abril de 2027, pocos días antes de la primera vuelta.",
+                   "El Partido Socialista confió la candidatura a Raphaël Glucksmann; sigue siendo una maquinaria electoral, un negociador del programa y un árbitro de la segunda vuelta.",
+                   "Ucrania es la línea divisoria estratégica de la campaña: un cambio de rumbo francés pesaría sobre la cohesión europea y sobre la relación transatlántica."],
+            "ar": ["يتصدر التجمع الوطني الدور الأول بما بين 30 و37 % من نوايا التصويت، لكن عليه أن يكسب قرابة عشرين نقطة إضافية للفوز في الدور الثاني.",
+                   "يُنتظر قرار محكمة النقض بشأن أهلية مارين لوبان في أجل أقصاه مطلع أبريل 2027، أي قبل أيام من الدور الأول.",
+                   "أسند الحزب الاشتراكي الترشيح إلى رافائيل غلوكسمان، ويظل آلة انتخابية ومفاوضًا على البرنامج وحَكَمًا في الدور الثاني.",
+                   "أوكرانيا هي خط الفصل الاستراتيجي في الحملة: أي تحول في الموقف الفرنسي سينعكس على التماسك الأوروبي وعلى العلاقة عبر الأطلسي."]},
+        "readers": {"es": "Responsables públicos, diplomáticos, periodistas políticos, investigadores y estudiantes de ciencia política y relaciones internacionales.",
+                    "ar": "صناع القرار العمومي، والدبلوماسيون، والصحافيون السياسيون، والباحثون والطلبة في العلوم السياسية والعلاقات الدولية."},
+        "figures": [{"es": "intenciones de voto para la Agrupación Nacional en la primera vuelta, principios de noviembre de 2026", "ar": "نوايا التصويت للتجمع الوطني في الدور الأول، مطلع نونبر 2026"},
+                    {"es": "deuda pública en porcentaje del PIB, finales de junio de 2026", "ar": "الدين العمومي نسبةً إلى الناتج الداخلي الخام، نهاية يونيو 2026"},
+                    {"es": "escenarios hasta mayo de 2027", "ar": "سيناريوهات في أفق ماي 2027"},
+                    {"es": "fuentes numeradas", "ar": "مصدرًا مرقّمًا"}],
+        "outline": {
+            "es": ["Resumen ejecutivo", "Marco institucional: una elección sin presidente saliente, bajo una doble restricción", "Mapa de fuerzas al 17 de noviembre de 2026", "El Partido Socialista: un actor autónomo sin candidato propio", "Los programas: seis visiones del Estado, seis contradicciones", "El estado real del país: finanzas públicas, desempleo, inflación", "Europa, Ucrania, seguridad: dos doctrinas de poder", "Relación de fuerzas: encuestas y ecuación de la segunda vuelta", "Cinco escenarios y sus detonantes", "Marco teórico: Duverger, Sartori, Lipset y Rokkan, Mair", "Consecuencias para Europa, Estados Unidos y Marruecos", "Conclusión y límites"],
+            "ar": ["ملخص تنفيذي", "الإطار المؤسساتي: انتخابات بلا رئيس منتهية ولايته وتحت قيد مزدوج", "خريطة القوى إلى غاية 17 نونبر 2026", "الحزب الاشتراكي: فاعل مستقل بلا مرشح خاص", "البرامج: ست رؤى للدولة وست تناقضات", "الوضع الفعلي للبلاد: المالية العمومية والبطالة والتضخم", "أوروبا وأوكرانيا والأمن: عقيدتان للقوة", "موازين القوى: استطلاعات الرأي ومعادلة الدور الثاني", "خمسة سيناريوهات ومحفزاتها", "الإطار النظري: دوفرجيه، سارتوري، ليبسيت وروكان، ماير", "الانعكاسات على أوروبا والولايات المتحدة والمغرب", "خلاصة وحدود الدراسة"]},
+        "keywords": {"es": ["Francia", "elección presidencial 2027", "sistemas de partidos", "sociología electoral", "prospectiva", "Europa", "Ucrania", "finanzas públicas"],
+                     "ar": ["فرنسا", "الانتخابات الرئاسية 2027", "الأنظمة الحزبية", "سوسيولوجيا الانتخابات", "الاستشراف", "أوروبا", "أوكرانيا", "المالية العمومية"]},
+        "cite_tail": {"es": "Estudio de ciencia política y prospectiva, 17 de noviembre de 2026.", "ar": "دراسة في العلوم السياسية والاستشراف، 17 نونبر 2026."},
+    },
     "partir-rester-se-faire-entendre": {
         "lang_note": {"es": "Texto en francés", "ar": "النص الكامل بالفرنسية"},
         "date_txt": {"es": "15 de noviembre de 2026", "ar": "15 نونبر 2026"},
