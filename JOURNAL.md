@@ -2,6 +2,9 @@
 
 Entrées les plus récentes en haut. Chaque conversation ajoute une entrée à la fin de son travail.
 
+## 2026-11-25 — Formation en gestion de projet
+- Ajout dans « Formation continue » : gestion de projet (Toulouse), sans nommer l'organisme national (règle de CLAUDE.md).
+
 ## 2026-11-25 — Fichier de consignes et journal
 - Création de `CLAUDE.md` (règles permanentes) et de ce journal, pour que chaque nouvelle conversation reprenne le travail sans perte.
 
