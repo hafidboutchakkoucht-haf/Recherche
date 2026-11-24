@@ -40,7 +40,7 @@ Conserver la ligne `goatcounter` en bas de chaque page. Conserver les compteurs 
 
 - Titre : « chercheur » uniquement. Jamais « docteur », « Dr », « PhD », « professeur ».
 - Ne mentionner aucun projet personnel d'études ou de candidature ; parler de « recherches sur les jeunesses ».
-- Service public : s'en tenir à « membre de la fonction publique ». Aucun employeur, grade ni organisme national de formation.
+- Service public : s'en tenir à « membre de la fonction publique ». Aucun employeur ni grade. Formations citées avec l'accord de l'auteur : INSET d'Angers, gestion de projet (CNFPT, Toulouse).
 - Presse : « auteur d'articles » dans DairaNews, Casanews et sur EasyChair, sans aucune fonction dans un média.
 - Cyclad Consulting : « expérience du conseil au sein du cabinet », jamais « consultant ».
 - N'ajouter aucun titre, fonction, employeur ou projet personnel sans l'accord de l'auteur.

@@ -2,6 +2,9 @@
 
 Entrées les plus récentes en haut. Chaque conversation ajoute une entrée à la fin de son travail.
 
+## 2026-11-25 — CNFPT nommé à la demande de l'auteur
+- « Formation continue » : gestion de projet (CNFPT, Toulouse), dans les quatre langues. L'auteur a demandé de préciser l'organisme ; règle de CLAUDE.md mise à jour.
+
 ## 2026-11-25 — Formation en gestion de projet
 - Ajout dans « Formation continue » : gestion de projet (Toulouse), sans nommer l'organisme national (règle de CLAUDE.md).
 
