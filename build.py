@@ -296,7 +296,7 @@ def about_page(lang):
   <p class="lead">{e(u['ab_lead'])}</p>
   <div class="axes three"><article><h3>{e(t)}</h3><p>{e(d)}</p></article></div>
   <div class="cv">
-    <div><p class="label">{e(u['edu_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(a)}</strong><br>{e(c)}</p>' for a, c in (u['edu'][1], u['edu'][4]))}<p class="label" style="margin-top:1.6em">{e(u['mandate_k'])}</p><p class="cvl"><strong>{e(u['mandate'][0])}</strong><br>{e(u['mandate'][1])}</p></div>
+    <div><p class="label">{e(u['edu_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(a)}</strong><br>{e(c)}</p>' for a, c in (u['edu'][1], u['edu'][2], u['edu'][4]))}<p class="label" style="margin-top:1.6em">{e(u['mandate_k'])}</p><p class="cvl"><strong>{e(u['mandate'][0])}</strong><br>{e(u['mandate'][1])}</p></div>
     <div><p class="label">{e(u['val_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(a)}</strong><br>{e(c)}</p>' for a, c in (u['vals'][1], u['vals'][2]))}</div>
   </div>
 </div>"""
