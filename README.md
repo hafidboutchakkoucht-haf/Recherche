@@ -6,7 +6,8 @@ Carnet de recherche publié sur `hafidboutchakkoucht.crossborders.ngo` (françai
 | --- | --- |
 | Textes, études, biographie en français et en anglais | `contenu.py` |
 | Traductions espagnole et arabe | `traductions.py` |
-| Mise en page | `assets/style.css` |
+| Page d'accueil et page des fiches : libellés, parcours, ressources (4 langues) | `accueil.py` |
+| Mise en page | `assets/style.css` (polices intégrées dans `assets/fonts/`, licence OFL) |
 | Filtres, thème, copie de référence | `assets/app.js` |
 | PDF des études, fichiers BibTeX et RIS | `telechargements/` |
 | Vidéothèque : rubriques, séries et vidéos (4 langues) | `videotheque.py` |

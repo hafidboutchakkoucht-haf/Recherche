@@ -22,7 +22,7 @@ UI = {
                comment="Commentaire", recueil_h="Le recueil des études", recueil_p="Toutes les études réunies en un seul PDF, chacune précédée de son commentaire.", recueil_b="Télécharger le recueil (PDF)",
                about_k="03 · À propos", about_h="L’auteur, <em>en bref</em>", portrait="Télécharger le portrait", orcid="Profil ORCID",
                contact_k="04 · Contact", contact_h="Échanger, <em>citer, inviter</em>", contact_p="Pour réagir à une publication, proposer une collaboration, une intervention ou un entretien :",
-               back="← Bibliothèque", author="Auteur", published="Parution", nature="Nature", approach="Approche", language="Langue",
+               back="← Publications", author="Auteur", published="Parution", nature="Nature", approach="Approche", language="Langue",
                keyfig="L’étude en chiffres", keyfig_n="Chiffres tirés de l’étude.", takeaways="Ce qu’il faut retenir", readers="À qui s’adresse ce texte", abstract="Résumé", abstract_other="Abstract (English)",
                outline="Plan de l’étude", keywords="Mots-clés", cite="Citer cette étude", copy="Copier la référence", copied="Référence copiée", reader="Lire en ligne", reader_n="Si le lecteur ne s’affiche pas sur votre appareil, utilisez le bouton de téléchargement.",
                write="Écrire à l’auteur", next="Autre étude", rights="Tous droits réservés. Les textes peuvent être cités avec mention de l’auteur et de la source. Site sans cookie ; mesure d’audience anonyme.", series="Série Erasmus+ décrypté · en français"),
@@ -37,7 +37,7 @@ UI = {
                comment="Commentary", recueil_h="The collected studies", recueil_p="All studies in a single PDF, each preceded by its commentary (in French).", recueil_b="Download the collection (PDF)",
                about_k="03 · About", about_h="The author, <em>in brief</em>", portrait="Download the portrait", orcid="ORCID profile",
                contact_k="04 · Contact", contact_h="Discuss, <em>cite, invite</em>", contact_p="To respond to a publication, or to propose a collaboration, a talk or an interview:",
-               back="← Library", author="Author", published="Published", nature="Type", approach="Approach", language="Language",
+               back="← Publications", author="Author", published="Published", nature="Type", approach="Approach", language="Language",
                keyfig="The study in figures", keyfig_n="Figures taken from the study.", takeaways="Key takeaways", readers="Who this text is for", abstract="Abstract", abstract_other="Résumé (français)",
                outline="Outline", keywords="Keywords", cite="Cite this study", copy="Copy the reference", copied="Reference copied", reader="Read online", reader_n="If the reader does not display on your device, use the download button.",
                write="Write to the author", next="Another study", rights="All rights reserved. Texts may be quoted with attribution to the author and source. No cookies; anonymous audience measurement.", series="Erasmus+ décrypté series · in French"),
@@ -57,6 +57,7 @@ for _l in LANGS:
     UI[_l].update(S[_l])
 AXES.append({l: S[l]["axe3"] for l in LANGS})
 import questionnaire as QZ  # noqa: E402
+import accueil as ACC  # noqa: E402
 import lexique as LX  # noqa: E402
 import zlib  # noqa: E402
 from fiches_fr import FICHES_FR, UI as FR_UI, SOURCE as FR_SOURCE  # noqa: E402
@@ -146,7 +147,7 @@ def page(lang, path, alt_paths, title, desc, body, head_extra="", alternates=Tru
 <a class="skip" href="#main">{u['skip']}</a>
 <header class="top"><div class="wrap">
   <a class="sig" href="{home}"><span>{e(SITE_TITLE[lang])}</span><b>{AUTHOR}</b></a>
-  <nav aria-label="{u['library']}"><a href="{home}#axes">{u['axes']}</a><a href="{home}#jeunesses">{u['nav_doc']}</a><a href="{home}#bibliotheque">{u['nav_etudes']}</a><a href="{home}#fiches">{u['nav_fiches']}</a><a href="{root}{LX.L_DIR[lang]}/">{LX.TXT['nav'][lang]}</a><a href="{root}{VID_DIR[lang]}/">{UI_V[lang]['nav']}</a><a href="{home}#parcours">{u['nav_parcours']}</a><a href="{home}#contact">{u['contact']}</a></nav>
+  <nav aria-label="{u['library']}"><a href="{home}#axes">{ACC.A[lang]['nav_axes']}</a><a href="{home}#bibliotheque">{ACC.A[lang]['nav_pubs']}</a><a href="{root}{ACC.FI_DIR[lang]}/">{u['nav_fiches']}</a><a href="{root}{LX.L_DIR[lang]}/">{LX.TXT['nav'][lang]}</a><a href="{root}{VID_DIR[lang]}/">{UI_V[lang]['nav']}</a><a href="{home}#parcours">{u['nav_parcours']}</a><a href="{home}#contact">{u['contact']}</a></nav>
   <div class="tools">{switch}<button class="tool" type="button" data-theme aria-label="{u['theme']}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button></div>
   <div class="bar" aria-hidden="true"></div>
 </div></header>
@@ -171,123 +172,107 @@ def home(lang):
     r = "" if lang == "fr" else "../"
     total_pages = sum(p["pages"] for p in PUBLICATIONS)
     n_videos = sum(len(v) for _, v in VIDEO_THEMES) + count_videos()
-    cards = []
-    for p in PUBLICATIONS:
-        link = f"{r}{PUB_DIR[lang]}/{p['slug']}/"
-        hay = " ".join([p["title"][lang], p["subtitle"][lang], " ".join(p["keywords"][lang]), p["type"][lang]])
-        cards.append(f"""
-    <article class="item study rv" data-item data-kind="study" data-topic="{p['topic']}" data-text="{e(hay.lower())}">
-      <div class="meta"><span class="year">{p['year']}</span><span class="label">{e(p['type'][lang])}</span><span class="tag">{e(TOPICS[p['topic']][lang])}</span></div>
-      <div>
-        <h3><a href="{link}">{e(p['title'][lang])}</a></h3>
-        <p class="sub">{e(p['subtitle'][lang])}</p>
-        <div class="comment"><p class="label">{u['comment']}</p><p>{e(p['comment'][lang])}</p></div>
-        <ul class="kw">{''.join(f'<li>{e(k)}</li>' for k in p['keywords'][lang][:6])}</ul>
-        <p class="dl"><a class="chip fill" href="{link}">{u['read']}</a><a class="chip" href="{r}telechargements/{p['pdf']}" download>{u['pdf']} · {p['pages']} {u['pages']}</a></p>
-      </div>
-    </article>""")
-    for theme, eps in VIDEO_THEMES:
-        for n, t, d in eps:
-            cards.append(f"""
-    <article class="item vid rv" data-item data-kind="video" data-topic="europe" data-text="{e((t[lang] + ' ' + d[lang] + ' ' + theme[lang] + ' erasmus').lower())}">
-      <video controls playsinline preload="none" poster="{r}videos/erasmus-decrypte-ep{n}.jpg" aria-label="{e(t[lang])}"><source src="{r}videos/erasmus-decrypte-ep{n}.mp4" type="video/mp4"></video>
-      <div><p class="label">{u['video']} · {e(theme[lang])}</p><h3>{e(t[lang])}</h3><p class="sub">{e(d[lang])}</p><p class="small">{u['series']} · <a href="{r}videos/erasmus-decrypte-ep{n}.mp4" download>{u['download']}</a></p></div>
-    </article>""")
-    filters = f'<button class="f" type="button" data-f="all" aria-pressed="true">{u["all"]}</button>' + (f'<button class="f" type="button" data-f="kind:study" aria-pressed="false">{u["studies"]}</button><button class="f" type="button" data-f="kind:video" aria-pressed="false">{u["videos"]}</button>' if n_videos else "") + "".join(
-        f'<button class="f" type="button" data-f="topic:{k}" aria-pressed="false">{e(v[lang])}</button>' for k, v in TOPICS.items())
     person = {"@context": "https://schema.org", "@type": "Person", "name": AUTHOR, "url": SITE + "/", "image": SITE + "/assets/portrait.jpg", "jobTitle": UI[lang]["role"],
               "identifier": f"https://orcid.org/{ORCID}", "sameAs": [f"https://orcid.org/{ORCID}"], "description": BIO[lang], "knowsAbout": [a[lang][0] for a in AXES],
               "affiliation": {"@type": "NGO", "name": "Cross Borders", "url": MAIN_SITE}}
-    title_html = u["title_html"]
+    a = ACC.A[lang]
+    bio1 = BIO[lang].split(". ", 1)[0].rstrip(".") + "."
+    rec = f"{r}telechargements/boutchakkoucht-recueil-des-etudes.pdf"
+    pubs = "".join(f"""
+    <li><p class="bmeta">{p['year']} · {e(p['type'][lang])} · {p['pages']} {a['pages']}</p>
+      <h3><a href="{r}{PUB_DIR[lang]}/{p['slug']}/">{e(p['title'][lang])}</a></h3>
+      <p class="bsub">{e(p['subtitle'][lang])}</p>
+      <p class="bact"><a href="{r}{PUB_DIR[lang]}/{p['slug']}/">{a['pres']}</a><a href="{r}telechargements/{p['pdf']}" download>{a['pdf']}</a><a href="{r}{PUB_DIR[lang]}/{p['slug']}/#citer">{a['cite']}</a></p></li>""" for p in PUBLICATIONS)
+    rb, s_ = featured_series()
+    jv = f"{r}{VID_DIR[lang]}/#{rb['id']}" if rb else f"{r}{VID_DIR[lang]}/"
+    n_lex = sum(len(v) for v in LX.TERMS.values())
+    res_href = {"fiches": f"{r}{ACC.FI_DIR[lang]}/", "lexique": f"{r}{LX.L_DIR[lang]}/", "videos": f"{r}{VID_DIR[lang]}/", "jeunesses": jv, "enquete": f"{r}enquete/"}
+    res_n = {"fiches": len(FICHES) + len(FICHES_FR), "lexique": n_lex, "videos": n_videos, "jeunesses": 0, "enquete": 0}
+    res = "".join(f'<li id="{k_}"><a href="{res_href[k_]}">{e(t)}</a><span>{e(d.format(n=res_n[k_]))}</span></li>' for k_, t, d in a["res"])
+    axes = "".join(f'<div class="axe"><h3>{e(x[lang][0])}</h3><p>{e(x[lang][1])}</p>' + (f'<p class="axe-links"><a href="{jv}">{e(a["axe_links"].split(" · ")[0])}</a> · <a href="{r}enquete/">{e(a["axe_links"].split(" · ")[1])}</a></p>' if i == len(AXES) - 1 else "") + '</div>' for i, x in enumerate(AXES))
+    body = f"""<div class="wrap hero2">
+  <div class="hero-txt">
+    <h1>{AUTHOR}</h1>
+    <p class="rolehero">{e(u['role'])}</p>
+    <p class="lead">{e(bio1)}</p>
+    <p class="links"><a href="https://orcid.org/{ORCID}" rel="me">ORCID {ORCID}</a><a href="{rec}" download>{e(a['recueil'].format(n=total_pages + 5))}</a><a href="#contact">{e(a['contact'])}</a></p>
+  </div>
+  <figure class="hero-img"><img src="{r}assets/portrait.jpg" alt="{AUTHOR}" width="700" height="700"></figure>
+</div>
+<div class="wrap"><dl class="stats">
+  <div><dt>{len(PUBLICATIONS)}</dt><dd>{u['n_studies']}</dd></div><div><dt>{total_pages}</dt><dd>{u['n_pages']}</dd></div><div><dt>{len(FICHES) + len(FICHES_FR)}</dt><dd>{u['n_fiches']}</dd></div><div><dt>{n_videos}</dt><dd>{u['n_videos']}</dd></div>
+</dl></div>
+
+<section id="axes" class="s2"><div class="wrap s2g">
+  <h2>{e(a['h_axes'])}</h2>
+  <div class="axelist">{axes}</div>
+</div></section>
+<span id="jeunesses"></span>
+
+<section id="bibliotheque" class="s2"><div class="wrap s2g">
+  <h2>{e(a['h_pubs'])}</h2>
+  <div><ol class="biblio">{pubs}
+  </ol>
+  <p class="bfoot"><a href="{rec}" download>{e(a['recueil'].format(n=total_pages + 5))}</a></p></div>
+</div></section>
+
+<section id="travaux" class="s2"><div class="wrap s2g">
+  <h2>{e(a['h_works'])}</h2>
+  <ul class="worklist2">{''.join(f'<li><strong>{e(t.rstrip("."))}.</strong> {e(d)} <em>{e(st)}.</em></li>' for t, d, st in u['works'])}</ul>
+</div></section>
+
+<section id="ressources" class="s2"><div class="wrap s2g">
+  <h2>{e(a['h_res'])}</h2>
+  <ul class="reslist">{res}</ul>
+</div></section>
+
+<section id="parcours" class="s2"><div class="wrap s2g">
+  <h2>{e(a['h_par'])}</h2>
+  <div><dl class="cvlist">{''.join(f'<div><dt>{e(t)}</dt><dd>{e(d)}</dd></div>' for t, d in a['cv'])}</dl>
+  <p class="links"><a href="{r}assets/portrait.jpg" download="hafid-boutchakkoucht.jpg">{e(a['portrait'])}</a><a href="{r}{AB_DIR[lang]}/">{e(a['more'])}</a><a href="{MAIN_SITE}">Cross Borders ↗</a></p></div>
+</div></section>
+
+<section id="contact" class="s2"><div class="wrap s2g">
+  <h2>{e(a['h_contact'])}</h2>
+  <p class="contact-p">{u['contact_p']} <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+</div></section>"""
+    page(lang, HOME[lang], HOME, f"{SITE_TITLE[lang]} — {AUTHOR}", BIO[lang][:158].rsplit(" ", 1)[0] + "…", body,
+         head_extra=f'<script type="application/ld+json">{json.dumps(person, ensure_ascii=False)}</script>')
+
+
+def fiches_page(lang):
+    u = UI[lang]
+    path = ACC.FI_DIR[lang]
+    r = "../" * len(path.split("/"))
     parts = list(dict.fromkeys(f["part"] for f in FICHES))
     allf = [("ma", "fiches", f) for f in FICHES] + [("fr", "fiches-france", f) for f in FICHES_FR]
     fcards = "".join(f"""
-    <a class="fcard rv" data-item data-sys="{sy}" data-part="{sy}{parts.index(f['part']) if f['part'] in parts else 9}" data-text="{e((f['title'] + ' ' + f['ar'] + ' ' + ' '.join(f['pills']) + ' ' + f['q'] + ' ' + u['f_' + sy]).lower())}" href="{r}{fd}/{f['slug']}/" hreflang="fr">
+    <a class="fcard" data-item data-sys="{sy}" data-part="{sy}{parts.index(f['part']) if f['part'] in parts else 9}" data-text="{e((f['title'] + ' ' + f['ar'] + ' ' + ' '.join(f['pills']) + ' ' + f['q'] + ' ' + u['f_' + sy]).lower())}" href="{r}{fd}/{f['slug']}/" hreflang="fr">
       <span class="fnum">{f['n']:02d}</span><span class="tag sys-{sy}">{e(u['f_' + sy])} · {e(PARTS[f['part']][lang])}</span>
       <strong lang="fr" dir="ltr">{e(f['title'])}</strong><span class="far" lang="ar" dir="rtl">{e(f['ar'])}</span>
       <span class="fpills" dir="ltr">{''.join(f'<i>{e(x)}</i>' for x in f['pills'])}</span>
     </a>""" for sy, fd, f in allf)
     ffilters = f'<button class="f" type="button" data-f="all" aria-pressed="true">{u["f_all"]}</button>' + "".join(f'<button class="f" type="button" data-f="sys:{sy}" aria-pressed="false">{e(u["f_" + sy])}</button>' for sy in ("ma", "fr"))
     quiz = [{"n": f["n"], "q": f["q"], "r": f["r"], "t": u["f_" + sy] + " · " + f["title"], "u": f"{r}{fd}/{f['slug']}/"} for sy, fd, f in allf]
-    k = lambda i, label: f"{i:02d} · {strip_no(label)}"
-    body = f"""<div class="wrap hero">
-  <div>
-    <p class="label">{u['kicker']}</p>
-    <h1>{title_html}</h1>
-    <p class="byline">{AUTHOR}</p>
-    <p class="rolehero">{e(u['role'])}</p>
-    <p class="lead">{e(u['tagline'])}</p>
-    <p class="dl"><a class="chip fill" href="#bibliotheque">{u['cta1']}</a><a class="chip" href="{r}telechargements/boutchakkoucht-recueil-des-etudes.pdf" download>{u['cta2']}</a></p>
-  </div>
-  <div class="art">{norm_real_svg()}<p class="legend"><span>{u['norm']}</span><span>{u['real']}</span></p></div>
-</div>
-<div class="wrap"><dl class="stats rv">
-  <div><dt>{len(PUBLICATIONS)}</dt><dd>{u['n_studies']}</dd></div><div><dt>{total_pages}</dt><dd>{u['n_pages']}</dd></div><div><dt>{len(FICHES) + len(FICHES_FR)}</dt><dd>{u['n_fiches']}</dd></div><div><dt>{n_videos}</dt><dd>{u['n_videos']}</dd></div>
-</dl></div>
-
-<section id="axes"><div class="wrap">
-  <div class="head"><p class="label">{k(1, u['axes_k'])}</p><h2>{u['axes_h']}</h2></div>
-  <div class="axes">{''.join(f'<article class="rv"><b>{chr(97 + i)}.</b><h3>{e(a[lang][0])}</h3><p>{e(a[lang][1])}</p></article>' for i, a in enumerate(AXES))}</div>
-</div></section>
-
-<section id="jeunesses"><div class="wrap">
-  <div class="head"><p class="label">{k(2, u['doc_k'])}</p><div><h2>{u['doc_h']}</h2><p class="sub big-sub">{e(u['doc_sub'])}</p><p class="intro">{e(u['doc_p'])}</p></div></div>
-  <div class="axes three">{''.join(f'<article class="rv"><b>{['I', 'II', 'III'][i]}</b><h3>{e(t)}</h3><p>{e(d)}</p></article>' for i, (t, d) in enumerate(u['doc_cards']))}</div>
-  <ul class="kw">{''.join(f'<li>{e(x)}</li>' for x in u['doc_kw'])}</ul>
-  {jeunesses_affiche(lang, r)}
-  {survey_cta(lang, r)}
-</div></section>
-
-<section id="bibliotheque"><div class="wrap" data-library>
-  <div class="head"><p class="label">{k(3, u['lib_k'])}</p><div><h2>{u['lib_h']}</h2><p class="intro">{u['lib_p']}</p></div></div>
-  <div class="toolbar"><input class="search" type="search" placeholder="{u['search']}" aria-label="{u['search']}"><div class="filters">{filters}</div></div>
-  <div class="items">{''.join(cards)}
-  </div>
-  <p class="empty" hidden>{u['none']}</p>
-  <aside class="recueil rv"><div><p class="label">PDF · {total_pages + 5} {u['pages']}</p><h3>{u['recueil_h']}</h3><p>{u['recueil_p']}</p></div><a class="chip fill" href="{r}telechargements/boutchakkoucht-recueil-des-etudes.pdf" download>{u['recueil_b']}</a></aside>
-</div></section>
-
-<div class="wrap works"><div class="head" style="margin-top:clamp(40px,6vw,72px)"><p class="label">{e(u['works_k'])}</p><h2 class="h2s">{u['works_h']}</h2></div>
-  <ol class="worklist">{''.join(f'<li class="rv"><div><h3>{e(t)}</h3><p>{e(d)}</p></div><span class="tag">{e(st)}</span></li>' for t, d, st in u['works'])}</ol>
-</div>
-
-<section id="fiches"><div class="wrap" data-library>
-  <div class="head"><p class="label">{k(4, u['f_k'])}</p><div><h2>{u['f_h']}</h2><p class="intro">{e(u['f_p'])}</p><p class="small">{e(u['f_note'])}</p>
-  <p class="dl"><a class="chip fill" href="{r}telechargements/qanoun-clair-pack-1.pdf" download>{e(u['f_pack_ma'])}</a><a class="chip fill" href="{r}telechargements/droit-clair-france.pdf" download>{e(u['f_pack_fr'])}</a></p></div></div>
-  <div class="toolbar"><input class="search" type="search" placeholder="{e(u['f_search'])}" aria-label="{e(u['f_search'])}"><div class="filters">{ffilters}</div></div>
+    a = ACC.A[lang]
+    body = f"""<div class="wrap article" id="fiches" data-library>
+  <p class="label">{e(strip_no(u['f_k']))}</p>
+  <h1>{e(a['fi_title'])}</h1>
+  <p class="lead">{e(u['f_p'])}</p>
+  <p class="small">{e(u['f_note'])}</p>
+  <p class="dl"><a class="chip fill" href="{r}telechargements/qanoun-clair-pack-1.pdf" download>{e(u['f_pack_ma'])}</a><a class="chip" href="{r}telechargements/droit-clair-france.pdf" download>{e(u['f_pack_fr'])}</a></p>
+  <div class="toolbar" style="margin-top:28px"><input class="search" type="search" placeholder="{e(u['f_search'])}" aria-label="{e(u['f_search'])}"><div class="filters">{ffilters}</div></div>
   <div class="fgrid">{fcards}
   </div>
   <p class="empty" hidden>{e(u['f_none'])}</p>
-  <div class="quiz rv" data-quiz><div><p class="label">{e(u['quiz_k'])}</p><h3>{u['quiz_h']}</h3></div>
+  <div class="quiz" data-quiz><div><p class="label">{e(u['quiz_k'])}</p><h3>{u['quiz_h']}</h3></div>
     <div class="qcard" lang="fr" dir="ltr"><p class="qn"></p><p class="qq"></p><p class="qr" hidden></p>
     <p class="dl"><button class="chip fill" type="button" data-show>{e(u['quiz_show'])}</button><button class="chip" type="button" data-next>{e(u['quiz_next'])}</button><a class="chip" data-link href="#" hidden>{e(u['quiz_link'])}</a></p></div>
     <script type="application/json">{json.dumps({"fiche": u["f_fiche"], "items": quiz}, ensure_ascii=False).replace("<", "\\u003c")}</script>
   </div>
   <p class="small" style="margin-top:18px">{e(u['f_updated'])} {e(u['f_updated_fr'])} {e(u['f_disc'])}</p>
-</div></section>
-
-{lex_teaser(lang, r)}
-
-{videos_teaser(lang, r)}
-
-<section id="parcours"><div class="wrap">
-  <div class="head"><p class="label">{k(7, u['par_k'])}</p><h2>{u['par_h']}</h2></div>
-  <div class="about rv"><figure><img src="{r}assets/portrait.jpg" alt="{AUTHOR}" width="700" height="700" loading="lazy"></figure>
-  <div><p class="role">{e(u['role'])}</p><p>{e(BIO[lang])}</p>
-  <p class="dl"><a class="chip" href="https://orcid.org/{ORCID}" rel="me">{u['orcid']} · {ORCID}</a><a class="chip" href="{r}assets/portrait.jpg" download="hafid-boutchakkoucht.jpg">{u['portrait']}</a><a class="chip" href="{MAIN_SITE}">Cross Borders ↗</a></p></div></div>
-  <div class="axes three">{''.join(f'<article class="rv"><b>{i + 1}</b><h3>{e(t)}</h3><p>{e(d)}</p></article>' for i, (t, d) in enumerate(u['par_cards'][:3]))}</div>
-  <div class="cv rv">
-    <div><p class="label">{e(u['edu_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(t)}</strong><br>{e(d)}</p>' for t, d in (u['edu'][0], u['edu'][3]))}<p class="label" style="margin-top:1.6em">{e(u['lang_k'])}</p><p class="cvl">{e(u['langs'])}</p></div>
-    <div><p class="label">{e(u['val_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(t)}</strong><br>{e(d)}</p>' for t, d in (u['vals'][0], u['vals'][3]))}</div>
-  </div>
-  <p class="dl rv"><a class="chip" href="{r}{AB_DIR[lang]}/">{e(u['ab_link'])} →</a></p>
-</div></section>
-
-<section id="contact"><div class="wrap">
-  <div class="head"><p class="label">{k(8, u['contact_k'])}</p><div><h2>{u['contact_h']}</h2><p class="intro">{u['contact_p']} <a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>
-</div></section>"""
-    page(lang, HOME[lang], HOME, f"{SITE_TITLE[lang]} — {AUTHOR}", BIO[lang][:158].rsplit(" ", 1)[0] + "…", body,
-         head_extra=f'<script type="application/ld+json">{json.dumps(person, ensure_ascii=False)}</script>')
+</div>"""
+    page(lang, path, ACC.FI_DIR, f"{a['fi_title']} — {AUTHOR} · {SITE_TITLE[lang]}", u["f_p"][:155].rsplit(" ", 1)[0] + "…", body)
 
 
 JV = {"fr": dict(watch="Voir les épisodes", study="Lire l'étude", survey="Répondre à l'enquête", series="Voir la série", film="La série en un film (16:9)"),
@@ -311,7 +296,7 @@ def about_page(lang):
   <p class="lead">{e(u['ab_lead'])}</p>
   <div class="axes three"><article><h3>{e(t)}</h3><p>{e(d)}</p></article></div>
   <div class="cv">
-    <div><p class="label">{e(u['edu_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(a)}</strong><br>{e(c)}</p>' for a, c in (u['edu'][1], u['edu'][2], u['edu'][4]))}<p class="label" style="margin-top:1.6em">{e(u['mandate_k'])}</p><p class="cvl"><strong>{e(u['mandate'][0])}</strong><br>{e(u['mandate'][1])}</p></div>
+    <div><p class="label">{e(u['edu_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(a)}</strong><br>{e(c)}</p>' for a, c in (u['edu'][1], u['edu'][4]))}<p class="label" style="margin-top:1.6em">{e(u['mandate_k'])}</p><p class="cvl"><strong>{e(u['mandate'][0])}</strong><br>{e(u['mandate'][1])}</p></div>
     <div><p class="label">{e(u['val_k'])}</p>{''.join(f'<p class="cvl"><strong>{e(a)}</strong><br>{e(c)}</p>' for a, c in (u['vals'][1], u['vals'][2]))}</div>
   </div>
 </div>"""
@@ -531,7 +516,7 @@ def fiche_page(f, prev, nxt):
           "about": "Droit pénal marocain", "url": f"{SITE}/{path}/", "image": f"{SITE}/fiches/img/fiche-{f['n']:02d}.webp", "isPartOf": {"@type": "CreativeWorkSeries", "name": "Qanoun Clair"},
           "author": {"@type": "Person", "name": AUTHOR, "url": SITE + "/"}}
     body = f"""<div class="wrap article fiche">
-  <p class="label"><a href="{root}#fiches">{u['fp_back']}</a> · Qanoun Clair · {u['f_fiche']} {f['n']:02d} / {len(FICHES)} · {e(f['part'])}</p>
+  <p class="label"><a href="{root}fiches/">{u['fp_back']}</a> · Qanoun Clair · {u['f_fiche']} {f['n']:02d} / {len(FICHES)} · {e(f['part'])}</p>
   <h1>{e(f['title'])}</h1>
   <p class="far-title" lang="ar" dir="rtl">{e(f['ar'])}</p>
   <ul class="kw">{''.join(f'<li>{e(x)}</li>' for x in f['pills'])}</ul>
@@ -570,7 +555,7 @@ def fiche_fr_page(f, prev, nxt):
     ld = {"@context": "https://schema.org", "@type": "LearningResource", "name": f["title"], "alternateName": f["ar"], "inLanguage": "fr", "learningResourceType": "Fiche de révision",
           "about": "Droit pénal français", "url": f"{SITE}/{path}/", "isPartOf": {"@type": "CreativeWorkSeries", "name": FR_UI["serie"]}, "author": {"@type": "Person", "name": AUTHOR, "url": SITE + "/"}}
     body = f"""<div class="wrap article fiche">
-  <p class="label"><a href="{root}#fiches">{u['fp_back']}</a> · {FR_UI['serie']} · {u['f_fiche']} {f['n']:02d} / {len(FICHES_FR)} · {e(f['part'])}</p>
+  <p class="label"><a href="{root}fiches/">{u['fp_back']}</a> · {FR_UI['serie']} · {u['f_fiche']} {f['n']:02d} / {len(FICHES_FR)} · {e(f['part'])}</p>
   <h1>{e(f['title'])}</h1>
   <p class="far-title" lang="ar" dir="rtl">{e(f['ar'])}</p>
   <ul class="kw">{''.join(f'<li>{e(x)}</li>' for x in f['pills'])}</ul>
@@ -776,6 +761,7 @@ for lang in LANGS:
     survey_page(lang)
     videos_page(lang)
     about_page(lang)
+    fiches_page(lang)
     home(lang)
     for i, p in enumerate(PUBLICATIONS):
         publication(lang, p, PUBLICATIONS[(i + 1) % len(PUBLICATIONS)])
@@ -794,7 +780,7 @@ for p in PUBLICATIONS:
 write("CNAME", SITE.replace("https://", "") + "\n")
 write(".nojekyll", "")
 write("assets/icon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#7A1F2B"/><path d="M10 20h18c8 0 10-6 16-6s6 6 10 6M10 32h18c8 0 10 7 16 7s6-7 10-7M10 44h18c8 0 10-6 16-6s6 6 10 6" fill="none" stroke="#F6F2EA" stroke-width="3.2" stroke-linecap="round"/></svg>\n')
-urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS] + [f"{SITE}/fiches/{f['slug']}/" for f in FICHES] + [f"{SITE}/fiches-france/{f['slug']}/" for f in FICHES_FR] + [f"{SITE}/{LX.L_DIR[l]}/" for l in LANGS] + [f"{SITE}/{AB_DIR[l]}/" for l in LANGS] + [f"{SITE}/enquete/"] + ([f"{SITE}/{QZ.Q_DIR[l]}/" for l in LANGS] if QZ.ENDPOINT else [])
+urls = [f"{SITE}/{HOME[l] + '/' if HOME[l] else ''}" for l in LANGS] + [f"{SITE}/{VID_DIR[l]}/" for l in LANGS] + [f"{SITE}/{FILM_URL}"] + [f"{SITE}/{PUB_DIR[l]}/{p['slug']}/" for l in LANGS for p in PUBLICATIONS] + [f"{SITE}/fiches/{f['slug']}/" for f in FICHES] + [f"{SITE}/fiches-france/{f['slug']}/" for f in FICHES_FR] + [f"{SITE}/{LX.L_DIR[l]}/" for l in LANGS] + [f"{SITE}/{AB_DIR[l]}/" for l in LANGS] + [f"{SITE}/{ACC.FI_DIR[l]}/" for l in LANGS] + [f"{SITE}/enquete/"] + ([f"{SITE}/{QZ.Q_DIR[l]}/" for l in LANGS] if QZ.ENDPOINT else [])
 write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"  <url><loc>{x}</loc></url>\n" for x in urls) + "</urlset>\n")
 write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 entries = "".join(f"""  <entry><title>{e(p['title']['fr'])}</title><link href="{SITE}/publications/{p['slug']}/"/><id>{SITE}/publications/{p['slug']}/</id><updated>{p['date'] if len(p['date']) > 4 else p['date'] + '-01-01'}T00:00:00Z</updated><summary>{e(p['comment']['fr'])}</summary></entry>\n""" for p in PUBLICATIONS)
